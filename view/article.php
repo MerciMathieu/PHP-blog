@@ -1,1 +1,0 @@
-page d'un article
