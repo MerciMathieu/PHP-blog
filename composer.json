@@ -1,0 +1,10 @@
+{
+    "name": "mdelclos/blog-php",
+    "require-dev": {
+    },
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {"App\\": "src/"}
+    }
+}
