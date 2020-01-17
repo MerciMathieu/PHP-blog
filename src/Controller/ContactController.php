@@ -2,16 +2,21 @@
 
 namespace App\Controller;
 
-use App\Classes\TwigLoader;
+Class ContactController
+{
+    /**
+     * @var \Twig\Environment
+     */
+    private $twig;
 
-Class ContactController {
+    public function __construct(\Twig\Environment $twig)
+    {
+        $this->twig = $twig;
+    }
 
-    public function index() {
-
-        $twigLoader = new TwigLoader();
-        $twig = $twigLoader->load();
-
-        echo $twig->render('contact.html.twig', [
+    public function index() 
+    {
+        echo $this->twig->render('contact.html.twig', [
             'title' => 'contact'
         ]);
     }
