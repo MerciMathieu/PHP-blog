@@ -11,8 +11,8 @@ Class ContactController {
         $twigLoader = new TwigLoader();
         $twig = $twigLoader->load();
 
-        echo $twig->render('contact.html.twig', [
-            'title' => 'contact'
+        echo $twig->render('contact/contact.html.twig', [
+            'title' => 'Contact'
         ]);
     }
 }
