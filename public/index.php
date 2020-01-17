@@ -5,21 +5,28 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use App\Controller\HomeController;
 use App\Controller\ContactController;
 
-$homeController = new HomeController(); 
-$contactController = new ContactController();
+$loader = new \Twig\Loader\FilesystemLoader('../view');
+$twig = new \Twig\Environment($loader, [
+    'debug' => true,
+    'cache' => '../var/cache/templates',
+    'auto_reload' => true
+]);
+
+$homeController = new HomeController($twig); 
+$contactController = new ContactController($twig);
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case "home":
-            $homeController->home();
-            break;
+            return $homeController->index();
+        break;
         case "contact":
-            $contactController->contact();
-            break;
+            return $contactController->index();
+        break;
         default:
-        $homeController->home();
-            break;
+            return $homeController->index();
+    break;
     }
 } else { 
-    $homeController->home();
+    return $homeController->index();
 }
