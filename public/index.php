@@ -2,7 +2,6 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Classes\TwigLoader;
 use App\Controller\HomeController;
 use App\Controller\ContactController;
 
