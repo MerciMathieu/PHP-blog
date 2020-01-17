@@ -2,17 +2,22 @@
 
 namespace App\Controller;
 
-use App\Classes\TwigLoader;
+Class HomeController
+{
+    /**
+     * @var \Twig\Environment
+     */
+    private $twig;
 
-Class HomeController {
-    
-    public function index() {
+    public function __construct(\Twig\Environment $twig)
+    {
+        $this->twig = $twig;
+    }
 
-        $twigLoader = new TwigLoader();
-        $twig = $twigLoader->load();
-
-        echo $twig->render('homepage/homepage.html.twig', [
-            'title' => 'Home'
+    public function index()
+    {
+        echo $this->twig->render('homepage/homepage.html.twig', [
+            'title' => 'home'
         ]);
     }
 }
