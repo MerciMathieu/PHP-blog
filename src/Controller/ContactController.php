@@ -2,9 +2,18 @@
 
 namespace App\Controller;
 
+use App\Classes\TwigLoader;
+
 Class ContactController {
-    function contact() {
-        require('../templates/contact.php');
+
+    public function index() {
+
+        $twigLoader = new TwigLoader();
+        $twig = $twigLoader->load();
+
+        echo $twig->render('contact.html.twig', [
+            'title' => 'contact'
+        ]);
     }
 }
 

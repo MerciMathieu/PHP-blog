@@ -11,15 +11,15 @@ $contactController = new ContactController();
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case "home":
-            $homeController->home();
-            break;
+            return $homeController->index();
+        break;
         case "contact":
-            $contactController->contact();
-            break;
+            return $contactController->index();
+        break;
         default:
-        $homeController->home();
-            break;
-    }
+            return $homeController->index();
+    break;
+}
 } else { 
-    $homeController->home();
+    return $homeController->index();
 }

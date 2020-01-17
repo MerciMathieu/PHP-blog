@@ -1,3 +1,5 @@
-# vendor 
 /vendor
+/.vscode
+/var/cache/
 
+composer.lock
