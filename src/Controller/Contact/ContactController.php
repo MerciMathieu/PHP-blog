@@ -16,8 +16,8 @@ Class ContactController
 
     public function index() 
     {
-        echo $this->twig->render('contact/contact.html.twig', [
-            'title' => 'Contact'
+        return $this->twig->render('contact/contact.html.twig', [
+        
         ]);
     }
 }

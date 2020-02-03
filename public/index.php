@@ -18,15 +18,15 @@ $contactController = new ContactController($twig);
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case "home":
-            return $homeController->index();
+            echo $homeController->index();
         break;
         case "contact":
-            return $contactController->index();
+            echo $contactController->index();
         break;
         default:
-            return $homeController->index();
+            echo $homeController->index();
     break;
     }
 } else { 
-    return $homeController->index();
+    echo $homeController->index();
 }
