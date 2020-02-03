@@ -2,10 +2,10 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Controller\HomeController;
-use App\Controller\ContactController;
+use App\Controller\Home\HomeController;
+use App\Controller\Contact\ContactController;
 
-$loader = new \Twig\Loader\FilesystemLoader('../view');
+$loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
     'cache' => '../var/cache/templates',
@@ -18,15 +18,15 @@ $contactController = new ContactController($twig);
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case "home":
-            return $homeController->index();
+            echo $homeController->index();
         break;
         case "contact":
-            return $contactController->index();
+            echo $contactController->index();
         break;
         default:
-            return $homeController->index();
+            echo $homeController->index();
     break;
     }
 } else { 
-    return $homeController->index();
+    echo $homeController->index();
 }

@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Controller;
+namespace App\Controller\Contact;
 
 Class ContactController
 {
@@ -16,8 +16,8 @@ Class ContactController
 
     public function index() 
     {
-        echo $this->twig->render('contact.html.twig', [
-            'title' => 'contact'
+        return $this->twig->render('contact/contact.html.twig', [
+        
         ]);
     }
 }

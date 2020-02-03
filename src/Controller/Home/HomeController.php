@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Controller;
+namespace App\Controller\Home;
 
 Class HomeController
 {
@@ -16,8 +16,8 @@ Class HomeController
 
     public function index()
     {
-        echo $this->twig->render('homepage.html.twig', [
-            'title' => 'home'
+        return $this->twig->render('homepage/homepage.html.twig', [
+            
         ]);
     }
 }
