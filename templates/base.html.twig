@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>{% block title %}blog PHP{% endblock %}</title>
-
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     {% endblock %}
 </head>
 <body>
@@ -22,16 +22,19 @@
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">A propos</a>
+                            <a class="nav-link" href="/">Accueil</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">A propos<i class="fas fa-angle-down"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Dernières actualités</a>
+                            <a class="nav-link" href="#">Derniers articles<i class="fas fa-angle-down"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="?action=contact">Contact</a>
+                            <a class="nav-link" href="#">Contact<i class="fas fa-angle-down"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Blog</a>
+                            <a class="nav-link" href="?action=blog">Blog</a>
                         </li>
                     </ul>
                 </div>

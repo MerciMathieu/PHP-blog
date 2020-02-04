@@ -1,8 +1,8 @@
 <?php 
 
-namespace App\Controller\Contact;
+namespace App\Controller\Blog;
 
-Class ContactController
+Class BlogController
 {
     /**
      * @var \Twig\Environment
@@ -16,7 +16,7 @@ Class ContactController
 
     public function index() 
     {
-        return $this->twig->render('contact/contact.html.twig', [
+        return $this->twig->render('blog/blog.html.twig', [
         
         ]);
     }
