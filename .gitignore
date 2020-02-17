@@ -1,4 +1,5 @@
 /vendor
 /var/cache/
+/public/docs/
 
 composer.lock
