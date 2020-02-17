@@ -1,0 +1,82 @@
+/* GENERAL */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%; /** 1rem = 10px **/
+}
+
+:focus {
+    outline: none;
+}
+
+h1 {
+    margin: 0;
+    font-size: 4rem;
+    padding: 20px 0;
+}
+
+p {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.button-link {
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #343A40;
+    color: rgba(245, 245, 245, 0.815);
+    box-shadow: black 1px 1px 5px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+}
+
+.button-link:hover {
+    background-color: #363b40c5;
+    color: white;
+    box-shadow: darkgrey 1px 1px 5px;
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+div#content {
+    font-size: 1.6rem;
+}
+
+section {
+    padding: 40px;
+}
+
+/* HEADER */
+#header nav .navbar-brand {
+    font-size: 3rem;
+}
+
+#header nav .nav-link {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.dropdown-item {
+    font-size: 1.4rem;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: darkgray;
+    color: black !important;
+}
+
+.dropdown-menu {
+    font-size: 1rem;
+    color: #212529;
+    margin-left: 15px;
+    background-color: rgb(52, 58, 64);
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-top: 1px solid rgba(0,0,0,.15);
+}

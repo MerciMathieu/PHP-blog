@@ -1,0 +1,13 @@
+/* VARIABLES CSS */
+:root {
+    --main-bg-color: rgb(92, 107, 192);
+    --second-bg-color: whitesmoke;
+}
+
+.color-black {
+    color: rgba(12, 11, 11, 0.924);
+}
+
+.color-white {
+    color: whitesmoke;
+}

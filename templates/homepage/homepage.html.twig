@@ -2,16 +2,23 @@
 
 {% block title %}Accueil - {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/homepage/homepage.css">
+{% endblock %}
+
 {% block content %}
 
-    <section id="home">
-        <div class="text-center">
-            <img src="img/avatar.png" alt="avatar">
-            <h2>Développeur front-end/back-end</h2>
+    <section id="home" class="color-white">
+        <div class="container">
+            <div class="text-center">
+                <img src="img/avatar.png" alt="avatar">
+                <h1 class="font-weight-bold">&lt;!&#45;&#45; Développeur front-end / back-end --></h1>
+            </div>
         </div>
     </section>
 
-    <section id="about">
+    <section id="about" class="color-black">
         <div class="text-center">
             
             <h1 class="text-center">A propos</h1>
@@ -21,7 +28,9 @@
                 <p>J'ai également obtenu une certification RNCP de niveau 3 en techniques d'intégration et de développement web chez <a href="https://www.wf3.fr/" target="_blank">WebForce3</a> et plusieurs autres sur la plateforme OpenClassrooms. Voir mon CV pour plus d'informations à mon propos. 😎</p>
             </div>
             <div class="text-center">
-                <a href="/docs/CV_mathieu_delclos_ALTERNANCE.pdf" download="CV_MathieuD"><button><i class="fas fa-download mr-2"></i>Télécharger mon CV</button></a>
+                <a href="/docs/CV_mathieu_delclos_ALTERNANCE.pdf" download="CV_MathieuD">
+                    <button class="button-link"><i class="fas fa-download mr-2"></i>Télécharger mon CV</button>
+                </a>
             </div>
         </div>
     </section>

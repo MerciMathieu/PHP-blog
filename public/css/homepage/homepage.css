@@ -1,0 +1,30 @@
+/* Page de garde */
+
+section#home {
+    background-color: var(--main-bg-color);
+    height: 100vh;
+}
+
+img {
+    width: 300px;
+}
+
+section#home h1 {
+    font-size: 3.5rem;
+}
+
+/* ABOUT */
+
+section#about{
+    background-color: var(--second-bg-color);
+}
+
+.text-about {
+    padding: 50px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.text-about p {
+    width: 40%;
+}
