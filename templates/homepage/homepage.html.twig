@@ -8,5 +8,73 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Accueil</h1>
+
+    <section id="home">
+        <div class="text-center">
+            <img src="img/avatar.png" alt="avatar">
+            <h2>Développeur front-end/back-end</h2>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="text-center">
+            
+            <h1 class="text-center">A propos</h1>
+            <div class="text-about text-center">
+                <p>Bonjour! Moi c'est Mathieu et j'ai 29 ans. Je vis à Marseille et suis actuellement en alternance chez <a href="https://internethic.com/" target="_blank">Internethic</a> pour la formation Développeur back end PHP Symfony proposée par <a href="https://openclassrooms.com/" target="_blank">OpenClassrooms</a></p>
+        
+                <p>J'ai également obtenu une certification RNCP de niveau 3 en techniques d'intégration et de développement web chez <a href="https://www.wf3.fr/" target="_blank">WebForce3</a> et plusieurs autres sur la plateforme OpenClassrooms. Voir mon CV pour plus d'informations à mon propos. 😎</p>
+            </div>
+            <div class="text-center">
+                <a href="/docs/CV_mathieu_delclos_ALTERNANCE.pdf" download="CV_MathieuD"><button><i class="fas fa-download mr-2"></i>Télécharger mon CV</button></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="last-articles">
+        <h1 class="text-center">Derniers articles</h1>
+        <div class="card bg-white mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h4 class="card-title">Dark card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="card bg-white mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h4 class="card-title">Dark card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+        <div class="card bg-white mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h4 class="card-title">Dark card title</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+
+        <a href="?action=blog"><button>Voir tous les articles</button></a>
+    </section>
+
+    <section id="contact">
+        <h1 class="text-center">Me contacter</h1>
+
+        <form action="" method="post">
+            <label for="lastname">Nom:</label>
+            <input type="text" name="lastname" id="lastname">
+            <label for="firstname">Prénom:</label>
+            <input type="text" name="firstname" id="firstname">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <label for="message">Message:</label>
+            <textarea type="text" name="message" id="message"></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    </section>
+
 {% endblock %}
