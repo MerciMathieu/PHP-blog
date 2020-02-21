@@ -6,6 +6,15 @@ html, body {
     font-size: 62.5%; /** 1rem = 10px **/
 }
 
+::selection {
+    background-color: var(--main-bg-color);
+    color: white;
+}
+
+textarea {
+    resize: none;
+}
+
 :focus {
     outline: none;
 }
@@ -24,7 +33,7 @@ p {
 .button-link {
     border-radius: 4px;
     padding: 8px;
-    background-color: #343A40;
+    background-color: var(--third-bg-color);
     color: rgba(245, 245, 245, 0.815);
     box-shadow: black 1px 1px 5px;
     font-weight: 600;
@@ -52,14 +61,17 @@ section {
 }
 
 /* HEADER */
+
 #header nav .navbar-brand {
     font-size: 3rem;
+    user-select: none;
 }
 
 #header nav .nav-link {
     font-size: 1.8rem;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
+    user-select: none;
 }
 
 .dropdown-item {
@@ -79,4 +91,23 @@ section {
     border: none;
     border-bottom: 1px solid rgba(0,0,0,.15);
     border-top: 1px solid rgba(0,0,0,.15);
+}
+
+/* FOOTER */
+
+.socials-footer {
+    background-color: var(--third-bg-color);
+}
+
+.socials-footer h3 {
+    font-size: 3rem;
+}
+
+#icons {
+    font-size: 2.25rem;
+}
+
+#icons a {
+    color: white;
+    margin: 10px;
 }

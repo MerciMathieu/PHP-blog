@@ -2,10 +2,18 @@
 
 section#home {
     background-color: var(--main-bg-color);
-    height: 100vh;
+    height: calc(100vh - 61px);
+    position: relative;
 }
 
-img {
+section#home .container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+section#home img {
     width: 300px;
 }
 
@@ -27,4 +35,66 @@ section#about{
 
 .text-about p {
     width: 40%;
+}
+
+/* ARTICLES */
+
+.articles {
+    display: flex;
+    flex-direction: column;
+}
+
+.article {
+    justify-content: center;
+    border-bottom: lightgrey 1px solid;
+    padding-bottom: 15px;
+}
+
+.articles .article-content img {
+    float: left;
+}
+
+.articles .article-content img p {
+    clear: both;
+}
+
+.article-body h2 {
+    font-size: 3rem;
+}
+
+
+/* CONTACT */
+
+section#contact {
+    background-color: var(--main-bg-color);
+}
+
+section#contact form {
+    width: 60%;
+    margin: auto;
+}
+
+section#contact form input::placeholder, section#contact form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.596);
+    font-size: 1.7rem;
+}
+
+section#contact form input, section#contact form textarea {
+    background-color: inherit;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: rgba(211, 211, 211, 0.507) 1px solid;
+    margin-bottom: 25px;
+}
+
+section#contact form input:focus, section#contact form textarea:focus {
+    background-color: inherit;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: white 1px solid;
+    margin-bottom: 25px;
+    outline: none;
+    box-shadow: 0 1px 0px 0 var(--third-bg-color);
 }

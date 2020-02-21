@@ -18,7 +18,7 @@
     <div id="header">
         {% block header %}
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="/">Blog de Mathieu Delclos</a>
+                <a class="navbar-brand ml-5" href="/">Blog de Mathieu Delclos</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -54,18 +54,19 @@
     <div id="footer">
         {% block footer %}
             <div class="text-center">
-                <div class="socials-footer">
-                    <h3>Réseaux sociaux</h3>
-                    <div id="icons">
-                        <img src="/img/icones/facebook.png" alt="icone facebook">
-                        <img src="/img/icones/twitter.png" alt="icone facebook">
-                        <img src="/img/icones/linkedin.png" alt="icone facebook">
+                <div class="socials-footer color-white">
+                    <h3 class="pt-5 pb-3">Réseaux sociaux</h3>
+                    <div id="icons" class="pb-5">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
             </div>
             <div class="navbar-dark bg-dark">
                 <div class="text-center">
-                    <small class="navbar-brand" href="/">&copy;Copyright 2020</small>
+                    <small class="navbar-brand" href="/">&copy; Copyright 2020</small>
                 </div>
             </div>
         {% endblock %}
