@@ -25,6 +25,7 @@ section#home h1 {
 
 section#about{
     background-color: var(--second-bg-color);
+    height: 50vh;
 }
 
 .text-about {
@@ -37,41 +38,16 @@ section#about{
     width: 40%;
 }
 
-/* ARTICLES */
-
-.articles {
-    display: flex;
-    flex-direction: column;
-}
-
-.article {
-    justify-content: center;
-    border-bottom: lightgrey 1px solid;
-    padding-bottom: 15px;
-}
-
-.articles .article-content img {
-    float: left;
-}
-
-.articles .article-content img p {
-    clear: both;
-}
-
-.article-body h2 {
-    font-size: 3rem;
-}
-
-
 /* CONTACT */
 
 section#contact {
     background-color: var(--main-bg-color);
+    height: 100vh;
 }
 
 section#contact form {
     width: 60%;
-    margin: auto;
+    margin: 12% auto;
 }
 
 section#contact form input::placeholder, section#contact form textarea::placeholder {
