@@ -25,7 +25,7 @@ section#home h1 {
 
 section#about{
     background-color: var(--second-bg-color);
-    height: 50vh;
+    height: 100vh;
 }
 
 .text-about {
@@ -47,7 +47,7 @@ section#contact {
 
 section#contact form {
     width: 60%;
-    margin: 12% auto;
+    margin: auto;
 }
 
 section#contact form input::placeholder, section#contact form textarea::placeholder {
