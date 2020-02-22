@@ -2,73 +2,49 @@
 
 {% block title %}Blog - {{ parent() }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/blog/blog.css">
+{% endblock %}
+
 {% block content %}
 
-    <section id="blog">
-        <h1>Tous les articles</h1>
-
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
-            </div>
-        </div>
-        <div class="card bg-white mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                <h4 class="card-title">Dark card title</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+    <section id="last-articles">
+        <div class="container">
+            <h1 class="text-center mb-5">Derniers articles</h1>
+            <div class="articles mb-5">
+                <div class="article bg-white mb-3">
+                    <div class="article-body">
+                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
+                        <small class="text-muted ml-4"><i class="far fa-clock mr-2 mb-5"></i>Date de création ou de modification</small>
+                        <div class="article-content">
+                            <img src="http://placekitten.com/g/200/200" class="mr-3" alt="">
+                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+                        </div>
+                        <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+                <div class="article bg-white mb-3">
+                    <div class="article-body">
+                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
+                        <small class="text-muted ml-4"><i class="far fa-clock mr-2 mb-5"></i>Date de création ou de modification</small>
+                        <div class="article-content">
+                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+                        </div>
+                        <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
+                <div class="article bg-white mb-3">
+                    <div class="article-body">
+                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
+                        <small class="text-muted ml-4"><i class="far fa-clock mr-2 mb-5"></i>Date de création ou de modification</small>
+                        <div class="article-content">
+                            <img src="http://placekitten.com/g/200/200" class="mr-3" alt="">
+                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+                        </div>
+                        <a href="#">Lire l'article<i class="fas fa-angle-right"></i></a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
