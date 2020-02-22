@@ -25,6 +25,7 @@ section#home h1 {
 
 section#about{
     background-color: var(--second-bg-color);
+    height: 100vh;
 }
 
 .text-about {
