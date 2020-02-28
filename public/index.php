@@ -23,6 +23,9 @@ if (isset($_GET['action'])) {
         case "blog":
             echo $blogController->index();
         break;
+        case "post":
+            echo $blogController->show();
+        break;
         default:
             echo $homeController->index();
     break;

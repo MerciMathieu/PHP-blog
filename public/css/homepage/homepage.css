@@ -55,13 +55,13 @@ section#contact form input::placeholder, section#contact form textarea::placehol
     font-size: 1.7rem;
 }
 
-section#contact form input, section#contact form textarea {
+ section#contact form input, section#contact form textarea {
     background-color: inherit;
     border-left: none;
     border-right: none;
     border-top: none;
     border-bottom: rgba(211, 211, 211, 0.507) 1px solid;
-    margin-bottom: 25px;
+    color: white;
 }
 
 section#contact form input:focus, section#contact form textarea:focus {
@@ -71,6 +71,5 @@ section#contact form input:focus, section#contact form textarea:focus {
     border-top: none;
     border-bottom: white 1px solid;
     margin-bottom: 25px;
-    outline: none;
     box-shadow: 0 1px 0px 0 var(--third-bg-color);
 }
