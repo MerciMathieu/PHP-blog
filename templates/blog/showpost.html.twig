@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Blog - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/blog/showpost.css">
+{% endblock %}
+
+{% block content %}
+
+    <section id="show-post">
+        <div class="container">
+            <h1 class="text-center mb-5">Vue de l'article</h1>
+            <p class="chapo font-weight-bold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, doloribus officia at quisquam tempore.</p>
+            <p>
+                <small class="text-muted text-center ml-4"><i class="far fa-clock mr-2"></i>Date de création ou de modification</small><br />
+                <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par Mathieu Delclos</small>
+            </p>
+
+            <div style="clear: both;">
+                <img src="http://placekitten.com/g/400/400" class="mr-3" alt="">
+                <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+                <p class="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+            </div>
+            
+            <div style="clear: both;" class="pt-5 comments">
+                <h2>Poster un commentaire: </h2>
+                <form action="" method="post" class="w-50">
+                    <div class="form-group">
+                        <label for="lastname" hidden>Nom:</label>
+                        <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Entrez votre nom" />
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" hidden>Email:</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Entrez votre email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message" hidden>Message:</label>
+                        <textarea type="text" class="form-control" name="message" id="message" placeholder="Tapez votre message" rows="5"></textarea>
+                    </div>
+                    <div class="text-right mb-5">
+                        <button type="submit" class="button-link">Commenter</button>
+                    </div>
+                </form>
+                <hr>
+                <div id="space-comments" class="w-50">
+                    <h3>3 commentaire(s)</h3>
+                    <div class="comment mt-4 background-gray">
+                        <p class="font-weight-bold">Jean-charles Bedouin <small class="text-muted ml-2">posté le 24 février 2020 à 15h14</small></p>
+                        <p>Bravo pour cet article !</p>
+                    </div>
+                    <div class="comment mt-4 background-gray">
+                        <p class="font-weight-bold">Noémie aubert <small class="text-muted ml-2">posté le 24 février 2020 à 13h52</small></p>
+                        <p>Super!</p>
+                    </div>
+                    <div class="comment mt-4 background-gray">
+                        <p class="font-weight-bold">Corentin jallet <small class="text-muted ml-2">posté le 24 février 2020 à 09h38</small></p>
+                        <p>Whouaaa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+{% endblock %}
+
+

@@ -20,5 +20,12 @@ Class BlogController
         
         ]);
     }
+
+    public function show() 
+    {
+        return $this->twig->render('blog/showpost.html.twig', [
+        
+        ]);
+    }
 }
 

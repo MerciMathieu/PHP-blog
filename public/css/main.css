@@ -61,6 +61,41 @@ section {
     padding: 40px;
 }
 
+form input, form textarea {
+    margin-bottom: 25px;
+    font-size: 1.7rem !important;
+}
+
+form input::placeholder, form textarea::placeholder {
+    font-size: 1.7rem;
+}
+
+form input:focus, form textarea:focus {
+    margin-bottom: 25px;
+    outline: none;
+    box-shadow: none;
+    border-color: lightgray;
+}
+
+#back-top {
+    padding: 8px 15px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    border-radius: 5px;
+    background: rgba(125, 144, 160, 0.7);
+    z-index: 1000;
+}
+
+#back-top:hover{
+    background-color: #212529;
+    transition:all ease-in 0.2s;
+}
+
+#back-top i {
+    color: cornsilk;
+}
+
 /* HEADER */
 
 #header nav .navbar-brand {

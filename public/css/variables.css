@@ -12,3 +12,7 @@
 .color-white {
     color: whitesmoke;
 }
+
+.background-gray {
+    background-color: rgba(230, 230, 230, 0.829);
+}
