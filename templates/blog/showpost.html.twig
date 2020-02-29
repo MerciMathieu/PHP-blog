@@ -15,7 +15,7 @@
             <p class="chapo font-weight-bold">{{ post.intro }}</p>
             <p>
                 <small class="text-muted text-center ml-4"><i class="far fa-clock mr-2"></i>{{ post.createdAt|date( 'd F Y à H:i:s') }}</small><br />
-                <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par Mathieu Delclos</small>
+                <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par {{ post.author }}</small>
             </p>
 
             <div style="clear: both;">
