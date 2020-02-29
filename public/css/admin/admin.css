@@ -1,0 +1,15 @@
+table {
+    font-size: 1.8rem;
+}
+
+table tbody {
+    font-size: 1.6rem;
+}
+
+.table td.actions {
+    padding-bottom: 60px;
+}
+
+a {
+    font-size: 1.4rem;
+}
