@@ -14,12 +14,20 @@
             <h1 class="text-center mb-5">{{ post.title }}</h1>
             <p class="chapo font-weight-bold">{{ post.intro }}</p>
             <p>
-                <small class="text-muted text-center ml-4"><i class="far fa-clock mr-2"></i>{{ post.createdAt|date( 'd F Y à H:i:s') }}</small><br />
-                <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par {{ post.author }}</small>
+                <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>
+                    Publié par {{ post.author }}
+                </small>
+                <small class="text-muted text-center ml-4"><i class="far fa-clock mr-2"></i>
+                    {% if post.updatedAt %}
+                        Modifié le {{ post.updatedAt|date('d-m-Y à H:i:s') }}
+                    {% else %}
+                        Créé le {{ post.createdAt|date('d-m-Y à H:i:s') }}
+                    {% endif %}
+                </small><br />
             </p>
 
             <div style="clear: both;">
-                <img src={{ post.imageUrl }} class="mr-3" alt="">
+                <img src="{{ post.imageUrl }}" class="mr-3" alt="{{ post.title }}">
                 <p>{{ post.content }}</p>
             </div>
 
@@ -44,19 +52,21 @@
                 </form>
                 <hr>
                 <div id="space-comments" class="w-50">
-                    <h3>3 commentaire(s)</h3>
-                    <div class="comment mt-4 background-gray">
-                        <p class="font-weight-bold">Jean-charles Bedouin <small class="text-muted ml-2">posté le 24 février 2020 à 15h14</small></p>
-                        <p>Bravo pour cet article !</p>
-                    </div>
-                    <div class="comment mt-4 background-gray">
-                        <p class="font-weight-bold">Noémie aubert <small class="text-muted ml-2">posté le 24 février 2020 à 13h52</small></p>
-                        <p>Super!</p>
-                    </div>
-                    <div class="comment mt-4 background-gray">
-                        <p class="font-weight-bold">Corentin jallet <small class="text-muted ml-2">posté le 24 février 2020 à 09h38</small></p>
-                        <p>Whouaaa</p>
-                    </div>
+                    <h3>{{ comments|length }} commentaire(s)</h3>
+                    {% for comment in comments %}
+                        <div class="comment mt-4 background-gray">
+                            <p class="font-weight-bold">{{ comment.author }} 
+                                <small class="text-muted ml-2">
+                                    {% if comment.updatedAt %}
+                                        modifié le {{ comment.updatedAt|date('d-m-Y à H:i:s') }}
+                                    {% else %}
+                                        posté le {{ comment.createdAt|date('d-m-Y à H:i:s') }}
+                                    {% endif %}
+                                </small>
+                            </p>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

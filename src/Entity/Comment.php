@@ -30,14 +30,14 @@ Class Comment
      */
     private $status;
     
-    public function __construct(string $author, string $content, string $status)
+    public function __construct(string $author, string $content)
     {
         $this->author = $author;
         $this->content = $content;
-        $this->status = $status;
+        $this->createdAt = new \DateTime();
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt()
     {
         return $this->updatedAt;
     }

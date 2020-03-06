@@ -18,11 +18,15 @@
                     <div class="article bg-white mb-3">
                         <div class="article-body">
                             <h2 class="article-header article-title font-weight-bold mt-5 ml-4">{{ post.title }}</h2>
-                            <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>{{ post.createdAt|date('d M Y à H:i:s') }}</small><br />
-                            <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par {{ post.author }}</small>
+                            <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>
+                                {{ post.createdAt|date('d-m-Y à H:i:s') }}
+                            </small><br />
+                            <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>
+                                Publié par {{ post.author }}
+                            </small>
                             <div class="article-content">
                                 {% if post.imageUrl %}
-                                    <img src={{ post.imageUrl }} class="mr-3 img-fluid" alt={{ post.title }}>
+                                    <img src="{{ post.imageUrl }}" class="mr-3 img-fluid" alt="{{ post.title }}">
                                 {% endif %}
                                 <p class="article-text">{{ post.content }}</p>
                             </div>

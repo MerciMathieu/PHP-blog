@@ -26,7 +26,7 @@ if (isset($_GET['action'])) {
             echo $blogController->index();
         break;
         case "post":
-            echo $blogController->show();
+            echo $blogController->showPost();
         break;
         case "admin":
             echo $adminController->index();

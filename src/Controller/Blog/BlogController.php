@@ -4,6 +4,7 @@ namespace App\Controller\Blog;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 
 Class BlogController
 {
@@ -27,13 +28,17 @@ Class BlogController
         ]);
     }
 
-    public function show() 
+    public function showPost() 
     {
         $postRepository = new PostRepository();
         $post = $postRepository->find(1);
 
+        $commentRepository = new CommentRepository();
+        $comments = $commentRepository->findAll();
+
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,
+            'comments' => $comments
         ]);
     }
 }

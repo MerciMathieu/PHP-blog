@@ -52,21 +52,27 @@
                             </td>
                             <td class="text-center">{{ post.title }}</td>
                             <td class="text-center">{{ post.author }}</td>
-                            <td class="text-center">{{ post.createdAt|date('d M Y à H:i:s') }}</td>
+                            <td class="text-center">{{ post.createdAt|date('d-m-Y à H:i:s') }}</td>
                             <td class="text-center">
                                 {% if post.updatedAt %}
-                                    {{ post.updatedAt|date('d M Y à H:i:s') }}
+                                    {{ post.updatedAt|date('d-m-Y à H:i:s') }}
                                 {% else %}  
                                     -
                                 {% endif %}
                             </td>
                             <td class="text-center actions">
                                 <div>
-                                    <a class="btn btn-info" href="?action=admin/article/comments" role="button">Commentaires<i class="fas fa-comment ml-2"></i></a>
+                                    <a class="btn btn-info" href="?action=admin/article/comments" role="button">
+                                        Commentaires<i class="fas fa-comment ml-2"></i>
+                                    </a>
                                 </div>
                                 <div>
-                                    <a class="btn btn-primary" href="?action=admin/article/edit" role="button"><i class="fas fa-pen mr-2"></i>Modifier</a>
-                                    <a class="btn btn-danger" href="#" role="button">Supprimer<i class="fas fa-times ml-2"></i></a>
+                                    <a class="btn btn-primary" href="?action=admin/article/edit" role="button"><i class="fas fa-pen mr-2"></i>
+                                        Modifier
+                                    </a>
+                                    <a class="btn btn-danger" href="#" role="button">
+                                        Supprimer<i class="fas fa-times ml-2"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
