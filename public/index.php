@@ -25,18 +25,24 @@ if (isset($_GET['action'])) {
         case "blog":
             echo $blogController->index();
         break;
-        case "admin/article/edit":
-            echo $adminController->edit();
-        break;
         case "post":
             echo $blogController->show();
         break;
         case "admin":
             echo $adminController->index();
         break;
+        case "admin/article/edit":
+            echo $adminController->editArticle();
+        break;
+        case "admin/article/add":
+            echo $adminController->addArticle();
+        break;
+        case "admin/article/comments":
+            echo $adminController->showComments();
+        break;
         default:
             echo $homeController->index();
-    break;
+        break;
     }
 } else { 
     echo $homeController->index();
