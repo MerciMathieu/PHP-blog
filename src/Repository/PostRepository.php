@@ -7,9 +7,9 @@ use App\Entity\Post;
 class PostRepository
 {
 
-    public function findAll(): Array
+    public function findAll(): array
     {
-        $posts = array();
+        $posts = [];
 
         $post1 = new Post
         (

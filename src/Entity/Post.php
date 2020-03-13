@@ -114,7 +114,7 @@ Class Post {
         $this->author = $author;
     }
 
-    public function getImageUrl()
+    public function getImageUrl(): string
     {
         return $this->imageUrl;
     }
