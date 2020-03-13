@@ -19,14 +19,16 @@ Class BlogController
 
     public function index() 
     {
+        $postRepository = new PostRepository();
+        $posts = $postRepository->findAll();
+
         return $this->twig->render('blog/blog.html.twig', [
-        
+            'posts' => $posts,
         ]);
     }
 
     public function show() 
     {
-
         $postRepository = new PostRepository();
         $post = $postRepository->find(1);
 

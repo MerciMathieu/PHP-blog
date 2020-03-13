@@ -2,8 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\Controller\Home\HomeController;
 use App\Controller\Blog\BlogController;
+use App\Controller\Home\HomeController;
+use App\Controller\Admin\AdminController;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader, [
@@ -14,6 +15,7 @@ $twig = new \Twig\Environment($loader, [
 
 $homeController = new HomeController($twig); 
 $blogController = new BlogController($twig);
+$adminController = new AdminController($twig);
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
@@ -26,9 +28,21 @@ if (isset($_GET['action'])) {
         case "post":
             echo $blogController->show();
         break;
+        case "admin":
+            echo $adminController->index();
+        break;
+        case "admin/article/edit":
+            echo $adminController->editArticle();
+        break;
+        case "admin/article/add":
+            echo $adminController->addArticle();
+        break;
+        case "admin/article/comments":
+            echo $adminController->showComments();
+        break;
         default:
             echo $homeController->index();
-    break;
+        break;
     }
 } else { 
     echo $homeController->index();

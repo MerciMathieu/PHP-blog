@@ -1,0 +1,45 @@
+{% extends "baseadmin.html.twig" %}
+
+{% block title %}Modifier - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <section id="article-edit">
+        <div class="container">
+            <div class="text-center mb-5">
+                <a class="" href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste</a>
+            </div>
+            <h1 class="text-center mb-5">Ajouter un article</h1>
+            <form action="" method="post" class="">
+                <div class="row">
+                    <div id="group-author" class="form-group">
+                        <label for="author">Auteur:</label>
+                        <input type="text" class="form-control" name="author" id="author" placeholder="Utilisateur connecté" disabled/>
+                    </div>
+                    <div id="group-title" class="form-group">
+                        <label for="title">Titre:</label>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Ajouter un titre" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image(url):</label>
+                    <input type="text" class="form-control" name="image" id="image" placeholder="Ajouter l'URL de votre image"></input>
+                </div>
+                <div class="form-group">
+                    <label for="intro">Intro:</label>
+                    <textarea type="text" class="form-control" name="intro" id="intro" placeholder="Ajouter une intro à votre article" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content">Contenu:</label>
+                    <textarea type="text" class="form-control" name="content" id="content" placeholder="Contenu de votre article" rows="10"></textarea>
+                </div>
+                <div class="text-right mb-5">
+                    <button type="submit" class="button-link w-100">Valider</button>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
