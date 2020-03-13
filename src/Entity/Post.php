@@ -104,4 +104,19 @@ Class Post {
     {
         $this->author = $author;
     }
+
+    public function getImageUrl(): string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(string $imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
