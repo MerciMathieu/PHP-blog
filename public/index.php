@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use App\Classes\Database;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
@@ -9,13 +10,16 @@ use App\Controller\Admin\AdminController;
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
-    'cache' => '../var/cache/templates',
     'auto_reload' => true
 ]);
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
-$homeController = new HomeController($twig); 
-$blogController = new BlogController($twig);
-$adminController = new AdminController($twig);
+$db = Database::connect();
+
+$homeController = new HomeController($twig, $db); 
+$blogController = new BlogController($twig, $db);
+$adminController = new AdminController($twig, $db);
+
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {

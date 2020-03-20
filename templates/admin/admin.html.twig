@@ -51,7 +51,7 @@
                                 {% endif %}
                             </td>
                             <td class="text-center">{{ post.title }}</td>
-                            <td class="text-center">{{ post.author }}</td>
+                            <td class="text-center">{{ post.author.firstName }} {{ post.author.lastName }}</td>
                             <td class="text-center">{{ post.createdAt|date('d-m-Y à H:i:s') }}</td>
                             <td class="text-center">
                                 {% if post.updatedAt %}

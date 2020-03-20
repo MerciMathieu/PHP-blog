@@ -12,14 +12,20 @@ Class AdminController
      */
     private $twig;
 
-    public function __construct(\Twig\Environment $twig)
+    /**
+     * @var \PDO
+     */
+    private $db;
+
+    public function __construct(\Twig\Environment $twig, \PDO $db)
     {
         $this->twig = $twig;
+        $this->db = $db;
     }
 
     public function index() 
     {
-        $postRepository = new PostRepository;
+        $postRepository = new PostRepository($this->db);
         $posts = $postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
@@ -29,8 +35,8 @@ Class AdminController
 
     public function editArticle()
     {
-        $postRepository = new PostRepository();
-        $post = $postRepository->find(1);
+        $postRepository = new PostRepository($this->db);
+        /* $post = $postRepository->find(1); */
 
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post,
@@ -51,15 +57,16 @@ Class AdminController
 
     public function showComments()
     {
-        $postRepository = new PostRepository();
-        $post = $postRepository->find(1);
 
-        $commentRepository = new CommentRepository();
+        $postRepository = new PostRepository($this->db);
+        /* $post = $postRepository->find(1); */
+
+        $commentRepository = new CommentRepository($this->db);
         $comments = $commentRepository->findAll();
 
         return $this->twig->render('admin/comments.html.twig', [
-            'comments' => $comments,
-            'post' => $post
+            'post' => $post,
+            'comments' => $comments
         ]);
     }
 

@@ -55,12 +55,12 @@
                     <h3>{{ comments|length }} commentaire(s)</h3>
                     {% for comment in comments %}
                         <div class="comment mt-4 background-gray">
-                            <p class="font-weight-bold">{{ comment.author }} 
+                            <p class="font-weight-bold">{{ comment.author.firstName }} {{ comment.author.lastName }}
                                 <small class="text-muted ml-2">
                                     {% if comment.updatedAt %}
-                                        modifié le {{ comment.updatedAt|date('d-m-Y à H:i:s') }}
+                                        modifié le {{ comment.updatedAt|date('d m Y à H:i:s') }}
                                     {% else %}
-                                        posté le {{ comment.createdAt|date('d-m-Y à H:i:s') }}
+                                        posté le {{ comment.createdAt|date('d m Y à H:i:s') }}
                                     {% endif %}
                                 </small>
                             </p>

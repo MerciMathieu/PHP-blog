@@ -2,11 +2,12 @@
 
 namespace App\Classes;
 
+use PDO;
 use Exception;
 
 class Database 
 {
-    public function connect()
+    public static function connect()
     {
         $db = new PDO
         (
