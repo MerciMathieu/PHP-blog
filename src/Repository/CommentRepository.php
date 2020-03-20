@@ -18,13 +18,15 @@ class CommentRepository
         $this->pdo = $pdo;
     }
 
-    public function findAll(): array
+    public function findAllByPostId($id): array
     {
-        $req = $this->pdo->prepare("SELECT c.content, c.createdAt, c.updatedAt, c.isValidated, 
-                                           u.firstName, u.lastName 
+        $req = $this->pdo->prepare("SELECT c.id, c.content, c.createdAt, c.updatedAt, c.isValidated, 
+                                           u.firstName, u.lastName
                                     FROM   comment c
                                     JOIN   user u
-                                    ON     c.userId = u.id");
+                                    ON     c.userId = u.id
+                                    WHERE  c.postId = $id"
+                                );
         $req->execute();
         
         $commentsArrayFromDb = $req->fetchAll();
@@ -38,13 +40,13 @@ class CommentRepository
             );
 
             $comment = new Comment(
+                $commentFromDb['id'],
                 $author,
                 $commentFromDb['content'],
                 new \DateTime($commentFromDb['createdAt']),
                 new \DateTime($commentFromDb['updatedAt']),
                 $commentFromDb['isValidated']
             );
-            
             $comments[] = $comment;
         }
         return $comments;

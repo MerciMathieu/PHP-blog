@@ -37,12 +37,14 @@ Class Comment
      */
     private $isValidated;
     
-    public function __construct( User $author, 
+    public function __construct( int $id,
+                                 User $author, 
                                  string $content, 
                                  \DateTime $createdAt, 
                                  \DateTime $updatedAt = null, 
                                  bool $isValidated)
     {
+        $this->id = $id;
         $this->author = $author;
         $this->content = $content;
         $this->createdAt = $createdAt;
