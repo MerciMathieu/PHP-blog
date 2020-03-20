@@ -34,16 +34,16 @@ Class BlogController
         ]);
     }
 
-    public function showPost() 
+    public function showPost($id) 
     {  
-        /* $postRepository = new PostRepository($this->db);
-        $post = $postRepository->find(1); */
+        $postRepository = new PostRepository($this->db);
+        $post = $postRepository->findOneById($id);
 
         $commentRepository = new CommentRepository($this->db);
         $comments = $commentRepository->findAll();
-
+        
         return $this->twig->render('blog/showpost.html.twig', [
-            /* 'post' => $post, */
+            'post' => $post,
             'comments' => $comments
         ]);
     }

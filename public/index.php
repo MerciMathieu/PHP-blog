@@ -30,7 +30,10 @@ if (isset($_GET['action'])) {
             echo $blogController->index();
         break;
         case "post":
-            echo $blogController->showPost();
+            if ($_GET['id']) {
+                $id = $_GET['id'];
+            }
+            echo $blogController->showPost($id);
         break;
         case "admin":
             echo $adminController->index();

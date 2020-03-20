@@ -45,6 +45,7 @@ Class Post {
 
 
     public function __construct( 
+                                int $id,
                                 string $title, 
                                 string $intro,
                                 string $content,
@@ -53,6 +54,7 @@ Class Post {
                                 string $imageUrl = null,
                                 User $author)
     {
+        $this->id = $id;
         $this->title = $title;
         $this->intro = $intro;
         $this->content = $content;

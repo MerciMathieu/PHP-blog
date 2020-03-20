@@ -19,7 +19,7 @@ class PostRepository
     
     public function findAll(): array
     {
-        $req = $this->pdo->prepare("SELECT p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
+        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
                                            u.firstName,u.lastName
                                     FROM   post p
                                     JOIN   user u
@@ -29,12 +29,13 @@ class PostRepository
         $postsArrayFromDb = $req->fetchAll();
         $posts = [];
         foreach ($postsArrayFromDb as $postFromDb) {
-
+            
             $author = new User(
                 $postFromDb['firstName'],
                 $postFromDb['lastName']
             );
             $post = new Post(
+                $postFromDb['id'],
                 $postFromDb['title'],
                 $postFromDb['intro'],
                 $postFromDb['content'],
@@ -48,7 +49,35 @@ class PostRepository
         return $posts;
     }
 
-    public function find(int $id): Post
+    public function findOneById(int $id): Post
     {
+        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
+                                           u.firstName,u.lastName
+                                    FROM   post p
+                                    JOIN   user u
+                                    ON     p.userId = u.id
+                                    WHERE  p.id = $id"
+                                    );
+        $req->execute();
+        $postFromDb = $req->fetch();
+
+        $author = new User(
+            $postFromDb['firstName'],
+            $postFromDb['lastName']
+        );
+
+        $post = new Post(
+            $postFromDb['id'],
+            $postFromDb['title'],
+            $postFromDb['intro'],
+            $postFromDb['content'],
+            new \DateTime($postFromDb['createdAt']),
+            new \DateTime($postFromDb['updatedAt']),
+            $postFromDb['imageUrl'],
+            $author
+        );
+
+
+        return $post;
     }
 }

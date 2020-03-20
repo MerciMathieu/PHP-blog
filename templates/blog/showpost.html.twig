@@ -15,7 +15,7 @@
             <p class="chapo font-weight-bold">{{ post.intro }}</p>
             <p>
                 <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>
-                    Publié par {{ post.author }}
+                    Publié par {{ post.author.firstName }} {{ post.author.lastName }}
                 </small>
                 <small class="text-muted text-center ml-4"><i class="far fa-clock mr-2"></i>
                     {% if post.updatedAt %}
