@@ -55,14 +55,13 @@ Class AdminController
         
     }
 
-    public function showComments()
+    public function showCommentsFromPost($id)
     {
-
         $postRepository = new PostRepository($this->db);
-        /* $post = $postRepository->find(1); */
+        $post = $postRepository->findOneById($id);
 
         $commentRepository = new CommentRepository($this->db);
-        $comments = $commentRepository->findAll();
+        $comments = $commentRepository->findAllByPostId($id);
 
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,

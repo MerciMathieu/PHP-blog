@@ -36,12 +36,34 @@ if (isset($_GET['path'])) {
             echo $blogController->showPost($id);
         break;
         case "admin":
-            if (isset($_GET['action']) && $_GET['action'] === 'edit') {
-                if (isset($_GET['class']) && $_GET['class'] === 'post') {
-                    if (isset($_GET['id'])) {
-                        $id = $_GET['id'];
-                        echo $adminController->editPostForm($id);
-                    }
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'edit':
+                        if (isset($_GET['class']) && $_GET['class'] === 'post') {
+                            if (isset($_GET['id'])) {
+                                $id = $_GET['id'];
+                                echo $adminController->editPostForm($id);
+                            } else {
+                                echo $adminController->index();
+                            }
+                        }
+                        break;
+                    case 'moderatecomments':
+                        if (isset($_GET['class']) && $_GET['class'] === 'post') {
+                            if (isset($_GET['id'])) {
+                                $id = $_GET['id'];
+                                echo $adminController->showCommentsFromPost($id);
+                            } else {
+                                echo $adminController->index();
+                            }
+                        } else {
+                            var_dump("la classe n'existe pas");
+                        }
+                        break;
+                    
+                    default:
+                        echo $adminController->index();
+                        break;
                 }
             } else {
                 echo $adminController->index();
@@ -49,9 +71,6 @@ if (isset($_GET['path'])) {
         break;
         case "admin/post/add":
             echo $adminController->addPostForm();
-        break;
-        case "admin/post/comments":
-            echo $adminController->showComments();
         break;
         default:
             echo $homeController->index();
