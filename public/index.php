@@ -21,8 +21,8 @@ $blogController = new BlogController($twig, $db);
 $adminController = new AdminController($twig, $db);
 
 
-if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
+if (isset($_GET['path'])) {
+    switch ($_GET['path']) {
         case "home":
             echo $homeController->index();
         break;
@@ -30,21 +30,27 @@ if (isset($_GET['action'])) {
             echo $blogController->index();
         break;
         case "post":
-            if ($_GET['id']) {
+            if (isset($_GET['id'])) {
                 $id = $_GET['id'];
             }
             echo $blogController->showPost($id);
         break;
         case "admin":
-            echo $adminController->index();
+            if (isset($_GET['action']) && $_GET['action'] === 'edit') {
+                if (isset($_GET['class']) && $_GET['class'] === 'post') {
+                    if (isset($_GET['id'])) {
+                        $id = $_GET['id'];
+                        echo $adminController->editPostForm($id);
+                    }
+                }
+            } else {
+                echo $adminController->index();
+            }
         break;
-        case "admin/article/edit":
-            echo $adminController->editArticle();
+        case "admin/post/add":
+            echo $adminController->addPostForm();
         break;
-        case "admin/article/add":
-            echo $adminController->addArticle();
-        break;
-        case "admin/article/comments":
+        case "admin/post/comments":
             echo $adminController->showComments();
         break;
         default:

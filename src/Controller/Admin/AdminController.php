@@ -33,17 +33,17 @@ Class AdminController
         ]);
     }
 
-    public function editArticle()
+    public function editPostForm($id)
     {
         $postRepository = new PostRepository($this->db);
-        /* $post = $postRepository->find(1); */
+        $post = $postRepository->findOneById($id);
 
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post,
         ]);
     }
 
-    public function addArticle()
+    public function addPostForm()
     {
         return $this->twig->render('admin/add.html.twig', [
 

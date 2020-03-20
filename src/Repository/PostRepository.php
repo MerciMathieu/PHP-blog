@@ -76,8 +76,7 @@ class PostRepository
             $postFromDb['imageUrl'],
             $author
         );
-
-
+        
         return $post;
     }
 }
