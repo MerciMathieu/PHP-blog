@@ -5,6 +5,11 @@ namespace App\Entity;
 Class User 
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $firstName;
@@ -34,14 +39,11 @@ Class User
      */
     private $isAdmin;
 
-    public function __construct(string $firstName, string $lastName, string $email, string $password, bool $isAdmin)
+    public function __construct(string $firstName, 
+                                string $lastName)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->email = $email;
-        $this->password = $password;
-        $this->createdAt = new \DateTime();
-        $this->isAdmin = $isAdmin;
     }
 
     public function getFirstName(): string
@@ -84,12 +86,12 @@ Class User
         $this->password = $password;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
     }
@@ -104,4 +106,8 @@ Class User
         $this->isAdmin = $isAdmin;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

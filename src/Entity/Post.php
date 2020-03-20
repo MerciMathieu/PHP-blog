@@ -3,14 +3,13 @@
 namespace App\Entity;
 
 Class Post {
-
     /**
      * @var int
      */
     private $id;
 
     /**
-     * @var string
+     * @var User
      */
     private $author;
     
@@ -40,18 +39,27 @@ Class Post {
     private $content;
 
     /**
-     * @var
+     * @var string
      */
     private $imageUrl;
 
 
-    public function __construct(string $author, string $title, string $intro, string $content)
+    public function __construct( 
+                                string $title, 
+                                string $intro,
+                                string $content,
+                                \DateTime $createdAt,
+                                \DateTime $updatedAt = null,
+                                string $imageUrl = null,
+                                User $author)
     {
-        $this->author = $author;
         $this->title = $title;
         $this->intro = $intro;
         $this->content = $content;
-        $this->createdAt = new \DateTime();
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+        $this->imageUrl = $imageUrl;
+        $this->author = $author;
     }
 
     public function getTitle(): string
@@ -84,7 +92,7 @@ Class Post {
         $this->createdAt = $createdAt;
     }
  
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
@@ -104,12 +112,12 @@ Class Post {
         $this->content = $content;
     }
  
-    public function getAuthor(): string
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author)
+    public function setAuthor(User $author)
     {
         $this->author = $author;
     }

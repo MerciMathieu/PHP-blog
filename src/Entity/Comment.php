@@ -2,13 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
+
 Class Comment 
 {
-    
+
+    /**
+     * @var int
+     */
+    private $id;
+ 
     /**
      * @var string
      */
     private $author;
+
+    /**
+     * @var string
+     */
+    private $content;
 
     /**
      * @var \DateTime
@@ -21,23 +33,24 @@ Class Comment
     private $updatedAt;
 
     /**
-     * @var string
+     * @var bool
      */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $status;
+    private $isValidated;
     
-    public function __construct(string $author, string $content)
+    public function __construct( User $author, 
+                                 string $content, 
+                                 \DateTime $createdAt, 
+                                 \DateTime $updatedAt = null, 
+                                 bool $isValidated)
     {
         $this->author = $author;
         $this->content = $content;
-        $this->createdAt = new \DateTime();
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+        $this->isValidated = $isValidated;
     }
 
-    public function getUpdatedAt()
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
@@ -57,14 +70,14 @@ Class Comment
         $this->content = $content;
     }
 
-    public function getStatus(): string
+    public function getIsValidated(): bool
     {
-        return $this->status;
+        return $this->isValidated;
     }
 
-    public function setStatus(string $status)
+    public function setIsValidated(bool $isValidated)
     {
-        $this->status = $status;
+        $this->isValidated = $isValidated;
     }
 
     public function getCreatedAt(): \DateTime
@@ -77,13 +90,18 @@ Class Comment
         $this->createdAt = $createdAt;
     }
 
-    public function getAuthor(): string
+    public function getAuthor(): User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author)
+    public function setAuthor(User $author)
     {
         $this->author = $author;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 }

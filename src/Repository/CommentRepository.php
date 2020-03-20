@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Comment;
 
 class CommentRepository
@@ -17,35 +18,35 @@ class CommentRepository
         $this->pdo = $pdo;
     }
 
-    public function findAll(): Array
+    public function findAll(): array
     {
-        $req = $this->pdo->prepare("SELECT * from comment");
+        $req = $this->pdo->prepare("SELECT c.content, c.createdAt, c.updatedAt, c.isValidated, 
+                                           u.firstName, u.lastName 
+                                    FROM   comment c
+                                    JOIN   user u
+                                    ON     c.userId = u.id");
         $req->execute();
         
-        $commentsArray = $req->fetchAll();
-
-        /* $comment1 = new Comment(
-            "Eustache Bourque",
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, perspiciatis!"
-        );
-
-        $comment2 = new Comment(
-            "Aubrette Pirouet",
-            "Excepturi perferendis quos, eligendi officia velit obcaecati."
-        ); 
-
-        $comments = array($comment1, $comment2);*/
+        $commentsArrayFromDb = $req->fetchAll();
 
         $comments = [];
-        foreach ($commentsArray as $commentArray) {
-            $comment = new Comment(
-                "Eustache Bourque",
-                $commentArray['content']
+        foreach ($commentsArrayFromDb as $commentFromDb) {
+
+            $author = new User(
+                $commentFromDb['firstName'],
+                $commentFromDb['lastName']
             );
 
+            $comment = new Comment(
+                $author,
+                $commentFromDb['content'],
+                new \DateTime($commentFromDb['createdAt']),
+                new \DateTime($commentFromDb['updatedAt']),
+                $commentFromDb['isValidated']
+            );
+            
             $comments[] = $comment;
         }
         return $comments;
-
     }
 }
