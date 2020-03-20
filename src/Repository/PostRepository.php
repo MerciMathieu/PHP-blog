@@ -39,12 +39,13 @@ class PostRepository
         $post = new Post
         (
             "Mathieu.D",
-            "Ceci est mon article", 
+            "Ceci est mon article dynamique", 
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, doloribus officia at quisquam tempore.", 
             "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.
 
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore."
         );
+        $post->setImageUrl("http://placekitten.com/g/400/400");
 
         return $post;
     }

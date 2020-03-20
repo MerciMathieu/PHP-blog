@@ -4,6 +4,7 @@ namespace App\Controller\Blog;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 
 Class BlogController
 {
@@ -12,26 +13,38 @@ Class BlogController
      */
     private $twig;
 
-    public function __construct(\Twig\Environment $twig)
+    /**
+     * @var \PDO
+     */
+    private $db;
+
+    public function __construct(\Twig\Environment $twig, \PDO $db)
     {
         $this->twig = $twig;
+        $this->db = $db;
     }
 
     public function index() 
     {
+        $postRepository = new PostRepository($this->db);
+        $posts = $postRepository->findAll();
+
         return $this->twig->render('blog/blog.html.twig', [
-        
+            'posts' => $posts,
         ]);
     }
 
-    public function show() 
-    {
+    public function showPost() 
+    {  
+        /* $postRepository = new PostRepository($this->db);
+        $post = $postRepository->find(1); */
 
-        $postRepository = new PostRepository();
-        $post = $postRepository->find(1);
+        $commentRepository = new CommentRepository($this->db);
+        $comments = $commentRepository->findAll();
 
         return $this->twig->render('blog/showpost.html.twig', [
-            'post' => $post,
+            /* 'post' => $post, */
+            'comments' => $comments
         ]);
     }
 }

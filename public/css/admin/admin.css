@@ -1,0 +1,39 @@
+table {
+    font-size: 1.8rem;
+}
+
+table tbody {
+    font-size: 1.6rem;
+}
+
+table.comments tbody td i {
+    font-size: 3rem;
+    margin: 10px;
+}
+
+.table td.actions {
+    padding-bottom: 60px;
+}
+
+.img-fluid.img-thumbnail{
+    width: 100px;
+}
+
+a {
+    font-size: 1.4rem;
+}
+
+.row {
+    margin: unset;
+}
+
+#group-author {
+    width: 49%;
+    margin-right: 1%;
+}
+
+#group-title {
+    width: 49%;
+    margin-left: 1%;
+}
+

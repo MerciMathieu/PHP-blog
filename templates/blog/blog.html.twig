@@ -12,43 +12,30 @@
     <section id="last-articles">
         <div class="container">
             <h1 class="text-center mb-5">Derniers articles</h1>
-            <div class="articles mb-5">
-                <div class="article bg-white mb-3">
-                    <div class="article-body">
-                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
-                        <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>Date de création ou de modification</small><br />
-                        <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par Mathieu Delclos</small>
-                        <div class="article-content">
-                            <img src="http://placekitten.com/g/200/200" class="mr-3 img-fluid" alt="">
-                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
+
+            {% for post in posts %}
+                <div class="articles mb-5">
+                    <div class="article bg-white mb-3">
+                        <div class="article-body">
+                            <h2 class="article-header article-title font-weight-bold mt-5 ml-4">{{ post.title }}</h2>
+                            <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>
+                                {{ post.createdAt|date('d-m-Y à H:i:s') }}
+                            </small><br />
+                            <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>
+                                Publié par {{ post.author.firstName }} {{ post.author.lastName }}
+                            </small>
+                            <div class="article-content">
+                                {% if post.imageUrl %}
+                                    <img src="{{ post.imageUrl }}" class="mr-3 img-fluid" alt="{{ post.title }}">
+                                {% endif %}
+                                <p class="article-text">{{ post.intro }}</p>
+                            </div>
+                            <a href="?action=post">Lire l'article<i class="fas fa-angle-right"></i></a>
                         </div>
-                        <a href="?action=post">Lire l'article<i class="fas fa-angle-right"></i></a>
                     </div>
                 </div>
-                <div class="article bg-white mb-3">
-                    <div class="article-body">
-                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
-                        <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>Date de création ou de modification</small><br />
-                        <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par Mathieu Delclos</small>
-                        <div class="article-content">
-                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
-                        </div>
-                        <a href="?action=post">Lire l'article<i class="fas fa-angle-right"></i></a>
-                    </div>
-                </div>
-                <div class="article bg-white mb-3">
-                    <div class="article-body">
-                        <h2 class="article-header article-title font-weight-bold mt-5 ml-4">Dark title</h2>
-                        <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>Date de création ou de modification</small><br />
-                        <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>Publié par Mathieu Delclos</small>
-                        <div class="article-content">
-                            <img src="http://placekitten.com/g/200/200" class="mr-3 img-fluid" alt="">
-                            <p class="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt itaque necessitatibus vel nostrum tenetur provident pariatur, odit tempore facilis nam totam incidunt harum, distinctio qui architecto, neque a recusandae aut. Beatae distinctio autem commodi, atque nulla, omnis quod quibusdam odit iure repellendus iusto reprehenderit molestiae doloribus officia at quisquam tempore.</p>
-                        </div>
-                        <a href="?action=post">Lire l'article<i class="fas fa-angle-right"></i></a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
+
         </div>
     </section>
     
