@@ -25,8 +25,8 @@ class CommentRepository
                                     FROM   comment c
                                     JOIN   user u
                                     ON     c.userId = u.id
-                                    WHERE  c.postId = $id"
-                                );
+                                    WHERE  c.postId = $id
+                                    ORDER BY id desc");
         $req->execute();
         
         $commentsArrayFromDb = $req->fetchAll();
@@ -40,13 +40,14 @@ class CommentRepository
             );
 
             $comment = new Comment(
-                $commentFromDb['id'],
                 $author,
-                $commentFromDb['content'],
-                new \DateTime($commentFromDb['createdAt']),
-                new \DateTime($commentFromDb['updatedAt']),
-                $commentFromDb['isValidated']
+                $commentFromDb['content']
             );
+            $comment->setId($commentFromDb['id']);
+            $comment->setCreatedAt(new \DateTime($commentFromDb['createdAt']));
+            $comment->setUpdatedAt(new \DateTime($commentFromDb['updatedAt']));
+            $comment->setIsValidated($commentFromDb['isValidated']);
+
             $comments[] = $comment;
         }
         return $comments;

@@ -21,7 +21,7 @@ $db = Database::connect();
 $postRepository = new PostRepository($db);
 $commentRepository = new CommentRepository($db);
 
-$homeController = new HomeController($twig, $postRepository, $commentRepository); 
+$homeController = new HomeController($twig); 
 $blogController = new BlogController($twig, $postRepository, $commentRepository);
 $adminController = new AdminController($twig, $postRepository, $commentRepository);
 

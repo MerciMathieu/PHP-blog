@@ -16,8 +16,6 @@ Class HomeController
 
     public function index()
     {
-        return $this->twig->render('homepage/homepage.html.twig', [
-            
-        ]);
+        return $this->twig->render('homepage/homepage.html.twig');
     }
 }

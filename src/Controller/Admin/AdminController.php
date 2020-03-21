@@ -34,7 +34,6 @@ Class AdminController
 
     public function index() 
     {
-        
         $posts = $this->postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
@@ -58,6 +57,8 @@ Class AdminController
 
     public function insertPost()
     {
+        $urlRedirect = '?path=admin';
+
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
@@ -72,7 +73,7 @@ Class AdminController
 
         $postId = $this->postRepository->insert($post);   
 
-        header("Location: /");
+        header("Location: $urlRedirect");
     }
 
     public function showCommentsFromPost($id)

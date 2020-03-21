@@ -23,7 +23,9 @@ class PostRepository
                                            u.firstName,u.lastName
                                     FROM   post p
                                     JOIN   user u
-                                    ON     p.userId = u.id");
+                                    ON     p.userId = u.id
+                                    ORDER BY id desc"
+                                );
         $req->execute();
         
         $postsArrayFromDb = $req->fetchAll();
