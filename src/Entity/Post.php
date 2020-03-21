@@ -44,22 +44,16 @@ Class Post {
     private $imageUrl;
 
 
-    public function __construct( 
-                                int $id,
+    public function __construct(
                                 string $title, 
                                 string $intro,
                                 string $content,
-                                \DateTime $createdAt,
-                                \DateTime $updatedAt = null,
                                 string $imageUrl = null,
-                                User $author)
+                                User $author = null)
     {
-        $this->id = $id;
         $this->title = $title;
         $this->intro = $intro;
         $this->content = $content;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
         $this->imageUrl = $imageUrl;
         $this->author = $author;
     }
@@ -137,5 +131,10 @@ Class Post {
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 }

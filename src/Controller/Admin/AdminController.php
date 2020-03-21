@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 
@@ -13,20 +14,28 @@ Class AdminController
     private $twig;
 
     /**
-     * @var \PDO
+     * @var PostRepository
      */
-    private $db;
+    private $postRepository;
 
-    public function __construct(\Twig\Environment $twig, \PDO $db)
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    public function __construct(\Twig\Environment $twig, 
+                                 PostRepository $postRepository, 
+                                 CommentRepository $commentRepository)
     {
         $this->twig = $twig;
-        $this->db = $db;
+        $this->postRepository = $postRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     public function index() 
     {
-        $postRepository = new PostRepository($this->db);
-        $posts = $postRepository->findAll();
+        
+        $posts = $this->postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts
@@ -35,8 +44,7 @@ Class AdminController
 
     public function editPostForm($id)
     {
-        $postRepository = new PostRepository($this->db);
-        $post = $postRepository->findOneById($id);
+        $post = $this->postRepository->findOneById($id);
 
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post,
@@ -45,23 +53,32 @@ Class AdminController
 
     public function addPostForm()
     {
-        return $this->twig->render('admin/add.html.twig', [
-
-        ]);
+        return $this->twig->render('admin/add.html.twig');
     }
 
-    public function deleteArticle()
+    public function insertPost()
     {
-        
+        $title = $_POST['title'];
+        $intro = $_POST['intro'];
+        $content = $_POST['content'];
+        $image = $_POST['image'];
+
+        $post = new Post(
+            $title,
+            $intro,
+            $content,
+            $image
+        );
+
+        $postId = $this->postRepository->insert($post);   
+
+        header("Location: /");
     }
 
     public function showCommentsFromPost($id)
     {
-        $postRepository = new PostRepository($this->db);
-        $post = $postRepository->findOneById($id);
-
-        $commentRepository = new CommentRepository($this->db);
-        $comments = $commentRepository->findAllByPostId($id);
+        $post = $this->postRepository->findOneById($id);
+        $comments = $this->commentRepository->findAllByPostId($id);
 
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,

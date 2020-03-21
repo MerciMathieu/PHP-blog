@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Classes\Database;
+use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
@@ -16,10 +18,24 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 
 $db = Database::connect();
 
-$homeController = new HomeController($twig, $db); 
-$blogController = new BlogController($twig, $db);
-$adminController = new AdminController($twig, $db);
+$postRepository = new PostRepository($db);
+$commentRepository = new CommentRepository($db);
 
+$homeController = new HomeController($twig, $postRepository, $commentRepository); 
+$blogController = new BlogController($twig, $postRepository, $commentRepository);
+$adminController = new AdminController($twig, $postRepository, $commentRepository);
+
+
+/* A REFACTORISEEEEER */
+
+/* if ($_GET['action'] === 'index') {
+    echo $homeController->index();
+}
+
+if ($_GET['action'] === 'showpost') {
+    $id = $_GET['id'];
+    echo $blogController->showPost($id);
+} */
 
 if (isset($_GET['path'])) {
     switch ($_GET['path']) {
@@ -60,6 +76,16 @@ if (isset($_GET['path'])) {
                             var_dump("la classe n'existe pas");
                         }
                         break;
+                    case 'add':
+                        if (isset($_GET['class']) && $_GET['class'] === 'post') {
+                            if (isset($_POST['submit'])) {
+                                echo $adminController->insertPost();
+                            }
+                            echo $adminController->addPostForm();
+                        } else {
+                            var_dump("la classe n'existe pas");
+                        }
+                        break;
                     
                     default:
                         echo $adminController->index();
@@ -68,9 +94,6 @@ if (isset($_GET['path'])) {
             } else {
                 echo $adminController->index();
             }
-        break;
-        case "admin/post/add":
-            echo $adminController->addPostForm();
         break;
         default:
             echo $homeController->index();

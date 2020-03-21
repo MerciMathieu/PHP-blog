@@ -7,16 +7,16 @@
 {% endblock %}
 
 {% block content %}
-    <section id="article-edit">
+    <section action="" id="article-edit">
         <div class="container">
             <div class="text-center mb-5">
                 <a class="" href="?path=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
             <h1 class="text-center mb-5">Ajouter un article</h1>
-            <form action="" method="post" class="">
+            <form method="post">
                 <div class="form-group">
                     <label for="title">Titre:</label>
-                    <input type="text" class="form-control" name="title" id="title" placeholder="Ajouter un titre" />
+                    <input type="text" class="form-control" name="title" id="title" placeholder="Ajouter un titre" required/>
                 </div>
                 <div class="form-group">
                     <label for="image">Image(url):</label>
@@ -24,14 +24,14 @@
                 </div>
                 <div class="form-group">
                     <label for="intro">Intro:</label>
-                    <textarea type="text" class="form-control" name="intro" id="intro" placeholder="Ajouter une intro à votre article" rows="2"></textarea>
+                    <textarea type="text" class="form-control" name="intro" id="intro" placeholder="Ajouter une intro à votre article" rows="2" required></textarea>
                 </div>
                 <div class="form-group">
                     <label for="content">Contenu:</label>
-                    <textarea type="text" class="form-control" name="content" id="content" placeholder="Contenu de votre article" rows="10"></textarea>
+                    <textarea type="text" class="form-control" name="content" id="content" placeholder="Contenu de votre article" rows="10" required></textarea>
                 </div>
                 <div class="text-right mb-5">
-                    <button type="submit" class="button-link w-100">Valider</button>
+                    <button type="submit" name="submit" class="button-link w-100">Valider</button>
                 </div>
             </form>
         </div>

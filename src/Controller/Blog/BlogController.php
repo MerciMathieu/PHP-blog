@@ -14,20 +14,27 @@ Class BlogController
     private $twig;
 
     /**
-     * @var \PDO
+     * @var PostRepository
      */
-    private $db;
+    private $postRepository;
 
-    public function __construct(\Twig\Environment $twig, \PDO $db)
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    public function __construct(\Twig\Environment $twig, 
+                                 PostRepository $postRepository, 
+                                 CommentRepository $commentRepository)
     {
         $this->twig = $twig;
-        $this->db = $db;
+        $this->postRepository = $postRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     public function index() 
     {
-        $postRepository = new PostRepository($this->db);
-        $posts = $postRepository->findAll();
+        $posts = $this->postRepository->findAll();
 
         return $this->twig->render('blog/blog.html.twig', [
             'posts' => $posts,
@@ -36,11 +43,9 @@ Class BlogController
 
     public function showPost($id) 
     {  
-        $postRepository = new PostRepository($this->db);
-        $post = $postRepository->findOneById($id);
+        $post = $this->postRepository->findOneById($id);
 
-        $commentRepository = new CommentRepository($this->db);
-        $comments = $commentRepository->findAllByPostId($id);
+        $comments = $this->commentRepository->findAllByPostId($id);
 
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,

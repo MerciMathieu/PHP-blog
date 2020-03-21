@@ -35,15 +35,15 @@ class PostRepository
                 $postFromDb['lastName']
             );
             $post = new Post(
-                $postFromDb['id'],
                 $postFromDb['title'],
                 $postFromDb['intro'],
                 $postFromDb['content'],
-                new \DateTime($postFromDb['createdAt']),
-                new \DateTime($postFromDb['updatedAt']),
                 $postFromDb['imageUrl'],
                 $author
             );
+            $post->setId($postFromDb['id']);
+            $post->setCreatedAt(new \DateTime($postFromDb['createdAt']));
+            $post->setUpdatedAt(new \DateTime($postFromDb['updatedAt']));
             $posts[] = $post;
         }
         return $posts;
@@ -67,16 +67,41 @@ class PostRepository
         );
 
         $post = new Post(
-            $postFromDb['id'],
             $postFromDb['title'],
             $postFromDb['intro'],
             $postFromDb['content'],
-            new \DateTime($postFromDb['createdAt']),
-            new \DateTime($postFromDb['updatedAt']),
             $postFromDb['imageUrl'],
             $author
         );
+        $post->setId($postFromDb['id']);
+        $post->setCreatedAt(new \DateTime($postFromDb['createdAt']));
+        $post->setUpdatedAt(new \DateTime($postFromDb['updatedAt']));
         
         return $post;
+    }
+
+    public function insert(Post $post): int
+    {
+        
+        $sql = "INSERT INTO post (title, intro, content, imageUrl) 
+                VALUES (:title, :intro, :content, :imageUrl)";
+
+        $req = $this->pdo->prepare($sql);
+
+        $title = $post->getTitle();
+        $intro = $post->getIntro();
+        $content = $post->getContent();
+        $image = $post->getImageUrl();
+
+        $req->bindParam('title', $title);
+        $req->bindParam('intro', $intro);
+        $req->bindParam('content', $content);
+        $req->bindParam('imageUrl', $image);
+
+        $req->execute();
+
+        /* RECUPERER LA DERNIERE ENTREE EN BASE ( ID ) 
+        POUR RENVOYER VERS LA PAGE DE L ARTICLE INSERE */
+        return 1;
     }
 }
