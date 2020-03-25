@@ -45,14 +45,28 @@ Class AdminController
 
     public function addArticle()
     {
-        return $this->twig->render('admin/add.html.twig', [
-
-        ]);
+        return $this->twig->render('admin/add.html.twig');
     }
 
-    public function deleteArticle()
+    public function insertArticle()
     {
-        
+        $urlRedirect = '?action=admin';
+
+        $title = $_POST['title'];
+        $intro = $_POST['intro'];
+        $content = $_POST['content'];
+        $image = $_POST['image'];
+
+        $post = new Post(
+            $title,
+            $intro,
+            $content,
+            $image
+        );
+
+        $postId = $this->postRepository->insert($post);   
+
+        header("Location: $urlRedirect");
     }
 
     public function showComments()

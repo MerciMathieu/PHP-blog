@@ -7,47 +7,63 @@ use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
 
+/**** TWIG ****/
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
 $twig = new \Twig\Environment($loader, [
     'debug' => true,
     'auto_reload' => true
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
+/**** /TWIG ****/
 
+/**** Database ****/
 $db = Database::connect();
+/*****************/
 
-$homeController = new HomeController($twig, $db); 
-$blogController = new BlogController($twig, $db);
-$adminController = new AdminController($twig, $db);
+/**** Repositories ****/
+$postRepository = new PostRepository($db);
+$commentRepository = new CommentRepository($db);
+/**** /Repositories ****/
+
+/**** Controllers ****/
+$homeController = new HomeController($twig); 
+$blogController = new BlogController($twig, $postRepository, $commentRepository);
+$adminController = new AdminController($twig, $postRepository, $commentRepository);
+/**** /Controllers ****/
 
 
 if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-        case "home":
-            echo $homeController->index();
-        break;
-        case "blog":
-            echo $blogController->index();
-        break;
-        case "post":
-            echo $blogController->showPost();
-        break;
-        case "admin":
-            echo $adminController->index();
-        break;
-        case "admin/article/edit":
-            echo $adminController->editArticle();
-        break;
-        case "admin/article/add":
-            echo $adminController->addArticle();
-        break;
-        case "admin/article/comments":
-            echo $adminController->showComments();
-        break;
-        default:
-            echo $homeController->index();
-        break;
+    if ($_GET['action'] === 'index') {
+        echo $homeController->index();
     }
-} else { 
+    elseif ($_GET['action'] === 'blog') {
+        echo $blogController->index();
+    }
+    elseif ($_GET['action'] === 'showpost') {
+        $id = $_GET['id'];
+        echo $blogController->showPost($id);
+    }
+    elseif ($_GET['action'] === 'admin') {
+        echo $adminController->index();
+    }
+    elseif ($_GET['action'] === 'editpost') {
+        $id = $_GET['id'];
+        echo $adminController->editPostForm($id);
+    }
+    elseif ($_GET['action'] === 'moderate-post-comments') {
+        $id = $_GET['id'];
+        echo $adminController->showCommentsFromPost($id);
+    }
+    elseif ($_GET['action'] === 'addpost') {
+        if (isset($_POST['submit'])) {
+            echo $adminController->insertPost();
+        }
+        echo $adminController->addPostForm();
+    }
+    else { 
+        echo $homeController->index();
+    }
+}
+else { 
     echo $homeController->index();
 }
