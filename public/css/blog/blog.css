@@ -13,6 +13,7 @@
 
 .articles .article-content img {
     float: left;
+    max-width: 450px;
 }
 
 .articles .article-content img p {

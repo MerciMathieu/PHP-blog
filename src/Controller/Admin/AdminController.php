@@ -57,7 +57,7 @@ Class AdminController
 
     public function insertPost()
     {
-        $urlRedirect = '?path=admin';
+        $urlRedirect = '?action=admin';
 
         $title = $_POST['title'];
         $intro = $_POST['intro'];
