@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Classes\Database;
+use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
@@ -31,6 +33,9 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository)
 $adminController = new AdminController($twig, $postRepository, $commentRepository);
 /**** /Controllers ****/
 
+$homeController = new HomeController($twig); 
+$blogController = new BlogController($twig, $postRepository, $commentRepository);
+$adminController = new AdminController($twig, $postRepository, $commentRepository);
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] === 'index') {

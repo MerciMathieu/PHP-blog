@@ -37,25 +37,18 @@ Class Comment
      */
     private $isValidated;
     
-    public function __construct( User $author, 
-                                 string $content, 
-                                 \DateTime $createdAt, 
-                                 \DateTime $updatedAt = null, 
-                                 bool $isValidated)
+    public function __construct(string $content, User $author = null)
     {
-        $this->author = $author;
         $this->content = $content;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
-        $this->isValidated = $isValidated;
+        $this->author = $author;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }
@@ -103,5 +96,10 @@ Class Comment
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 }

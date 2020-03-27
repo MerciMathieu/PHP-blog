@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 
@@ -13,45 +14,49 @@ Class AdminController
     private $twig;
 
     /**
-     * @var \PDO
+     * @var PostRepository
      */
-    private $db;
+    private $postRepository;
 
-    public function __construct(\Twig\Environment $twig, \PDO $db)
+    /**
+     * @var CommentRepository
+     */
+    private $commentRepository;
+
+    public function __construct(\Twig\Environment $twig, 
+                                 PostRepository $postRepository, 
+                                 CommentRepository $commentRepository)
     {
         $this->twig = $twig;
-        $this->db = $db;
+        $this->postRepository = $postRepository;
+        $this->commentRepository = $commentRepository;
     }
 
     public function index() 
     {
-        $postRepository = new PostRepository($this->db);
-        $posts = $postRepository->findAll();
+        $posts = $this->postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts
         ]);
     }
 
-    public function editArticle()
+    public function editPostForm($id)
     {
-        $postRepository = new PostRepository($this->db);
-        /* $post = $postRepository->find(1); */
+        $post = $this->postRepository->findOneById($id);
 
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post,
         ]);
     }
 
-    public function addArticle()
+    public function addPostForm()
     {
         return $this->twig->render('admin/add.html.twig');
     }
 
-    public function insertArticle()
+    public function insertPost()
     {
-        $urlRedirect = '?action=admin';
-
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
@@ -63,20 +68,13 @@ Class AdminController
             $content,
             $image
         );
-
         $postId = $this->postRepository->insert($post);   
-
-        header("Location: $urlRedirect");
     }
 
-    public function showComments()
+    public function showCommentsFromPost($id)
     {
-
-        $postRepository = new PostRepository($this->db);
-        /* $post = $postRepository->find(1); */
-
-        $commentRepository = new CommentRepository($this->db);
-        $comments = $commentRepository->findAll();
+        $post = $this->postRepository->findOneById($id);
+        $comments = $this->commentRepository->findAllByPostId($id);
 
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,

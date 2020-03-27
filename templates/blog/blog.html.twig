@@ -19,10 +19,14 @@
                         <div class="article-body">
                             <h2 class="article-header article-title font-weight-bold mt-5 ml-4">{{ post.title }}</h2>
                             <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>
-                                {{ post.createdAt|date('d-m-Y à H:i:s') }}
+                                {% if post.updatedAt %}
+                                    Modifié le {{ post.updatedAt|date('d-m-Y à H:i:s') }}
+                                {% else %}
+                                    Publié le {{ post.createdAt|date('d-m-Y à H:i:s') }}
+                                {% endif %}
                             </small><br />
                             <small class="text-muted text-center ml-4"><i class="fas fa-user mr-2 mb-5"></i>
-                                Publié par {{ post.author.firstName }} {{ post.author.lastName }}
+                                Par {{ post.author.firstName }} {{ post.author.lastName }}
                             </small>
                             <div class="article-content">
                                 {% if post.imageUrl %}
