@@ -41,46 +41,59 @@ Class AdminController
         ]);
     }
 
-    public function editPostForm($id)
-    {
-        $post = $this->postRepository->findOneById($id);
-
-        return $this->twig->render('admin/edit.html.twig', [
-            'post' => $post,
-        ]);
-    }
-
     public function addPostForm()
     {
         return $this->twig->render('admin/add.html.twig');
     }
-
+    
     public function insertPost()
     {
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
         $image = $_POST['image'];
-
-        $post = new Post(
+        
+        $postOBject = new Post(
             $title,
             $intro,
             $content,
             $image
         );
-        $postId = $this->postRepository->insert($post);   
+        $post = $this->postRepository->insert($postObject);   
     }
 
+    public function editPostForm($id)
+    {
+        $post = $this->postRepository->findOneById($id);
+
+        return $this->twig->render('admin/edit.html.twig', [
+            'post' => $post
+        ]);
+    }
+
+    public function editPost($id)
+    {
+        $postRepository = $this->postRepository;
+        $post = $postRepository->findOneById($id);
+        $postRepository->edit($post);
+    }
+
+    public function deletePost($id)
+    {
+        $postRepository = $this->postRepository;
+        $post = $postRepository->findOneById($id);
+        $postRepository->delete($post);
+    }
+    
     public function showCommentsFromPost($id)
     {
         $post = $this->postRepository->findOneById($id);
         $comments = $this->commentRepository->findAllByPostId($id);
-
+    
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,
             'comments' => $comments
         ]);
     }
-
 }
 

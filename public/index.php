@@ -53,6 +53,9 @@ if (isset($_GET['action'])) {
     }
     elseif ($_GET['action'] === 'editpost') {
         $id = $_GET['id'];
+        if (isset($_POST['submit'])) {
+            echo $adminController->editPost($id);
+        }
         echo $adminController->editPostForm($id);
     }
     elseif ($_GET['action'] === 'moderate-post-comments') {
@@ -64,6 +67,10 @@ if (isset($_GET['action'])) {
             echo $adminController->insertPost();
         }
         echo $adminController->addPostForm();
+    }
+    elseif ($_GET['action'] === 'deletepost') {
+        $id = $_GET['id'];
+        echo $adminController->deletePost($id);
     }
     else { 
         echo $homeController->index();

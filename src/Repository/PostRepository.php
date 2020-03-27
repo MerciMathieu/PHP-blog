@@ -82,8 +82,6 @@ class PostRepository
         return $post;
     }
 
-    /* RECUPERER LA DERNIERE ENTREE EN BASE ( ID ) 
-    POUR RENVOYER VERS LA PAGE DE L ARTICLE INSERE */
     private function getLastEntryId(): int
     {
         $req = $this->pdo->prepare("SELECT MAX(id) from post");
@@ -93,7 +91,7 @@ class PostRepository
         return $lastEntryId['0'];
     }
     
-    private function redirect(): url
+    private function redirectToLastIdInserted(): url
     {
         $id = self::getLastEntryId();
         $redirect = header("Location:/?action=editpost&id=$id");
@@ -112,13 +110,47 @@ class PostRepository
         $content = $post->getContent();
         $image = $post->getImageUrl();
 
-        $req->bindParam('title', $title);
-        $req->bindParam('intro', $intro);
-        $req->bindParam('content', $content);
-        $req->bindParam('imageUrl', $image);
+        $req->execute(array(
+            'title' => $title,
+            'intro' => $intro,
+            'content' =>$content,
+            'imageUrl' => $image
+        ));
 
+        self::redirectToLastIdInserted();
+    }
+
+    public function edit(Post $post): void
+    {
+        $id = $post->getId();
+
+        $title = $_POST['title'];
+        $intro = $_POST['intro'];
+        $content = $_POST['content'];
+        $image = $_POST['image'];
+
+        $sql = "UPDATE post 
+                SET title = :title, intro = :intro, content = :content, imageUrl = :imageUrl 
+                WHERE id = $id";
+
+        $req = $this->pdo->prepare($sql);
+
+        $req->execute(array(
+            'title' => $title,
+            'intro' => $intro,
+            'content' =>$content,
+            'imageUrl' => $image
+        ));
+
+        header('Location:?action=admin');
+    }
+
+    public function delete(Post $post): void
+    {
+        $id = $post->getId();
+        $req = $this->pdo->prepare("DELETE from post WHERE id = $id");
         $req->execute();
 
-        self::redirect();
+        header('Location:?action=admin');
     }
 }
