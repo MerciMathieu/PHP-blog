@@ -16,7 +16,7 @@ class PostRepository
     {
         $this->pdo = $pdo;
     }
-    
+
     public function findAll(): array
     {
         $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
@@ -82,9 +82,26 @@ class PostRepository
         return $post;
     }
 
-    public function insert(Post $post): int
+    /* RECUPERER LA DERNIERE ENTREE EN BASE ( ID ) 
+    POUR RENVOYER VERS LA PAGE DE L ARTICLE INSERE */
+    private function getLastEntryId(): int
     {
-        
+        $req = $this->pdo->prepare("SELECT MAX(id) from post");
+        $req->execute();
+
+        $lastEntryId = $req->fetch();
+        return $lastEntryId['0'];
+    }
+    
+    private function redirect(): url
+    {
+        $id = self::getLastEntryId();
+        $redirect = header("Location:/?action=editpost&id=$id");
+        return $redirect;
+    }
+
+    public function insert(Post $post): void
+    {
         $sql = "INSERT INTO post (title, intro, content, imageUrl) 
                 VALUES (:title, :intro, :content, :imageUrl)";
 
@@ -102,8 +119,6 @@ class PostRepository
 
         $req->execute();
 
-        /* RECUPERER LA DERNIERE ENTREE EN BASE ( ID ) 
-        POUR RENVOYER VERS LA PAGE DE L ARTICLE INSERE */
-        return 1;
+        self::redirect();
     }
 }

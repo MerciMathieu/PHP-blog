@@ -57,8 +57,6 @@ Class AdminController
 
     public function insertPost()
     {
-        $urlRedirect = '?action=admin';
-
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
@@ -70,10 +68,7 @@ Class AdminController
             $content,
             $image
         );
-
         $postId = $this->postRepository->insert($post);   
-
-        header("Location: $urlRedirect");
     }
 
     public function showCommentsFromPost($id)

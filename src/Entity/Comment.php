@@ -37,19 +37,18 @@ Class Comment
      */
     private $isValidated;
     
-    public function __construct(User $author = null, 
-                                string $content)
+    public function __construct(string $content, User $author = null)
     {
-        $this->author = $author;
         $this->content = $content;
+        $this->author = $author;
     }
 
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }

@@ -88,12 +88,12 @@ Class Post {
         $this->createdAt = $createdAt;
     }
  
-    public function getUpdatedAt(): \DateTime
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTime $updatedAt)
+    public function setUpdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }
@@ -118,12 +118,12 @@ Class Post {
         $this->author = $author;
     }
 
-    public function getImageUrl(): string
+    public function getImageUrl(): ?string
     {
         return $this->imageUrl;
     }
 
-    public function setImageUrl(string $imageUrl)
+    public function setImageUrl(?string $imageUrl)
     {
         $this->imageUrl = $imageUrl;
     }
