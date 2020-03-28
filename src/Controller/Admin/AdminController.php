@@ -78,11 +78,16 @@ Class AdminController
         header("Location:/?action=admin");
     } 
 
-    public function deletePost($id)
+    public function deletePost(int $id)
     {
-        $postRepository = $this->postRepository;
-        $post = $postRepository->findOneById($id);
-        $postRepository->delete($post);
+        if (!isset($_POST['delete'])) {
+            return $this->twig->render('admin/admin.html.twig');
+        }
+        
+        $post = $this->postRepository->findOneById($id);
+        $this->postRepository->delete($post);   
+
+        header('Location:?action=admin');
     }
     
     public function showCommentsFromPost($id)
