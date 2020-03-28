@@ -3,45 +3,23 @@
 namespace App\Entity;
 
 Class Post {
-    /**
-     * @var int
-     */
-    private $id;
 
-    /**
-     * @var User
-     */
-    private $author;
+
+    private int $id;
     
-    /**
-     * @var string
-     */
-    private $title;
+    private string $title;
 
-    /**
-     * @var string
-     */
-    private $intro;
+    private string $intro;
 
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+    private string $content;
 
-    /**
-     * @var \DateTime
-     */
-    private $updatedAt;
-
-    /**
-     * @var string
-     */
-    private $content;
-
-    /**
-     * @var string
-     */
-    private $imageUrl;
+    private \DateTime $createdAt;
+    
+    private ?\DateTime $updatedAt;
+    
+    private ?string $imageUrl;
+    
+    private ?User $author;
 
 
     public function __construct(
@@ -57,6 +35,7 @@ Class Post {
         $this->imageUrl = $imageUrl;
         $this->author = $author;
     }
+
 
     public function getTitle(): string
     {

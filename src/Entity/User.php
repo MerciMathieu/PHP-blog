@@ -4,40 +4,21 @@ namespace App\Entity;
 
 Class User 
 {
-    /**
-     * @var int
-     */
-    private $id;
 
-    /**
-     * @var string
-     */
-    private $firstName;
+    private int $id;
 
-    /**
-     * @var string
-     */
-    private $lastName;
+    private string $firstName;
 
-    /**
-     * @var string
-     */
-    private $email;
+    private string $lastName;
 
-    /**
-     * @var string
-     */
-    private $password;
+    private string $email;
 
-    /**
-     * @var \DateTime
-     */
-    private $createdAt;
+    private string $password;
 
-    /**
-     * @var bool
-     */
-    private $isAdmin;
+    private \DateTime $createdAt;  
+    
+    private bool $isAdmin;
+    
 
     public function __construct(string $firstName, 
                                 string $lastName)
