@@ -80,13 +80,11 @@ Class AdminController
 
     public function deletePost(int $id)
     {
-        if (!isset($_POST['delete'])) {
-            return $this->twig->render('admin/admin.html.twig');
+        if (isset($_POST['delete'])) {
+            $post = $this->postRepository->findOneById($id);
+            $this->postRepository->delete($post);   
         }
         
-        $post = $this->postRepository->findOneById($id);
-        $this->postRepository->delete($post);   
-
         header('Location:?action=admin');
     }
     
