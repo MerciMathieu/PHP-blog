@@ -41,36 +41,58 @@ Class AdminController
         ]);
     }
 
-    public function editPostForm($id)
+    public function addPost()
     {
-        $post = $this->postRepository->findOneById($id);
-
-        return $this->twig->render('admin/edit.html.twig', [
-            'post' => $post,
-        ]);
-    }
-
-    public function addPostForm()
-    {
-        return $this->twig->render('admin/add.html.twig');
-    }
-
-    public function insertPost()
-    {
+        if (!isset($_POST['submit'])) {
+            return $this->twig->render('admin/add.html.twig');
+        }
+        
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
         $image = $_POST['image'];
-
-        $post = new Post(
+        
+        $postObject = new Post(
             $title,
             $intro,
             $content,
             $image
         );
-        $postId = $this->postRepository->insert($post);   
+        $postId = $this->postRepository->insert($postObject); 
+        
+        header("Location:/?action=editpost&id=$postId");
     }
 
+    public function editPostForm($id)
+    {
+        $post = $this->postRepository->findOneById($id);
+
+        return $this->twig->render('admin/edit.html.twig', [
+            'post' => $post
+        ]);
+    }
+
+    public function editPost($id)
+    {
+        $postRepository = $this->postRepository;
+        $post = $postRepository->findOneById($id);
+        $postRepository->edit($post);
+    }
+
+    public function deletePost($id)
+    {
+        $postRepository = $this->postRepository;
+        $post = $postRepository->findOneById($id);
+        $postRepository->delete($post);
+    }
+
+    public function deleteComment($commentId)
+    {
+        $commentRepository = $this->commentRepository;
+        $comment = $commentRepository->findOneById($commentId);
+        $commentRepository->delete($comment);
+    }
+    
     public function showCommentsFromPost($id)
     {
         $post = $this->postRepository->findOneById($id);

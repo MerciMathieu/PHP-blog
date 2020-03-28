@@ -82,25 +82,7 @@ class PostRepository
         return $post;
     }
 
-    /* RECUPERER LA DERNIERE ENTREE EN BASE ( ID ) 
-    POUR RENVOYER VERS LA PAGE DE L ARTICLE INSERE */
-    private function getLastEntryId(): int
-    {
-        $req = $this->pdo->prepare("SELECT MAX(id) from post");
-        $req->execute();
-
-        $lastEntryId = $req->fetch();
-        return $lastEntryId['0'];
-    }
-    
-    private function redirect(): url
-    {
-        $id = self::getLastEntryId();
-        $redirect = header("Location:/?action=editpost&id=$id");
-        return $redirect;
-    }
-
-    public function insert(Post $post): void
+    public function insert(Post $post): int
     {
         $sql = "INSERT INTO post (title, intro, content, imageUrl) 
                 VALUES (:title, :intro, :content, :imageUrl)";
@@ -112,13 +94,42 @@ class PostRepository
         $content = $post->getContent();
         $image = $post->getImageUrl();
 
-        $req->bindParam('title', $title);
-        $req->bindParam('intro', $intro);
-        $req->bindParam('content', $content);
-        $req->bindParam('imageUrl', $image);
+        $req->execute([
+            'title' => $title,
+            'intro' => $intro,
+            'content' =>$content,
+            'imageUrl' => $image
+        ]);
 
-        $req->execute();
+        return $this->pdo->lastInsertId();
+    }
 
-        self::redirect();
+    public function edit(Post $post): void
+    {
+        $id = $post->getId();
+
+        $title = $_POST['title'];
+        $intro = $_POST['intro'];
+        $content = $_POST['content'];
+        $image = $_POST['image'];
+
+        $sql = "UPDATE post 
+                SET title = :title, intro = :intro, content = :content, imageUrl = :imageUrl 
+                WHERE id = $id";
+
+        $req = $this->pdo->prepare($sql);
+
+        $req->execute([
+            'title' => $title,
+            'intro' => $intro,
+            'content' =>$content,
+            'imageUrl' => $image
+        ]);
+    }
+
+    public function delete(Post $post): void
+    {
+        $req = $this->pdo->prepare("DELETE from post WHERE id = :id");
+        $req->execute(['id' => $post->getId()]);
     }
 }
