@@ -12,11 +12,12 @@
             <div class="text-center mb-5">
                 <a href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
-            <h1 class="text-center mb-5">Modifier l'article 1</h1>
+            <h1 class="text-center mb-5">Modifier l'article</h1>
+            <h2>{{ post.title }}</h2>
             <form method="post">
                 <div class="form-group">
                     <label for="title">Titre:</label>
-                    <input type="text" class="form-control" name="title" id="title" value="{{ post.title|raw }}" />
+                    <input type="text" class="form-control" name="title" id="title" value="{{ post.title }}" />
                 </div>
                 <div class="form-group">
                     <label for="image">Image(url):</label>
@@ -24,11 +25,11 @@
                 </div>
                 <div class="form-group">
                     <label for="intro">Intro:</label>
-                    <textarea type="text" class="form-control" name="intro" id="intro" rows="2">{{ post.intro|raw }}</textarea>
+                    <textarea type="text" class="form-control" name="intro" id="intro" rows="2">{{ post.intro }}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="content">Contenu:</label>
-                    <textarea type="text" class="form-control" name="content" id="content" rows="10">{{ post.content|raw }}</textarea>
+                    <textarea type="text" class="form-control" name="content" id="content" rows="10">{{ post.content }}</textarea>
                 </div>
                 <div class="text-right mb-5">
                     <button type="submit" name="submit" class="button-link w-100">Valider</button>
