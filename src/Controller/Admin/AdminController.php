@@ -47,62 +47,56 @@ Class AdminController
             return $this->twig->render('admin/add.html.twig');
         }
         
-        $title = $_POST['title'];
-        $intro = $_POST['intro'];
-        $content = $_POST['content'];
-        $image = $_POST['image'];
-        
-        $postObject = new Post(
-            $title,
-            $intro,
-            $content,
-            $image
+        $post = new Post(
+            $_POST['title'],
+            $_POST['intro'],
+            $_POST['content'],
+            $_POST['image']
         );
-        $postId = $this->postRepository->insert($postObject); 
+        $postId = $this->postRepository->insert($post); 
         
         header("Location:/?action=editpost&id=$postId");
     }
 
-    public function editPostForm($id)
+    public function editPost(int $id)
     {
         $post = $this->postRepository->findOneById($id);
 
-        return $this->twig->render('admin/edit.html.twig', [
-            'post' => $post
-        ]);
-    }
+        if (!isset($_POST['submit'])) {
+            return $this->twig->render('admin/edit.html.twig', [
+                'post' => $post
+            ]);
+        }
 
-    public function editPost($id)
-    {
-        $postRepository = $this->postRepository;
-        $post = $postRepository->findOneById($id);
-        $postRepository->edit($post);
-    }
+        $post->setTitle($_POST['title']);
+        $post->setIntro($_POST['intro']);
+        $post->setContent($_POST['content']);
+        $post->setImageUrl($_POST['image']);
 
-    public function deletePost($id)
-    {
-        $postRepository = $this->postRepository;
-        $post = $postRepository->findOneById($id);
-        $postRepository->delete($post);
-    }
+        $this->postRepository->edit($post);
 
-    public function deleteComment($commentId)
+        header("Location:/?action=admin");
+    } 
+
+    public function deletePost(int $id)
     {
-        $commentRepository = $this->commentRepository;
-        $comment = $commentRepository->findOneById($commentId);
-        $commentRepository->delete($comment);
+        if (isset($_POST['delete'])) {
+            $post = $this->postRepository->findOneById($id);
+            $this->postRepository->delete($post);   
+        }
+        
+        header('Location:?action=admin');
     }
     
     public function showCommentsFromPost($id)
     {
         $post = $this->postRepository->findOneById($id);
         $comments = $this->commentRepository->findAllByPostId($id);
-
+    
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,
             'comments' => $comments
         ]);
     }
-
 }
 
