@@ -89,16 +89,11 @@ class PostRepository
 
         $req = $this->pdo->prepare($sql);
 
-        $title = $post->getTitle();
-        $intro = $post->getIntro();
-        $content = $post->getContent();
-        $image = $post->getImageUrl();
-
         $req->execute([
-            'title' => $title,
-            'intro' => $intro,
-            'content' =>$content,
-            'imageUrl' => $image
+            'title' => $post->getTitle(),
+            'intro' => $post->getIntro(),
+            'content' =>$post->getContent(),
+            'imageUrl' => $post->getImageUrl()
         ]);
 
         return $this->pdo->lastInsertId();
@@ -106,24 +101,18 @@ class PostRepository
 
     public function edit(Post $post): void
     {
-        $id = $post->getId();
-
-        $title = $_POST['title'];
-        $intro = $_POST['intro'];
-        $content = $_POST['content'];
-        $image = $_POST['image'];
-
         $sql = "UPDATE post 
                 SET title = :title, intro = :intro, content = :content, imageUrl = :imageUrl 
-                WHERE id = $id";
+                WHERE id = :id";
 
         $req = $this->pdo->prepare($sql);
 
         $req->execute([
-            'title' => $title,
-            'intro' => $intro,
-            'content' =>$content,
-            'imageUrl' => $image
+            'id' => $post->getId(),
+            'title' => $post->getTitle(),
+            'intro' => $post->getIntro(),
+            'content' =>$post->getContent(),
+            'imageUrl' => $post->getImageUrl()
         ]);
     }
 
