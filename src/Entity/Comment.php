@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\User;
@@ -13,9 +15,14 @@ Class Comment
     private $id;
  
     /**
-     * @var string
+     * @var User
      */
     private $author;
+
+    /**
+     * @var int
+     */
+    private $postId;
 
     /**
      * @var string
@@ -32,14 +39,12 @@ Class Comment
      */
     private $updatedAt;
 
-    /**
-     * @var bool
-     */
-    private $isValidated;
+    public bool $isValidated;
     
-    public function __construct(string $content, User $author = null)
+    public function __construct(string $content, int $postId, User $author = null)
     {
         $this->content = $content;
+        $this->postId = $postId;
         $this->author = $author;
     }
 
@@ -61,16 +66,6 @@ Class Comment
     public function setContent(string $content)
     {
         $this->content = $content;
-    }
-
-    public function getIsValidated(): bool
-    {
-        return $this->isValidated;
-    }
-
-    public function setIsValidated(bool $isValidated)
-    {
-        $this->isValidated = $isValidated;
     }
 
     public function getCreatedAt(): \DateTime
@@ -102,4 +97,15 @@ Class Comment
     {
         $this->id = $id;
     }
+
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId)
+    {
+        $this->postId = $postId;
+    }
+
 }

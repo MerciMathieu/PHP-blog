@@ -41,25 +41,26 @@ Class AdminController
         ]);
     }
 
-    public function addPostForm()
+    public function addPost()
     {
-        return $this->twig->render('admin/add.html.twig');
-    }
-    
-    public function insertPost()
-    {
+        if (!isset($_POST['submit'])) {
+            return $this->twig->render('admin/add.html.twig');
+        }
+        
         $title = $_POST['title'];
         $intro = $_POST['intro'];
         $content = $_POST['content'];
         $image = $_POST['image'];
         
-        $postOBject = new Post(
+        $postObject = new Post(
             $title,
             $intro,
             $content,
             $image
         );
-        $post = $this->postRepository->insert($postObject);   
+        $postId = $this->postRepository->insert($postObject); 
+        
+        header("Location:/?action=editpost&id=$postId");
     }
 
     public function editPostForm($id)
@@ -76,6 +77,22 @@ Class AdminController
         $postRepository = $this->postRepository;
         $post = $postRepository->findOneById($id);
         $postRepository->edit($post);
+    }
+    
+    public function insertPost()
+    {
+        $title = $_POST['title'];
+        $intro = $_POST['intro'];
+        $content = $_POST['content'];
+        $image = $_POST['image'];
+        
+        $postOBject = new Post(
+            $title,
+            $intro,
+            $content,
+            $image
+        );
+        $post = $this->postRepository->insert($postObject);   
     }
 
     public function deletePost($id)

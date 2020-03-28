@@ -82,23 +82,7 @@ class PostRepository
         return $post;
     }
 
-    private function getLastEntryId(): int
-    {
-        $req = $this->pdo->prepare("SELECT MAX(id) from post");
-        $req->execute();
-
-        $lastEntryId = $req->fetch();
-        return $lastEntryId['0'];
-    }
-    
-    private function redirectToLastIdInserted(): url
-    {
-        $id = self::getLastEntryId();
-        $redirect = header("Location:/?action=editpost&id=$id");
-        return $redirect;
-    }
-
-    public function insert(Post $post): void
+    public function insert(Post $post): int
     {
         $sql = "INSERT INTO post (title, intro, content, imageUrl) 
                 VALUES (:title, :intro, :content, :imageUrl)";
@@ -110,14 +94,14 @@ class PostRepository
         $content = $post->getContent();
         $image = $post->getImageUrl();
 
-        $req->execute(array(
+        $req->execute([
             'title' => $title,
             'intro' => $intro,
             'content' =>$content,
             'imageUrl' => $image
-        ));
+        ]);
 
-        self::redirectToLastIdInserted();
+        return $this->pdo->lastInsertId();
     }
 
     public function edit(Post $post): void
@@ -135,22 +119,17 @@ class PostRepository
 
         $req = $this->pdo->prepare($sql);
 
-        $req->execute(array(
+        $req->execute([
             'title' => $title,
             'intro' => $intro,
             'content' =>$content,
             'imageUrl' => $image
-        ));
-
-        header('Location:?action=admin');
+        ]);
     }
 
     public function delete(Post $post): void
     {
-        $id = $post->getId();
-        $req = $this->pdo->prepare("DELETE from post WHERE id = $id");
-        $req->execute();
-
-        header('Location:?action=admin');
+        $req = $this->pdo->prepare("DELETE from post WHERE id = :id");
+        $req->execute(['id' => $post->getId()]);
     }
 }

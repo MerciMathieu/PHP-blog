@@ -18,7 +18,24 @@ class CommentRepository
         $this->pdo = $pdo;
     }
 
-    public function findAllByPostId($id): array
+    public function findOneByID(int $id): Comment
+    {
+        $req = $this->pdo->prepare("SELECT *
+                                    FROM   comment c
+                                    WHERE  c.id = $id"
+                                    );
+        $req->execute();
+        $commentFromDb = $req->fetch();
+
+        $comment = new Comment(
+            $commentFromDb['content'],
+            $commentFromDb['postId']
+        );
+        
+        return $comment;
+    }
+
+    public function findAllByPostId(int $id): array
     {
         $req = $this->pdo->prepare("SELECT c.id, c.content, c.createdAt, c.updatedAt, c.isValidated, 
                                            u.firstName, u.lastName
@@ -40,8 +57,9 @@ class CommentRepository
             );
 
             $comment = new Comment(
-                $author,
-                $commentFromDb['content']
+                $commentFromDb['content'],
+                $id,
+                $author
             );
             $comment->setId($commentFromDb['id']);
             $comment->setCreatedAt(new \DateTime($commentFromDb['createdAt']));
@@ -51,5 +69,32 @@ class CommentRepository
             $comments[] = $comment;
         }
         return $comments;
+    }
+
+    public function insert(Comment $comment): void
+    {
+        $content = $comment->getContent();
+        $postId = $comment->getPostId();
+
+        $sql = "INSERT INTO comment (postId, content) 
+                VALUES (:postId, :content)";
+
+        $req = $this->pdo->prepare($sql);
+
+        $req->execute(array(
+            'content' => $content,
+            'postId' => $postId
+        ));
+
+        header('Location:/');
+    }
+
+    public function delete(Comment $comment): void
+    {
+        $id = $comment->getId();
+        $req = $this->pdo->prepare("DELETE from comment WHERE id = $id");
+        $req->execute();
+
+        header('Location:?action=admin');
     }
 }
