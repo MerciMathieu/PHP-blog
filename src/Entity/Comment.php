@@ -9,6 +9,8 @@ Class Comment
 
     private int $id;
 
+    private int $postId;
+
     private string $content;
 
     private \DateTime $createdAt;
@@ -17,11 +19,12 @@ Class Comment
     
     private ?\DateTime $updatedAt;
     
-    private ?string $author;
+    private ?User $author;
     
-    public function __construct(string $content, User $author = null)
+    public function __construct(string $content, int $postId, User $author = null)
     {
         $this->content = $content;
+        $this->postId = $postId;
         $this->author = $author;
     }
 
@@ -75,13 +78,23 @@ Class Comment
         $this->author = $author;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(?int $id)
     {
         $this->id = $id;
+    }
+ 
+    public function getPostId(): int
+    {
+        return $this->postId;
+    }
+
+    public function setPostId(int $postId)
+    {
+        $this->postId = $postId;
     }
 }

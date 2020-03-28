@@ -45,37 +45,34 @@ if (isset($_GET['action'])) {
         echo $blogController->index();
     }
     elseif ($_GET['action'] === 'showpost') {
-        $postId = $_GET['id'];
-        if (isset($_POST['submit'])) {
-            echo $blogController->insertComment($postId);
-        }
+        $postId = $_GET['postid'];
         echo $blogController->showPost($postId);
     }
     elseif ($_GET['action'] === 'admin') {
         echo $adminController->index();
     }
     elseif ($_GET['action'] === 'editpost') {
-        $postId = $_GET['id'];
+        $postId = $_GET['postid'];
         echo $adminController->editPost($postId);
     }
     elseif ($_GET['action'] === 'moderate-post-comments') {
-        $postId = $_GET['id'];
+        $postId = $_GET['postid'];
         echo $adminController->showCommentsFromPost($postId);
     }
     elseif ($_GET['action'] === 'addpost') {
         echo $adminController->addPost();
     }
     elseif ($_GET['action'] === 'deletepost') {
-        $postId = $_GET['id'];
+        $postId = $_GET['postid'];
         echo $adminController->deletePost($postId);
     }
     elseif ($_GET['action'] === 'deletecomment') {
-        $commentId = $_GET['id'];
+        $commentId = $_GET['commentid'];
         echo $adminController->deleteComment($commentId);
     }
     elseif ($_GET['action'] === 'deletepost') {
-        $id = $_GET['id'];
-        echo $adminController->deletePost($id);
+        $postId = $_GET['postid'];
+        echo $adminController->deletePost($postId);
     }
     else { 
         echo $homeController->index();

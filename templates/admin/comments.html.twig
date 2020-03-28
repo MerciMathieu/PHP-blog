@@ -8,10 +8,7 @@
             <div class="text-center mb-5">
                 <a class="" href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
-            <div class="text-center pb-5">
-                <h1>Commentaires de l'article</h1>
-                <h2>"{{ post.title }}"</h2>
-            </div>
+            <h1 class="text-center pb-5">Commentaires de l'article<br /><strong>'{{ post.title|upper }}'</strong></h1>
             <h3 class="pt-5"><i class="fas fa-envelope mr-2"></i>Commentaires à valider ({{ comments|length }})</h3>
             <table class="table table-striped mb-5 comments">
                 <thead>
@@ -38,12 +35,20 @@
                                 </div>
                             </td>
                             <td class="text-center">
-                                <a href="#" title="Valider le commentaire">
-                                    <i class="fas fa-check" style="color: green;"></i>
+                                <form action="?action=approvecomment&commentid={{ comment.id }}" method="post">
+                                    <button type="submit" class="btn btn-success w-100" title="Approuver le commentaire" name="approve">
+                                        Approuver<i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                <a href="" title="Valider le commentaire">
+                                    
                                 </a>
-                                <a href="?action=deletecomment&id={{ comment.id }}" title="Supprimer le commentaire">
-                                    <i class="fas fa-times" style="color: red;"></i>
-                                </a>
+                                
+                                <form action="?action=deletecomment&commentid={{ comment.id }}" method="post">
+                                    <button type="submit" class="btn btn-danger w-100" title="Supprimer le commentaire" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                                        Supprimer<i class="fas fa-times ml-2"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}

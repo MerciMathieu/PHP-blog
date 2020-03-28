@@ -45,9 +45,9 @@ class CommentRepository
                                     WHERE  c.postId = $id
                                     ORDER BY id desc");
         $req->execute();
-        
-        $commentsArrayFromDb = $req->fetchAll();
 
+        $commentsArrayFromDb = $req->fetchAll();
+        
         $comments = [];
         foreach ($commentsArrayFromDb as $commentFromDb) {
 
@@ -85,16 +85,11 @@ class CommentRepository
             'content' => $content,
             'postId' => $postId
         ));
-
-        header('Location:/');
     }
 
     public function delete(Comment $comment): void
     {
-        $id = $comment->getId();
-        $req = $this->pdo->prepare("DELETE from comment WHERE id = $id");
-        $req->execute();
-
-        header('Location:?action=admin');
+        $req = $this->pdo->prepare("DELETE from comment WHERE id = :id");
+        $req->execute(['id' => $comment->getId()]);
     }
 }

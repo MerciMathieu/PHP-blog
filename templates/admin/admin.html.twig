@@ -61,15 +61,15 @@
                                 {% endif %}
                             </td>
                             <td class="text-center actions">
-                                <a class="btn btn-info" href="?action=moderate-post-comments&id={{ post.id }}" role="button">
+                                <a class="btn btn-info" href="?action=moderate-post-comments&postid={{ post.id }}" role="button">
                                     Commentaires<i class="fas fa-comment ml-2"></i>
                                 </a>
-                                <a class="btn btn-primary" href="?action=editpost&id={{ post.id }}" role="button">
+                                <a class="btn btn-primary" href="?action=editpost&postid={{ post.id }}" role="button">
                                     Modifier
                                     <i class="fas fa-pen mr-2"></i>
                                 </a>
-                                <form action="?action=deletepost&id={{ post.id}}" method="post">
-                                    <button type="submit" class="btn btn-danger confirmModalLink" name="delete" role="button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                                <form action="?action=deletepost&postid={{ post.id}}" method="post">
+                                    <button type="submit" class="btn btn-danger" name="delete" role="button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                                         Supprimer<i class="fas fa-times ml-2"></i>
                                     </button>
                                 </form>
