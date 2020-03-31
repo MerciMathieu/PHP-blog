@@ -28,12 +28,12 @@ Class Comment
         $this->author = $author;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getupdatedAt(): ?\DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTime $updatedAt)
+    public function setupdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
     }
@@ -58,12 +58,12 @@ Class Comment
         $this->isValidated = $isValidated;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function getcreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt)
+    public function setcreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }

@@ -92,10 +92,13 @@ Class AdminController
     public function deleteComment(int $id)
     {
         if (isset($_POST['delete'])) {
-            $comment = $this->commentRepository->findOneById($id);
-            $this->commentRepository->delete($comment); 
 
-            header('Location:?action=admin');
+            $commentRepository = $this->commentRepository;
+            
+            $comment = $commentRepository->findOneById($id);
+            $commentRepository->delete($comment); 
+
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPostId());
         }
     }
 

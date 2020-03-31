@@ -29,20 +29,21 @@ class CommentRepository
 
         $comment = new Comment(
             $commentFromDb['content'],
-            $commentFromDb['postId']
+            $commentFromDb['post_id']
         );
+        $comment->setId($commentFromDb['id']);
         
         return $comment;
     }
 
     public function findAllByPostId(int $id): array
     {
-        $req = $this->pdo->prepare("SELECT c.id, c.content, c.createdAt, c.updatedAt, c.isValidated, 
-                                           u.firstName, u.lastName
+        $req = $this->pdo->prepare("SELECT c.id, c.content, c.created_at, c.updated_at, c.is_validated, 
+                                           u.first_name, u.last_name
                                     FROM   comment c
                                     JOIN   user u
-                                    ON     c.userId = u.id
-                                    WHERE  c.postId = $id
+                                    ON     c.user_id = u.id
+                                    WHERE  c.post_id = $id
                                     ORDER BY id desc");
         $req->execute();
 
@@ -52,8 +53,8 @@ class CommentRepository
         foreach ($commentsArrayFromDb as $commentFromDb) {
 
             $author = new User(
-                $commentFromDb['firstName'],
-                $commentFromDb['lastName']
+                $commentFromDb['first_name'],
+                $commentFromDb['last_name']
             );
 
             $comment = new Comment(
@@ -62,9 +63,9 @@ class CommentRepository
                 $author
             );
             $comment->setId($commentFromDb['id']);
-            $comment->setCreatedAt(new \DateTime($commentFromDb['createdAt']));
-            $comment->setUpdatedAt(new \DateTime($commentFromDb['updatedAt']));
-            $comment->setIsValidated($commentFromDb['isValidated']);
+            $comment->setcreatedAt(new \DateTime($commentFromDb['created_at']));
+            $comment->setupdatedAt(new \DateTime($commentFromDb['updated_at']));
+            $comment->setIsValidated($commentFromDb['is_validated']);
 
             $comments[] = $comment;
         }
@@ -76,14 +77,14 @@ class CommentRepository
         $content = $comment->getContent();
         $postId = $comment->getPostId();
 
-        $sql = "INSERT INTO comment (postId, content) 
-                VALUES (:postId, :content)";
+        $sql = "INSERT INTO comment (post_id, content) 
+                VALUES (:post_id, :content)";
 
         $req = $this->pdo->prepare($sql);
 
         $req->execute(array(
             'content' => $content,
-            'postId' => $postId
+            'post_id' => $postId
         ));
     }
 
