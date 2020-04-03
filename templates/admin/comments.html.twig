@@ -34,19 +34,16 @@
                                     <p>{{ comment.content }}</p>
                                 </div>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center actions">
                                 <form action="?action=approvecomment&commentid={{ comment.id }}" method="post">
-                                    <button type="submit" class="btn btn-success w-100" title="Approuver le commentaire" name="approve">
-                                        Approuver<i class="fas fa-check"></i>
+                                    <button type="submit" class="btn btn-success mx-1" title="Approuver le commentaire" name="approve">
+                                        <i class="fas fa-check"></i>
                                     </button>
                                 </form>
-                                <a href="" title="Valider le commentaire">
-                                    
-                                </a>
                                 
                                 <form action="?action=deletecomment&commentid={{ comment.id }}" method="post">
-                                    <button type="submit" class="btn btn-danger w-100" title="Supprimer le commentaire" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
-                                        Supprimer<i class="fas fa-times ml-2"></i>
+                                    <button type="submit" class="btn btn-danger mx-1" title="Supprimer le commentaire" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </form>
                             </td>
