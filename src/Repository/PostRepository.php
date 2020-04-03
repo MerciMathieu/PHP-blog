@@ -19,19 +19,22 @@ class PostRepository
 
     public function findAll(): array
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
+        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,p.has_unvalidated_comments,
                                            u.first_name,u.last_name
                                     FROM   post p
                                     JOIN   user u
                                     ON     p.user_id = u.id
                                     ORDER BY id desc"
                                 );
-        $req->execute();
+                                $req->execute();
+                                
         
         $postsArrayFromDb = $req->fetchAll();
         $posts = [];
         foreach ($postsArrayFromDb as $postFromDb) {
-            
+
+            $this->updateIfPostHasUnvalidatedComments($postFromDb['id']);
+
             $author = new User(
                 $postFromDb['first_name'],
                 $postFromDb['last_name']
@@ -46,6 +49,7 @@ class PostRepository
             $post->setId($postFromDb['id']);
             $post->setcreatedAt(new \DateTime($postFromDb['created_at']));
             $post->setupdatedAt(new \DateTime($postFromDb['updated_at']));
+            $post->setHasUnvalidatedComments($postFromDb['has_unvalidated_comments']);
             $posts[] = $post;
         }
         return $posts;
@@ -120,5 +124,35 @@ class PostRepository
     {
         $req = $this->pdo->prepare("DELETE from post WHERE id = :id");
         $req->execute(['id' => $post->getId()]);
+    }
+
+    private function updateIfPostHasUnvalidatedComments(int $id): void
+    {
+        $hasUnvalidatedComments = 0;
+
+        $sql = "SELECT COUNT(*)
+                FROM   comment c
+                JOIN   post p
+                ON     p.id = c.post_id
+                WHERE  p.id = $id
+                AND    c.is_validated = 0";
+
+        $req = $this->pdo->query($sql);
+        $countUnvalidatedComments = $req->fetchColumn();
+
+        if ($countUnvalidatedComments > 0) {
+            $hasUnvalidatedComments = 1;           
+        }
+
+        $sql = "UPDATE post p
+                SET has_unvalidated_comments = :has_unvalidated_comments
+                WHERE p.id = :id";
+
+        $req = $this->pdo->prepare($sql);
+
+        $req->execute([
+            'id' => $id,
+            'has_unvalidated_comments' => $hasUnvalidatedComments
+        ]);
     }
 }

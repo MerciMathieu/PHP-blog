@@ -35,7 +35,6 @@ Class AdminController
     public function index() 
     {
         $posts = $this->postRepository->findAll();
-
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts
         ]);
@@ -88,6 +87,19 @@ Class AdminController
         }
         
     }
+    
+    public function showCommentsFromPost(int $id)
+    {
+        $post = $this->postRepository->findOneById($id);
+        $approvedComments = $this->commentRepository->findAllByPostId($id, true);
+        $unvalidatedComments = $this->commentRepository->findAllByPostId($id, false);
+    
+        return $this->twig->render('admin/comments.html.twig', [
+            'post' => $post,
+            'approvedComments' => $approvedComments,
+            'unvalidatedComments' => $unvalidatedComments
+        ]);
+    }
 
     public function deleteComment(int $id)
     {
@@ -102,15 +114,19 @@ Class AdminController
         }
     }
 
-    public function showCommentsFromPost($id)
+    public function approveComment(int $id, bool $validate)
     {
-        $post = $this->postRepository->findOneById($id);
-        $comments = $this->commentRepository->findAllByPostId($id);
-    
-        return $this->twig->render('admin/comments.html.twig', [
-            'post' => $post,
-            'comments' => $comments
-        ]);
+        if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
+            $commentRepository = $this->commentRepository;
+
+            $comment = $commentRepository->findOneById($id);
+
+            $comment->setIsValidated($validate); 
+            $commentRepository->approve($comment);
+
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPostId());
+        }
     }
+
 }
 

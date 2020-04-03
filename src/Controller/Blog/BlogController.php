@@ -49,7 +49,7 @@ Class BlogController
         }
 
         $post = $this->postRepository->findOneById($id);
-        $comments = $this->commentRepository->findAllByPostId($id);
+        $comments = $this->commentRepository->findAllByPostId($id, true);
 
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,

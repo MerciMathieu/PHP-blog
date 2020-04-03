@@ -13,13 +13,16 @@ Class Post {
 
     private string $content;
 
+    private bool $hasUnvalidatedComments;
+
     private \DateTime $createdAt;
-    
+        
     private ?\DateTime $updatedAt;
     
     private ?string $imageUrl;
     
     private ?User $author;
+
 
 
     public function __construct(
@@ -115,5 +118,15 @@ Class Post {
     public function setId(int $id)
     {
         $this->id = $id;
+    }
+
+    public function getHasUnvalidatedComments(): bool
+    {
+        return $this->hasUnvalidatedComments;
+    }
+
+    public function setHasUnvalidatedComments(bool $hasUnvalidatedComments)
+    {
+        $this->hasUnvalidatedComments = $hasUnvalidatedComments;
     }
 }

@@ -36,14 +36,15 @@ class CommentRepository
         return $comment;
     }
 
-    public function findAllByPostId(int $id): array
+    public function findAllByPostId(int $id, bool $showApproved): array
     {
         $req = $this->pdo->prepare("SELECT c.id, c.content, c.created_at, c.updated_at, c.is_validated, 
                                            u.first_name, u.last_name
                                     FROM   comment c
                                     JOIN   user u
                                     ON     c.user_id = u.id
-                                    WHERE  c.post_id = $id
+                                    WHERE  c.post_id = $id 
+                                    AND    c.is_validated = '$showApproved'
                                     ORDER BY id desc");
         $req->execute();
 
@@ -86,6 +87,21 @@ class CommentRepository
             'content' => $content,
             'post_id' => $postId
         ));
+    }
+
+    public function approve(Comment $comment): void
+    {
+        $boolApproved = $comment->getIsValidated();
+
+        if ($boolApproved == '' || $boolApproved === false) {
+            $boolApproved = 0;
+        }
+        
+        $req = $this->pdo->prepare("UPDATE comment SET is_validated=:is_validated WHERE id = :id");
+        $req->execute([
+            'id' => $comment->getId(),
+            'is_validated' => $boolApproved 
+            ]);
     }
 
     public function delete(Comment $comment): void

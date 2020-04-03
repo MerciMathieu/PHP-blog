@@ -33,10 +33,6 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository)
 $adminController = new AdminController($twig, $postRepository, $commentRepository);
 /**** /Controllers ****/
 
-$homeController = new HomeController($twig); 
-$blogController = new BlogController($twig, $postRepository, $commentRepository);
-$adminController = new AdminController($twig, $postRepository, $commentRepository);
-
 if (isset($_GET['action'])) {
     if ($_GET['action'] === 'index') {
         echo $homeController->index();
@@ -69,6 +65,14 @@ if (isset($_GET['action'])) {
     elseif ($_GET['action'] === 'deletecomment') {
         $commentId = $_GET['commentid'];
         echo $adminController->deleteComment($commentId);
+    }
+    elseif ($_GET['action'] === 'approvecomment') {
+        $commentId = $_GET['commentid'];
+        echo $adminController->approveComment($commentId, true);
+    }
+    elseif ($_GET['action'] === 'unvalidatecomment') {
+        $commentId = $_GET['commentid'];
+        echo $adminController->approveComment($commentId, false);
     }
     elseif ($_GET['action'] === 'deletepost') {
         $postId = $_GET['postid'];

@@ -9,7 +9,8 @@
                 <a class="" href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
             <h1 class="text-center pb-5">Commentaires de l'article<br /><strong>'{{ post.title|upper }}'</strong></h1>
-            <h3 class="pt-5"><i class="fas fa-envelope mr-2"></i>Commentaires à valider ({{ comments|length }})</h3>
+            
+            <h3 class="pt-5"><i class="fas fa-envelope mr-2"></i>Commentaires à valider ({{ unvalidatedComments|length }})</h3>
             <table class="table table-striped mb-5 comments">
                 <thead>
                     <tr>
@@ -18,30 +19,72 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for comment in comments %}
+                    {% for unvalidatedComment in unvalidatedComments %}
                         <tr>
                             <td>
                                 <div class="comment">
-                                    <p class="font-weight-bold">{{ comment.author.firstName }} {{ comment.author.lastName }}
+                                    <p class="font-weight-bold">{{ unvalidatedComment.author.firstName }} {{ unvalidatedComment.author.lastName }}
                                         <small class="text-muted ml-2">
-                                        {% if comment.updatedAt %}
-                                            modifié le {{ comment.createdAt|date('d m Y à H:i:s') }}
+                                        {% if unvalidatedComment.updatedAt %}
+                                            modifié le {{ unvalidatedComment.createdAt|date('d m Y à H:i:s') }}
                                         {% else %}    
-                                            posté le {{ comment.createdAt|date('d m Y à H:i:s') }}
+                                            posté le {{ unvalidatedComment.createdAt|date('d m Y à H:i:s') }}
                                         {% endif %}
                                         </small>
                                     </p>
-                                    <p>{{ comment.content }}</p>
+                                    <p>{{ unvalidatedComment.content }}</p>
                                 </div>
                             </td>
                             <td class="text-center actions">
-                                <form action="?action=approvecomment&commentid={{ comment.id }}" method="post">
+                                <form action="?action=approvecomment&commentid={{ unvalidatedComment.id }}" method="post">
                                     <button type="submit" class="btn btn-success mx-1" title="Approuver le commentaire" name="approve">
                                         <i class="fas fa-check"></i>
                                     </button>
                                 </form>
                                 
-                                <form action="?action=deletecomment&commentid={{ comment.id }}" method="post">
+                                <form action="?action=deletecomment&commentid={{ unvalidatedComment.id }}" method="post">
+                                    <button type="submit" class="btn btn-danger mx-1" title="Supprimer le commentaire" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3 class="pt-5"><i class="fas fa-envelope mr-2"></i>Commentaires validés ({{ approvedComments|length }})</h3>
+            <table class="table table-striped mb-5 comments">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Commentaire</th>
+                        <th scope="col" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for approvedComment in approvedComments %}
+                        <tr>
+                            <td>
+                                <div class="comment">
+                                    <p class="font-weight-bold">{{ approvedComment.author.firstName }} {{ approvedComment.author.lastName }}
+                                        <small class="text-muted ml-2">
+                                        {% if approvedComment.updatedAt %}
+                                            modifié le {{ approvedComment.createdAt|date('d m Y à H:i:s') }}
+                                        {% else %}    
+                                            posté le {{ approvedComment.createdAt|date('d m Y à H:i:s') }}
+                                        {% endif %}
+                                        </small>
+                                    </p>
+                                    <p>{{ approvedComment.content }}</p>
+                                </div>
+                            </td>
+                            <td class="text-center actions">
+                                <form action="?action=unvalidatecomment&commentid={{ approvedComment.id }}" method="post">
+                                    <button type="submit" class="btn btn-warning mx-1" title="Retirer des commentaires validés" name="unvalidate">
+                                        <i class="fas fa-glasses"></i>
+                                    </button>
+                                </form>
+                                
+                                <form action="?action=deletecomment&commentid={{ approvedComment.id }}" method="post">
                                     <button type="submit" class="btn btn-danger mx-1" title="Supprimer le commentaire" name="delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
                                         <i class="fas fa-times"></i>
                                     </button>
