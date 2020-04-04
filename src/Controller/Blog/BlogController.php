@@ -44,12 +44,13 @@ Class BlogController
 
     public function showPost(int $id) 
     {  
+        $post = $this->postRepository->findOneById($id);
+        
         if (isset($_POST['submit'])) {
-            self::insertComment($id);
+            $this->insertComment($post);
         }
 
-        $post = $this->postRepository->findOneById($id);
-        $comments = $this->commentRepository->findAllByPostId($id, true);
+        $comments = $this->commentRepository->findAllByPost($post, true);
 
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,
@@ -57,19 +58,18 @@ Class BlogController
         ]);
     }
 
-    private function insertComment(int $postId) 
+    private function insertComment(Post $post) 
     {   
         if (isset($_POST['submit'])) {
-            $post = $this->postRepository->findOneById($postId);
 
             $comment = new Comment(
                 $_POST['message'],
-                $post->getId()
+                $post
             );
     
             $this->commentRepository->insert($comment); 
             
-            header('Location:/?action=showpost&postid='.$postId);
+            header('Location:/?action=showpost&postid='.$post->getId());
         }
     }
 }

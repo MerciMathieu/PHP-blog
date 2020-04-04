@@ -9,8 +9,6 @@ Class Comment
 
     private int $id;
 
-    private int $postId;
-
     private string $content;
 
     private \DateTime $createdAt;
@@ -20,11 +18,13 @@ Class Comment
     private ?\DateTime $updatedAt;
     
     private ?User $author;
+
+    private Post $post;
     
-    public function __construct(string $content, int $postId, User $author = null)
+    public function __construct(string $content, Post $post, User $author = null)
     {
         $this->content = $content;
-        $this->postId = $postId;
+        $this->post = $post;
         $this->author = $author;
     }
 
@@ -88,13 +88,13 @@ Class Comment
         $this->id = $id;
     }
  
-    public function getPostId(): int
+    public function getPost(): Post
     {
-        return $this->postId;
+        return $this->post;
     }
 
-    public function setPostId(int $postId)
+    public function setPost(Post $post)
     {
-        $this->postId = $postId;
+        $this->post = $post;
     }
 }

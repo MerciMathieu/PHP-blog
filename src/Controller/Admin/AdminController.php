@@ -91,8 +91,8 @@ Class AdminController
     public function showCommentsFromPost(int $id)
     {
         $post = $this->postRepository->findOneById($id);
-        $approvedComments = $this->commentRepository->findAllByPostId($id, true);
-        $unvalidatedComments = $this->commentRepository->findAllByPostId($id, false);
+        $approvedComments = $this->commentRepository->findAllByPost($post, true);
+        $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
     
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,
@@ -110,7 +110,7 @@ Class AdminController
             $comment = $commentRepository->findOneById($id);
             $commentRepository->delete($comment); 
 
-            header('Location:?action=moderate-post-comments&postid='.$comment->getPostId());
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
         }
     }
 
@@ -124,7 +124,7 @@ Class AdminController
             $comment->setIsValidated($validate); 
             $commentRepository->approve($comment);
 
-            header('Location:?action=moderate-post-comments&postid='.$comment->getPostId());
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
         }
     }
 
