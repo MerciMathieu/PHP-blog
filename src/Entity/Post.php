@@ -13,12 +13,10 @@ Class Post {
 
     private string $content;
 
-    private bool $hasUnvalidatedComments;
-
     private \DateTime $createdAt;
-        
+
     private ?\DateTime $updatedAt;
-    
+
     private ?string $imageUrl;
     
     private ?User $author;
@@ -59,20 +57,20 @@ Class Post {
     {
         $this->intro = $intro;
     }
-
-    public function getcreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
  
-    public function setcreatedAt(\DateTime $createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
 
-    public function setupdatedAt(?\DateTime $updatedAt)
+    public function getCreatedAt(): \DateTime
     {
-        $this->updatedAt = $updatedAt;
+        return $this->createdAt;
+    }
+
+    public function setUpdatedAt(?\DateTime $updatedAt)
+    {
+        $this->updateddAt = $updatedAt;
     }
 
     public function getContent(): string

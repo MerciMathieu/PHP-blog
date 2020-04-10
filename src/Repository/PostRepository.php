@@ -56,16 +56,17 @@ class PostRepository
         return $posts;
     }
 
-    public function findOneById(int $id): Post
+    public function findOneById(int $postId): Post
     {
         $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
                                            u.first_name,u.last_name
                                     FROM   post p
                                     JOIN   user u
                                     ON     p.user_id = u.id
-                                    WHERE  p.id = $id"
+                                    WHERE  p.id = :post_id"
                                     );
-        $req->execute();
+        $req->execute(['post_id' => $postId]);
+
         $postFromDb = $req->fetch();
 
         $author = new User(
@@ -81,8 +82,8 @@ class PostRepository
             $author
         );
         $post->setId($postFromDb['id']);
-        $post->setcreatedAt(new \DateTime($postFromDb['created_at']));
-        $post->setupdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
+        $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
+        $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
         
         return $post;
     }
@@ -104,19 +105,20 @@ class PostRepository
 
     public function edit(Post $post): void
     {
-        $sql = "UPDATE post 
-                SET title = :title, intro = :intro, content = :content, image_url = :image_url 
-                WHERE id = :id";
 
-        $req = $this->pdo->prepare($sql);
+        $req = $this->pdo->prepare("UPDATE post 
+                                    SET title = :title, intro = :intro, content = :content, image_url = :image_url
+                                    WHERE id = :post_id");
 
         $req->execute([
-            'id' => $post->getId(),
             'title' => $post->getTitle(),
             'intro' => $post->getIntro(),
             'content' =>$post->getContent(),
-            'image_url' => $post->getImageUrl()
+            'image_url' => $post->getImageUrl(),
+            'post_id' => $post->getId()
         ]);
+
+        
     }
 
     public function delete(Post $post): void

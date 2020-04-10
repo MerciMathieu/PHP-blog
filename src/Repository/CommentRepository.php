@@ -44,7 +44,7 @@ class CommentRepository
 
     public function findAllByPost(Post $post, bool $showApproved): array
     {
-        $req = $this->pdo->prepare("SELECT c.id, c.content, c.created_at, c.updated_at, c.is_validated, 
+        $req = $this->pdo->prepare("SELECT c.id, c.content, c.created_at, c.is_validated, 
                                            u.first_name, u.last_name
                                     FROM   comment c
                                     JOIN   user u
@@ -73,8 +73,7 @@ class CommentRepository
                 $author
             );
             $comment->setId($commentFromDb['id']);
-            $comment->setcreatedAt(new \DateTime($commentFromDb['created_at']));
-            $comment->setupdatedAt($commentFromDb['updated_at'] ? new \DateTime($commentFromDb['updated_at']) : null);
+            $comment->setCreatedAt(new \DateTime($commentFromDb['created_at']));
             $comment->setIsValidated($commentFromDb['is_validated']);
 
             $comments[] = $comment;
