@@ -55,6 +55,29 @@ Class BlogController
         ]);
     }
 
+    public function login()
+    {
+        return $this->twig->render('blog/login.html.twig');
+    }
+
+    public function register()
+    {
+        if (isset($_POST['submit'])) {
+
+            $user = new User(
+                $_POST['firstname'],
+                $_POST['lastname']
+            );
+            $user->setEmail($_POST['email']);
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+            
+            $this->userRepository->insert($user);
+
+            header('Location: ?action=blog');
+        }
+        return $this->twig->render('blog/register.html.twig');
+    }
+
     private function insertComment(Post $post) 
     {   
         if (isset($_POST['submit'])) {
