@@ -3,34 +3,31 @@
 namespace App\Controller\Blog;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Entity\Comment;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 
 Class BlogController
 {
-    /**
-     * @var \Twig\Environment
-     */
-    private $twig;
+    private \Twig\Environment $twig;
 
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
+    private PostRepository $postRepository;
 
-    /**
-     * @var CommentRepository
-     */
-    private $commentRepository;
+    private CommentRepository $commentRepository;
+
+    private UserRepository $userRepository;
 
     public function __construct(\Twig\Environment $twig, 
                                  PostRepository $postRepository, 
-                                 CommentRepository $commentRepository)
+                                 CommentRepository $commentRepository,
+                                 UserRepository $userRepository)
     {
         $this->twig = $twig;
         $this->postRepository = $postRepository;
         $this->commentRepository = $commentRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index() 
