@@ -54,7 +54,7 @@ class CommentRepository
                                     ORDER BY id desc");
         $req->execute([
             'id' => $post->getId(),
-            'is_validated' => $showApproved
+            'is_validated' => (int)$showApproved
             ]);
 
         $commentsArrayFromDb = $req->fetchAll();
@@ -84,28 +84,19 @@ class CommentRepository
 
     public function insert(Comment $comment): void
     {
-        $content = $comment->getContent();
-        $postId = $comment->getPost()->getId();
-
-        $sql = "INSERT INTO comment (post_id, content) 
-                VALUES (:post_id, :content)";
-
-        $req = $this->pdo->prepare($sql);
-
+        $req = $this->pdo->prepare("INSERT INTO comment (post_id, content) VALUES (:post_id, :content)");
         $req->execute(array(
-            'content' => $content,
-            'post_id' => $postId
+            'content' => $comment->getContent(),
+            'post_id' => $comment->getPost()->getId()
         ));
     }
 
     public function approve(Comment $comment): void
     {
-        $boolApproved = $comment->getIsValidated();
-        
         $req = $this->pdo->prepare("UPDATE comment SET is_validated=:is_validated WHERE id = :id");
         $req->execute([
             'id' => $comment->getId(),
-            'is_validated' => (int)$boolApproved 
+            'is_validated' => (int)$comment->getIsValidated()
             ]);
     }
 

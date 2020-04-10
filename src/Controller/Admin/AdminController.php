@@ -49,7 +49,7 @@ Class AdminController
                 $_POST['content'],
                 $_POST['image']
             );
-            $postId = $this->postRepository->insert($post); 
+            $postId = $this->postRepository->insert($post);
             
             header("Location:/?action=editpost&postid=$postId");
         }
@@ -104,11 +104,8 @@ Class AdminController
     public function deleteComment(int $id)
     {
         if (isset($_POST['delete'])) {
-
-            $commentRepository = $this->commentRepository;
-            
-            $comment = $commentRepository->findOneById($id);
-            $commentRepository->delete($comment); 
+            $comment = $this->commentRepository->findOneById($id);
+            $this->commentRepository->delete($comment); 
 
             header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
         }
@@ -117,12 +114,9 @@ Class AdminController
     public function approveComment(int $id, bool $validate)
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
-            $commentRepository = $this->commentRepository;
-
-            $comment = $commentRepository->findOneById($id);
-
+            $comment = $this->commentRepository->findOneById($id);
             $comment->setIsValidated($validate); 
-            $commentRepository->approve($comment);
+            $this->commentRepository->approve($comment);
 
             header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
         }

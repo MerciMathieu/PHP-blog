@@ -89,10 +89,8 @@ class PostRepository
 
     public function insert(Post $post): int
     {
-        $sql = "INSERT INTO post (title, intro, content, image_url) 
-                VALUES (:title, :intro, :content, :image_url)";
-
-        $req = $this->pdo->prepare($sql);
+        $req = $this->pdo->prepare("INSERT INTO post (title, intro, content, image_url) 
+                                    VALUES (:title, :intro, :content, :image_url)");
 
         $req->execute([
             'title' => $post->getTitle(),

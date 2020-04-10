@@ -69,11 +69,6 @@ Class Post {
     {
         $this->createdAt = $createdAt;
     }
- 
-    public function getupdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
 
     public function setupdatedAt(?\DateTime $updatedAt)
     {

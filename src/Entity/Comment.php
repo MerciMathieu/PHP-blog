@@ -28,11 +28,6 @@ Class Comment
         $this->author = $author;
     }
 
-    public function getupdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
     public function setupdatedAt(?\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
