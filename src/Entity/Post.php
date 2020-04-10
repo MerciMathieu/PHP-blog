@@ -14,12 +14,13 @@ Class Post {
     private string $content;
 
     private \DateTime $createdAt;
-    
+
     private ?\DateTime $updatedAt;
-    
+
     private ?string $imageUrl;
     
     private ?User $author;
+
 
 
     public function __construct(
@@ -56,25 +57,20 @@ Class Post {
     {
         $this->intro = $intro;
     }
-
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
  
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
     }
- 
-    public function getUpdatedAt(): ?\DateTime
+
+    public function getCreatedAt(): \DateTime
     {
-        return $this->updatedAt;
+        return $this->createdAt;
     }
 
     public function setUpdatedAt(?\DateTime $updatedAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updateddAt = $updatedAt;
     }
 
     public function getContent(): string
@@ -115,5 +111,15 @@ Class Post {
     public function setId(int $id)
     {
         $this->id = $id;
+    }
+
+    public function getHasUnvalidatedComments(): bool
+    {
+        return $this->hasUnvalidatedComments;
+    }
+
+    public function setHasUnvalidatedComments(bool $hasUnvalidatedComments)
+    {
+        $this->hasUnvalidatedComments = $hasUnvalidatedComments;
     }
 }

@@ -19,81 +19,85 @@ class PostRepository
 
     public function findAll(): array
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
-                                           u.firstName,u.lastName
-                                    FROM   post p
-                                    JOIN   user u
-                                    ON     p.userId = u.id
-                                    ORDER BY id desc"
-                                );
+        $req = $this->pdo->prepare(
+            "SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
+                    u.first_name,u.last_name,
+                    (SELECT COUNT(*) FROM comment c WHERE c.post_id = p.id AND c.is_validated=0) AS unvalidated_comments_count
+            FROM   post p
+            JOIN   user u
+            ON     p.user_id = u.id
+            ORDER BY id desc"
+        );
         $req->execute();
-        
+                                
         $postsArrayFromDb = $req->fetchAll();
         $posts = [];
         foreach ($postsArrayFromDb as $postFromDb) {
-            
+
+            $hasUnvalidatedComments = $postFromDb['unvalidated_comments_count'] > 0 ? true : false;
+
             $author = new User(
-                $postFromDb['firstName'],
-                $postFromDb['lastName']
+                $postFromDb['first_name'],
+                $postFromDb['last_name']
             );
             $post = new Post(
                 $postFromDb['title'],
                 $postFromDb['intro'],
                 $postFromDb['content'],
-                $postFromDb['imageUrl'],
+                $postFromDb['image_url'],
                 $author
             );
             $post->setId($postFromDb['id']);
-            $post->setCreatedAt(new \DateTime($postFromDb['createdAt']));
-            $post->setUpdatedAt(new \DateTime($postFromDb['updatedAt']));
+            $post->setcreatedAt(new \DateTime($postFromDb['created_at']));
+            $post->setupdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
+            $post->setHasUnvalidatedComments($hasUnvalidatedComments);
             $posts[] = $post;
         }
         return $posts;
     }
 
-    public function findOneById(int $id): Post
+    public function findOneById(int $postId): Post
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.createdAt,p.updatedAt,p.imageUrl,
-                                           u.firstName,u.lastName
+        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
+                                           u.first_name,u.last_name
                                     FROM   post p
                                     JOIN   user u
-                                    ON     p.userId = u.id
-                                    WHERE  p.id = $id"
+                                    ON     p.user_id = u.id
+                                    WHERE  p.id = :post_id"
                                     );
-        $req->execute();
+        $req->execute(['post_id' => $postId]);
+
         $postFromDb = $req->fetch();
 
         $author = new User(
-            $postFromDb['firstName'],
-            $postFromDb['lastName']
+            $postFromDb['first_name'],
+            $postFromDb['last_name']
         );
 
         $post = new Post(
             $postFromDb['title'],
             $postFromDb['intro'],
             $postFromDb['content'],
-            $postFromDb['imageUrl'],
+            $postFromDb['image_url'],
             $author
         );
         $post->setId($postFromDb['id']);
-        $post->setCreatedAt(new \DateTime($postFromDb['createdAt']));
-        $post->setUpdatedAt(new \DateTime($postFromDb['updatedAt']));
+        $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
+        $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
         
         return $post;
     }
 
     public function insert(Post $post): int
     {
-        $sql = "INSERT INTO post (title, intro, content, imageUrl) 
-                VALUES (:title, :intro, :content, :imageUrl)";
-
-        $req = $this->pdo->prepare($sql);
+        $req = $this->pdo->prepare("INSERT INTO post (title, intro, content, image_url) 
+                                    VALUES (:title, :intro, :content, :image_url)");
 
         $req->execute([
             'title' => $post->getTitle(),
             'intro' => $post->getIntro(),
             'content' =>$post->getContent(),
-            'imageUrl' => $post->getImageUrl()
+            'image_url' => $post->getImageUrl()
         ]);
 
         return $this->pdo->lastInsertId();
@@ -101,19 +105,20 @@ class PostRepository
 
     public function edit(Post $post): void
     {
-        $sql = "UPDATE post 
-                SET title = :title, intro = :intro, content = :content, imageUrl = :imageUrl 
-                WHERE id = :id";
 
-        $req = $this->pdo->prepare($sql);
+        $req = $this->pdo->prepare("UPDATE post 
+                                    SET title = :title, intro = :intro, content = :content, image_url = :image_url
+                                    WHERE id = :post_id");
 
         $req->execute([
-            'id' => $post->getId(),
             'title' => $post->getTitle(),
             'intro' => $post->getIntro(),
             'content' =>$post->getContent(),
-            'imageUrl' => $post->getImageUrl()
+            'image_url' => $post->getImageUrl(),
+            'post_id' => $post->getId()
         ]);
+
+        
     }
 
     public function delete(Post $post): void

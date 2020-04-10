@@ -14,25 +14,17 @@ Class Comment
     private \DateTime $createdAt;
 
     private bool $isValidated;
+
+    private Post $post;
     
-    private ?\DateTime $updatedAt;
-    
-    private ?string $author;
-    
-    public function __construct(string $content, User $author = null)
+    private ?User $author;
+
+
+    public function __construct(string $content, Post $post, User $author = null)
     {
         $this->content = $content;
+        $this->post = $post;
         $this->author = $author;
-    }
-
-    public function getUpdatedAt(): ?\DateTime
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTime $updatedAt)
-    {
-        $this->updatedAt = $updatedAt;
     }
 
     public function getContent(): string
@@ -55,14 +47,14 @@ Class Comment
         $this->isValidated = $isValidated;
     }
 
-    public function getCreatedAt(): \DateTime
-    {
-        return $this->createdAt;
-    }
-
     public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
+    }
+
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 
     public function getAuthor(): ?User
@@ -75,13 +67,23 @@ Class Comment
         $this->author = $author;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id)
+    public function setId(?int $id)
     {
         $this->id = $id;
+    }
+ 
+    public function getPost(): Post
+    {
+        return $this->post;
+    }
+
+    public function setPost(Post $post)
+    {
+        $this->post = $post;
     }
 }

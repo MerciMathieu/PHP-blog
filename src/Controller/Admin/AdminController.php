@@ -35,7 +35,6 @@ Class AdminController
     public function index() 
     {
         $posts = $this->postRepository->findAll();
-
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts
         ]);
@@ -43,39 +42,39 @@ Class AdminController
 
     public function addPost()
     {
-        if (!isset($_POST['submit'])) {
-            return $this->twig->render('admin/add.html.twig');
+        if (isset($_POST['submit'])) {
+            $post = new Post(
+                $_POST['title'],
+                $_POST['intro'],
+                $_POST['content'],
+                $_POST['image']
+            );
+            $postId = $this->postRepository->insert($post);
+            
+            header("Location:/?action=editpost&postid=$postId");
         }
         
-        $post = new Post(
-            $_POST['title'],
-            $_POST['intro'],
-            $_POST['content'],
-            $_POST['image']
-        );
-        $postId = $this->postRepository->insert($post); 
-        
-        header("Location:/?action=editpost&id=$postId");
+        return $this->twig->render('admin/add.html.twig');
     }
 
     public function editPost(int $id)
     {
         $post = $this->postRepository->findOneById($id);
 
-        if (!isset($_POST['submit'])) {
-            return $this->twig->render('admin/edit.html.twig', [
-                'post' => $post
-            ]);
+        if (isset($_POST['submit'])) {
+            $post->setTitle($_POST['title']);
+            $post->setIntro($_POST['intro']);
+            $post->setContent($_POST['content']);
+            $post->setImageUrl($_POST['image']);
+
+            $this->postRepository->edit($post);
+
+            header("Location:/?action=admin");
         }
 
-        $post->setTitle($_POST['title']);
-        $post->setIntro($_POST['intro']);
-        $post->setContent($_POST['content']);
-        $post->setImageUrl($_POST['image']);
-
-        $this->postRepository->edit($post);
-
-        header("Location:/?action=admin");
+        return $this->twig->render('admin/edit.html.twig', [
+            'post' => $post
+        ]);
     } 
 
     public function deletePost(int $id)
@@ -83,20 +82,45 @@ Class AdminController
         if (isset($_POST['delete'])) {
             $post = $this->postRepository->findOneById($id);
             $this->postRepository->delete($post);   
+
+            header('Location:?action=admin');
         }
         
-        header('Location:?action=admin');
     }
     
-    public function showCommentsFromPost($id)
+    public function showCommentsFromPost(int $id)
     {
         $post = $this->postRepository->findOneById($id);
-        $comments = $this->commentRepository->findAllByPostId($id);
+        $approvedComments = $this->commentRepository->findAllByPost($post, true);
+        $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
     
         return $this->twig->render('admin/comments.html.twig', [
             'post' => $post,
-            'comments' => $comments
+            'approvedComments' => $approvedComments,
+            'unvalidatedComments' => $unvalidatedComments
         ]);
     }
+
+    public function deleteComment(int $id)
+    {
+        if (isset($_POST['delete'])) {
+            $comment = $this->commentRepository->findOneById($id);
+            $this->commentRepository->delete($comment); 
+
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
+        }
+    }
+
+    public function approveComment(int $id, bool $validate)
+    {
+        if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
+            $comment = $this->commentRepository->findOneById($id);
+            $comment->setIsValidated($validate); 
+            $this->commentRepository->approve($comment);
+
+            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
+        }
+    }
+
 }
 

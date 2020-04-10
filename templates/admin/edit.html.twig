@@ -12,7 +12,7 @@
             <div class="text-center mb-5">
                 <a href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
-            <h1 class="text-center mb-5">Modifier l'article<br /><strong>'{{ post.title }}'</strong></h1>
+            <h1 class="text-center mb-5">Modifier l'article<br /><strong>'{{ post.title|upper }}'</strong></h1>
             <form method="post">
                 <div class="form-group">
                     <label for="title">Titre:</label>

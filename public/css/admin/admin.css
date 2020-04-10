@@ -7,8 +7,13 @@ table tbody {
 }
 
 table.comments tbody td i {
-    font-size: 3rem;
-    margin: 10px;
+    width: 15px;
+    height: 10px;
+}
+
+table.comments td.actions {
+    display: flex;
+    justify-content: center;
 }
 
 .table td.actions {
@@ -21,5 +26,9 @@ table.comments tbody td i {
 
 a {
     font-size: 1.4rem;
+}
+
+.red {
+    color: red;
 }
 

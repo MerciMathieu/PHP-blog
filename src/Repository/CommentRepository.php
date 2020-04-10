@@ -2,69 +2,79 @@
 
 namespace App\Repository;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Comment;
 
 class CommentRepository
 {
 
-    /**
-     * @var \PDO
-     */
-    private $pdo;
+    private \PDO $pdo;
+
+    private PostRepository $postRepository;
 
     public function __construct(\PDO $pdo)
     {
         $this->pdo = $pdo;
+        $this->postRepository = new PostRepository($pdo);
     }
 
     public function findOneByID(int $id): Comment
     {
         $req = $this->pdo->prepare("SELECT *
                                     FROM   comment c
-                                    WHERE  c.id = $id"
+                                    WHERE  c.id = :id"
                                     );
-        $req->execute();
+
+        $req->execute(['id' => $id]);
+
         $commentFromDb = $req->fetch();
+
+        $post = $this->postRepository->findOneByID($commentFromDb['post_id']);
 
         $comment = new Comment(
             $commentFromDb['content'],
-            $commentFromDb['postId']
+            $post
         );
+        
+        $comment->setId($commentFromDb['id']);
         
         return $comment;
     }
 
-    public function findAllByPostId(int $id): array
+    public function findAllByPost(Post $post, bool $showApproved): array
     {
-        $req = $this->pdo->prepare("SELECT c.id, c.content, c.createdAt, c.updatedAt, c.isValidated, 
-                                           u.firstName, u.lastName
+        $req = $this->pdo->prepare("SELECT c.id, c.content, c.created_at, c.is_validated, 
+                                           u.first_name, u.last_name
                                     FROM   comment c
                                     JOIN   user u
-                                    ON     c.userId = u.id
-                                    WHERE  c.postId = $id
+                                    ON     c.user_id = u.id
+                                    WHERE  c.post_id = :id
+                                    AND    c.is_validated = :is_validated
                                     ORDER BY id desc");
-        $req->execute();
-        
-        $commentsArrayFromDb = $req->fetchAll();
+        $req->execute([
+            'id' => $post->getId(),
+            'is_validated' => (int)$showApproved
+            ]);
 
+        $commentsArrayFromDb = $req->fetchAll();
+        
         $comments = [];
         foreach ($commentsArrayFromDb as $commentFromDb) {
 
             $author = new User(
-                $commentFromDb['firstName'],
-                $commentFromDb['lastName']
+                $commentFromDb['first_name'],
+                $commentFromDb['last_name']
             );
 
             $comment = new Comment(
                 $commentFromDb['content'],
-                $id,
+                $post,
                 $author
             );
             $comment->setId($commentFromDb['id']);
-            $comment->setCreatedAt(new \DateTime($commentFromDb['createdAt']));
-            $comment->setUpdatedAt(new \DateTime($commentFromDb['updatedAt']));
-            $comment->setIsValidated($commentFromDb['isValidated']);
+            $comment->setCreatedAt(new \DateTime($commentFromDb['created_at']));
+            $comment->setIsValidated($commentFromDb['is_validated']);
 
             $comments[] = $comment;
         }
@@ -73,28 +83,25 @@ class CommentRepository
 
     public function insert(Comment $comment): void
     {
-        $content = $comment->getContent();
-        $postId = $comment->getPostId();
-
-        $sql = "INSERT INTO comment (postId, content) 
-                VALUES (:postId, :content)";
-
-        $req = $this->pdo->prepare($sql);
-
+        $req = $this->pdo->prepare("INSERT INTO comment (post_id, content) VALUES (:post_id, :content)");
         $req->execute(array(
-            'content' => $content,
-            'postId' => $postId
+            'content' => $comment->getContent(),
+            'post_id' => $comment->getPost()->getId()
         ));
+    }
 
-        header('Location:/');
+    public function approve(Comment $comment): void
+    {
+        $req = $this->pdo->prepare("UPDATE comment SET is_validated=:is_validated WHERE id = :id");
+        $req->execute([
+            'id' => $comment->getId(),
+            'is_validated' => (int)$comment->getIsValidated()
+            ]);
     }
 
     public function delete(Comment $comment): void
     {
-        $id = $comment->getId();
-        $req = $this->pdo->prepare("DELETE from comment WHERE id = $id");
-        $req->execute();
-
-        header('Location:?action=admin');
+        $req = $this->pdo->prepare("DELETE from comment WHERE id = :id");
+        $req->execute(['id' => $comment->getId()]);
     }
 }
