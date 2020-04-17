@@ -2,15 +2,11 @@
 
 {% block title %}Modifier - {{ parent() }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-
 {% block content %}
     <section action="" id="article-edit">
         <div class="container">
             <div class="text-center mb-5">
-                <a class="" href="?action=admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
+                <a class="" href="/admin"><i class="fas fa-arrow-left mr-2"></i>Retour à la liste des articles</a>
             </div>
             <h1 class="text-center mb-5">Ajouter un article</h1>
             <form method="post">

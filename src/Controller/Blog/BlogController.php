@@ -72,7 +72,7 @@ Class BlogController
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
             if ($_POST['confirm_password'] === $_POST['password']) {
                 $this->userRepository->insert($user);
-                header('Location: ?action=blog');
+                header('Location: /blog');
             } else {
                 echo "<script>alert(\"Le mot de passe est différent\")</script>";
             }
@@ -91,7 +91,7 @@ Class BlogController
     
             $this->commentRepository->insert($comment); 
             
-            header('Location:/?action=showpost&postid='.$post->getId());
+            header('Location:/post/'.$post->getId());
         }
     }
 }

@@ -70,7 +70,7 @@ Class Post {
 
     public function setUpdatedAt(?\DateTime $updatedAt)
     {
-        $this->updateddAt = $updatedAt;
+        $this->updatedAt = $updatedAt;
     }
 
     public function getContent(): string

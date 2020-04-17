@@ -20,8 +20,8 @@ class PostRepository
     public function findAll(): array
     {
         $req = $this->pdo->prepare(
-            "SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
-                    u.first_name,u.last_name,
+            "SELECT p.id, p.title, p.intro, p.content ,p.created_at, p.updated_at, p.image_url,
+                    u.first_name, u.last_name,
                     (SELECT COUNT(*) FROM comment c WHERE c.post_id = p.id AND c.is_validated=0) AS unvalidated_comments_count
             FROM   post p
             JOIN   user u
@@ -48,8 +48,8 @@ class PostRepository
                 $author
             );
             $post->setId($postFromDb['id']);
-            $post->setcreatedAt(new \DateTime($postFromDb['created_at']));
-            $post->setupdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
+            $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
+            $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
             $post->setHasUnvalidatedComments($hasUnvalidatedComments);
             $posts[] = $post;
         }
@@ -58,8 +58,8 @@ class PostRepository
 
     public function findOneById(int $postId): Post
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.title,p.intro,p.content,p.created_at,p.updated_at,p.image_url,
-                                           u.first_name,u.last_name
+        $req = $this->pdo->prepare("SELECT p.id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
+                                           u.first_name, u.last_name
                                     FROM   post p
                                     JOIN   user u
                                     ON     p.user_id = u.id

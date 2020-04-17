@@ -51,7 +51,7 @@ Class AdminController
             );
             $postId = $this->postRepository->insert($post);
             
-            header("Location:/?action=editpost&postid=$postId");
+            header("Location:/admin/edit/post/$postId");
         }
         
         return $this->twig->render('admin/add.html.twig');
@@ -69,7 +69,7 @@ Class AdminController
 
             $this->postRepository->edit($post);
 
-            header("Location:/?action=admin");
+            header("Location:/admin/posts");
         }
 
         return $this->twig->render('admin/edit.html.twig', [
@@ -83,7 +83,7 @@ Class AdminController
             $post = $this->postRepository->findOneById($id);
             $this->postRepository->delete($post);   
 
-            header('Location:?action=admin');
+            header('Location:/admin/posts');
         }
         
     }
@@ -107,7 +107,7 @@ Class AdminController
             $comment = $this->commentRepository->findOneById($id);
             $this->commentRepository->delete($comment); 
 
-            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
+            header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
     }
 
@@ -118,7 +118,7 @@ Class AdminController
             $comment->setIsValidated($validate); 
             $this->commentRepository->approve($comment);
 
-            header('Location:?action=moderate-post-comments&postid='.$comment->getPost()->getId());
+            header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
     }
 

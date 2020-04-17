@@ -37,60 +37,51 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] === 'index') {
-        echo $homeController->index();
-    }
-    elseif ($_GET['action'] === 'blog') {
-        echo $blogController->index();
-    }
-    elseif ($_GET['action'] === 'showpost') {
-        $postId = $_GET['postid'];
-        echo $blogController->showPost($postId);
-    }
-    elseif ($_GET['action'] === 'login') {
-        echo $blogController->login();
-    }
-    elseif ($_GET['action'] === 'register') {
-        echo $blogController->register();
-    }
-    elseif ($_GET['action'] === 'admin') {
-        echo $adminController->index();
-    }
-    elseif ($_GET['action'] === 'editpost') {
-        $postId = $_GET['postid'];
-        echo $adminController->editPost($postId);
-    }
-    elseif ($_GET['action'] === 'moderate-post-comments') {
-        $postId = $_GET['postid'];
-        echo $adminController->showCommentsFromPost($postId);
-    }
-    elseif ($_GET['action'] === 'addpost') {
-        echo $adminController->addPost();
-    }
-    elseif ($_GET['action'] === 'deletepost') {
-        $postId = $_GET['postid'];
-        echo $adminController->deletePost($postId);
-    }
-    elseif ($_GET['action'] === 'deletecomment') {
-        $commentId = $_GET['commentid'];
-        echo $adminController->deleteComment($commentId);
-    }
-    elseif ($_GET['action'] === 'approvecomment') {
-        $commentId = $_GET['commentid'];
-        echo $adminController->approveComment($commentId, true);
-    }
-    elseif ($_GET['action'] === 'unvalidatecomment') {
-        $commentId = $_GET['commentid'];
-        echo $adminController->approveComment($commentId, false);
-    }
-    elseif ($_GET['action'] === 'deletepost') {
-        $postId = $_GET['postid'];
-        echo $adminController->deletePost($postId);
-    }
-    else { 
-        echo $homeController->index();
-    }
+if ($_SERVER['REQUEST_URI'] === '/') {
+    echo $homeController->index();
+}
+elseif ($_SERVER['REQUEST_URI'] === '/blog') {
+    echo $blogController->index();
+}
+elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $postId = (int)$matches[1];
+    echo $blogController->showPost($postId);
+}
+elseif ($_SERVER['REQUEST_URI'] === '/admin/posts') {
+    echo $adminController->index();
+}
+elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $postId = (int)$matches[1];
+    echo $adminController->editPost($postId);
+}
+elseif ($_SERVER['REQUEST_URI'] === '/admin/post/add') {
+    echo $adminController->addPost();
+}
+elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $postId = (int)$matches[1];
+    echo $adminController->deletePost($postId);
+}
+elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $postId = (int)$matches[1];
+    echo $adminController->showCommentsFromPost($postId);
+}
+elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $commentId = (int)$matches[1];
+    echo $adminController->deleteComment($commentId);
+}
+elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $commentId = (int)$matches[1];
+    echo $adminController->approveComment($commentId, true);
+}
+elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+    $commentId = (int)$matches[1];
+    echo $adminController->approveComment($commentId, false);
+}
+elseif ($_SERVER['REQUEST_URI'] === '/login') {
+    echo $blogController->login();
+}
+elseif ($_SERVER['REQUEST_URI'] === '/register') {
+    echo $blogController->register();
 }
 else { 
     echo $homeController->index();
