@@ -117,8 +117,6 @@ class PostRepository
             'image_url' => $post->getImageUrl(),
             'post_id' => $post->getId()
         ]);
-
-        
     }
 
     public function delete(Post $post): void

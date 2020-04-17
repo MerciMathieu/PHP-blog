@@ -2,12 +2,15 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+
 use App\Classes\Database;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
+use App\Controller\Login\LoginController;
 
 /**** TWIG ****/
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
@@ -25,12 +28,13 @@ $db = Database::connect();
 /**** Repositories ****/
 $postRepository = new PostRepository($db);
 $commentRepository = new CommentRepository($db);
+$userRepository = new UserRepository($db);
 /**** /Repositories ****/
 
 /**** Controllers ****/
 $homeController = new HomeController($twig); 
-$blogController = new BlogController($twig, $postRepository, $commentRepository);
-$adminController = new AdminController($twig, $postRepository, $commentRepository);
+$blogController = new BlogController($twig, $postRepository, $commentRepository, $userRepository);
+$adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
 if (isset($_GET['action'])) {
@@ -43,6 +47,12 @@ if (isset($_GET['action'])) {
     elseif ($_GET['action'] === 'showpost') {
         $postId = $_GET['postid'];
         echo $blogController->showPost($postId);
+    }
+    elseif ($_GET['action'] === 'login') {
+        echo $blogController->login();
+    }
+    elseif ($_GET['action'] === 'register') {
+        echo $blogController->register();
     }
     elseif ($_GET['action'] === 'admin') {
         echo $adminController->index();
