@@ -70,10 +70,12 @@ Class BlogController
             );
             $user->setEmail($_POST['email']);
             $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
-            
-            $this->userRepository->insert($user);
-
-            header('Location: ?action=blog');
+            if ($_POST['confirm_password'] === $_POST['password']) {
+                $this->userRepository->insert($user);
+                header('Location: ?action=blog');
+            } else {
+                echo "<script>alert(\"Le mot de passe est différent\")</script>";
+            }
         }
         return $this->twig->render('blog/register.html.twig');
     }
