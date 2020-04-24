@@ -5,32 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
+use App\Controller\AbstractController;
 
-Class AdminController
+Class AdminController extends AbstractController
 {
-    /**
-     * @var \Twig\Environment
-     */
-    private $twig;
-
-    /**
-     * @var PostRepository
-     */
-    private $postRepository;
-
-    /**
-     * @var CommentRepository
-     */
-    private $commentRepository;
-
-    public function __construct(\Twig\Environment $twig, 
-                                 PostRepository $postRepository, 
-                                 CommentRepository $commentRepository)
-    {
-        $this->twig = $twig;
-        $this->postRepository = $postRepository;
-        $this->commentRepository = $commentRepository;
-    }
 
     public function index() 
     {
@@ -121,6 +99,5 @@ Class AdminController
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
     }
-
 }
 

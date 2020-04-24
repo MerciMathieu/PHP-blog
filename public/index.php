@@ -32,7 +32,7 @@ $userRepository = new UserRepository($db);
 /**** /Repositories ****/
 
 /**** Controllers ****/
-$homeController = new HomeController($twig); 
+$homeController = new HomeController($twig, $postRepository, $commentRepository, $userRepository); 
 $blogController = new BlogController($twig, $postRepository, $commentRepository, $userRepository);
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
