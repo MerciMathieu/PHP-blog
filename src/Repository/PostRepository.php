@@ -58,7 +58,7 @@ class PostRepository
 
     public function findOneById(int $postId): Post
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
+        $req = $this->pdo->prepare("SELECT p.id, p.user_id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
                                            u.first_name, u.last_name
                                     FROM   post p
                                     JOIN   user u
@@ -73,6 +73,7 @@ class PostRepository
             $postFromDb['first_name'],
             $postFromDb['last_name']
         );
+        $author->setId($postFromDb['user_id']);
 
         $post = new Post(
             $postFromDb['title'],
@@ -90,10 +91,11 @@ class PostRepository
 
     public function insert(Post $post): int
     {
-        $req = $this->pdo->prepare("INSERT INTO post (title, intro, content, image_url) 
-                                    VALUES (:title, :intro, :content, :image_url)");
+        $req = $this->pdo->prepare("INSERT INTO post (user_id, title, intro, content, image_url) 
+                                    VALUES (:user_id, :title, :intro, :content, :image_url)");
 
         $req->execute([
+            'user_id' => $post->getAuthor()->getId(),
             'title' => $post->getTitle(),
             'intro' => $post->getIntro(),
             'content' =>$post->getContent(),

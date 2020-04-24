@@ -9,6 +9,13 @@ Class HomeController extends AbstractController
 
     public function index()
     {
-        return $this->twig->render('homepage/homepage.html.twig');
+        $currentUser = '';
+        if ($this->getCurrentUser()) 
+        {
+            $currentUser = $this->getCurrentUser();
+        }
+        return $this->twig->render('homepage/homepage.html.twig', [
+            'current_user' => $currentUser
+        ]);
     }
 }

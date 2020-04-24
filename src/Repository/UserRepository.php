@@ -16,23 +16,27 @@ class UserRepository
 
     public function findOneByEmail(string $email) 
     {
-        //TODO
-        // EMAIL EN LOWERCASE
         $req = $this->pdo->prepare("SELECT *
-                                    FROM   user u 
-                                    WHERE  u.email = :email
-                                    ");
-        $req->execute(['email' => $email]);
+                                    FROM   user
+                                    WHERE  email = :email
+                                    ");         
 
+        $req->execute(['email' => $email]);
         $userFromDb = $req->fetch();
+
+        if ($userFromDb == null) 
+        {
+            Var_dump("Cet utilisateur n'existe pas!"); exit;
+        } 
 
         $user = new User(
             $userFromDb['first_name'],
             $userFromDb['last_name']
         );
-
-        $user->setEmail($userFromDb['email']);
+        $user->setId($userFromDb['id']);
+        $user->setEmail($userFromDb['email']); 
         $user->setPassword($userFromDb['password']);
+        $user->setIsAdmin($userFromDb['is_admin']);
 
         return $user;
     }

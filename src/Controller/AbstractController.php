@@ -30,7 +30,18 @@ abstract class AbstractController {
 
     protected function getCurrentUser(): ?User
     {
-        $user = $_SESSION['user'];
+        $user = null;
+        if (isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+        }
         return $user;
+    }
+
+    public function logout()
+    {
+        session_start();
+        $_SESSION = [];
+        session_destroy(); 
+        header('Location:/');
     }
 }

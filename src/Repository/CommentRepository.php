@@ -83,10 +83,11 @@ class CommentRepository
 
     public function insert(Comment $comment): void
     {
-        $req = $this->pdo->prepare("INSERT INTO comment (post_id, content) VALUES (:post_id, :content)");
+        $req = $this->pdo->prepare("INSERT INTO comment (user_id, post_id, content) VALUES (:user_id, :post_id, :content)");
         $req->execute(array(
             'content' => $comment->getContent(),
-            'post_id' => $comment->getPost()->getId()
+            'post_id' => $comment->getPost()->getId(),
+            'user_id' => $comment->getAuthor()->getId()
         ));
     }
 
