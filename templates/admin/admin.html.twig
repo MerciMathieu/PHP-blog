@@ -2,16 +2,12 @@
 
 {% block title %}Liste des articles - {{ parent() }}{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock %}
-
 {% block header %}
     {{ parent() }}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="m-auto" id="navbarColor02">
             <ul class="navbar-nav">
-                <a href="?action=addpost" class="nav-item nav-link text-primary mx-3"><i class="fas fa-plus-circle mr-3"></i>Ajouter un article</a> 
+                <a href="/admin/post/add" class="nav-item nav-link text-primary mx-3"><i class="fas fa-plus-circle mr-3"></i>Ajouter un article</a> 
             </ul>
         </div>
     </nav>
@@ -61,14 +57,14 @@
                                 {% endif %}
                             </td>
                             <td class="text-center actions">
-                                <a class="btn btn-info" href="?action=moderate-post-comments&postid={{ post.id }}" role="button">
+                                <a class="btn btn-info" href="moderate/comments/post/{{ post.id }}" role="button">
                                     Commentaires<i class="fas fa-comment ml-2 {% if post.hasUnvalidatedComments %}red{% endif %}"></i>
                                 </a>
-                                <a class="btn btn-primary" href="?action=editpost&postid={{ post.id }}" role="button">
+                                <a class="btn btn-primary" href="edit/post/{{ post.id }}" role="button">
                                     Modifier
                                     <i class="fas fa-pen mr-2"></i>
                                 </a>
-                                <form action="?action=deletepost&postid={{ post.id}}" method="post">
+                                <form action="delete/post/{{ post.id}}" method="post">
                                     <button type="submit" class="btn btn-danger" name="delete" role="button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                                         Supprimer<i class="fas fa-times ml-2"></i>
                                     </button>

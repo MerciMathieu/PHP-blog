@@ -2,15 +2,10 @@
 
 namespace App\Controller\Home;
 
-Class HomeController
-{
-    
-    private $twig;
+use App\Controller\AbstractController;
 
-    public function __construct(\Twig\Environment $twig)
-    {
-        $this->twig = $twig;
-    }
+Class HomeController extends AbstractController
+{
 
     public function index()
     {

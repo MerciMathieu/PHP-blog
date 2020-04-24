@@ -112,6 +112,7 @@ legend
     border-radius: 5px;
     background: rgba(125, 144, 160, 0.7);
     z-index: 1000;
+    color: wheat;
 }
 
 #back-top:hover{

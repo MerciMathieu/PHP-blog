@@ -8,28 +8,11 @@ use App\Entity\Comment;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
+use App\Controller\AbstractController;
 
-Class BlogController
+Class BlogController extends AbstractController
 {
-    private \Twig\Environment $twig;
-
-    private PostRepository $postRepository;
-
-    private CommentRepository $commentRepository;
-
-    private UserRepository $userRepository;
-
-    public function __construct(\Twig\Environment $twig, 
-                                 PostRepository $postRepository, 
-                                 CommentRepository $commentRepository,
-                                 UserRepository $userRepository)
-    {
-        $this->twig = $twig;
-        $this->postRepository = $postRepository;
-        $this->commentRepository = $commentRepository;
-        $this->userRepository = $userRepository;
-    }
-
+   
     public function index() 
     {
         $posts = $this->postRepository->findAll();
@@ -55,6 +38,31 @@ Class BlogController
         ]);
     }
 
+    public function login()
+    {
+        return $this->twig->render('blog/login.html.twig');
+    }
+
+    public function register()
+    {
+        if (isset($_POST['submit'])) {
+
+            $user = new User(
+                $_POST['firstname'],
+                $_POST['lastname']
+            );
+            $user->setEmail($_POST['email']);
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+            if ($_POST['confirm_password'] === $_POST['password']) {
+                $this->userRepository->insert($user);
+                header('Location: /blog');
+            } else {
+                echo "<script>alert(\"Le mot de passe est différent\")</script>";
+            }
+        }
+        return $this->twig->render('blog/register.html.twig');
+    }
+
     private function insertComment(Post $post) 
     {   
         if (isset($_POST['submit'])) {
@@ -66,7 +74,7 @@ Class BlogController
     
             $this->commentRepository->insert($comment); 
             
-            header('Location:/?action=showpost&postid='.$post->getId());
+            header('Location:/post/'.$post->getId());
         }
     }
 }
