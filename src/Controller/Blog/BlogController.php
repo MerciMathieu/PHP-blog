@@ -40,25 +40,44 @@ Class BlogController extends AbstractController
 
     public function login()
     {
+        if (isset($_POST['submit'])) {
+            $user = $this->userRepository->findOneByEmail($_POST['email']);
+
+            if (password_verify($_POST['password'], $user->getPassword())) {
+                $_SESSION['user'] = $user;
+                header('Location: /blog');  
+            } else {
+                // TODO
+                // GERER LE CAS D'ERREUR 
+                echo 'Le mot de passe est invalide.';
+            }
+        }
+
         return $this->twig->render('blog/login.html.twig');
+    }
+
+    public function logout()
+    {
+        // session_destroy()
     }
 
     public function register()
     {
         if (isset($_POST['submit'])) {
 
+            if ($_POST['confirm_password'] !== $_POST['password']) {
+                echo "<script>alert(\"Le mot de passe est différent\")</script>";
+            } 
+
             $user = new User(
                 $_POST['firstname'],
                 $_POST['lastname']
             );
             $user->setEmail($_POST['email']);
-            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
-            if ($_POST['confirm_password'] === $_POST['password']) {
-                $this->userRepository->insert($user);
-                header('Location: /blog');
-            } else {
-                echo "<script>alert(\"Le mot de passe est différent\")</script>";
-            }
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
+            $this->userRepository->insert($user);
+
+            header('Location: /blog');   
         }
         return $this->twig->render('blog/register.html.twig');
     }
