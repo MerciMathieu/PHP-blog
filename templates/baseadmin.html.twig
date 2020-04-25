@@ -20,9 +20,12 @@
 <body>
     <div id="header">
         {% block header %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand m-auto" href="/">Blog - administration</a>
-        </nav>  
+        <ul>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand m-auto" href="/">Blog - administration</a>
+                <li><a class="navbar-brand m-auto" href="/admin/logout">Se déconnecter</a></li>
+            </nav>  
+        </ul>
         {% endblock %}
     </div>
 

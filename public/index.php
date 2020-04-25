@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+session_start();
 
 use App\Classes\Database;
 use App\Repository\PostRepository;
@@ -80,8 +81,17 @@ elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $_SERVER['REQUEST_
 elseif ($_SERVER['REQUEST_URI'] === '/login') {
     echo $blogController->login();
 }
-elseif ($_SERVER['REQUEST_URI'] === '/register') {
+elseif ($_SERVER['REQUEST_URI'] === '/admin/login') {
+    echo $adminController->login();
+}
+elseif ($_SERVER['REQUEST_URI'] === '/blog/register') {
     echo $blogController->register();
+}
+elseif ($_SERVER['REQUEST_URI'] === '/admin/logout') {
+    echo $adminController->logout();
+}
+elseif ($_SERVER['REQUEST_URI'] === '/blog/logout') {
+    echo $blogController->logout();
 }
 else { 
     echo $homeController->index();

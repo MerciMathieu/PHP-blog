@@ -1,10 +1,10 @@
-{% extends "base.html.twig" %}
+{% extends "baseadmin.html.twig" %}
 
-{% block title %}Login - {{ parent() }}{% endblock %}
+{% block title %}ADMINISTRATION LOGIN{% endblock %}
 
 {% block content %}
 
-    <section id="login" class="color-blue">
+    <section>
         <form method="post" class="m-auto w-50 py-5">
             <fieldset>
                 <legend class="text-center">Se connecter</legend>
@@ -19,7 +19,6 @@
                     <button type="submit" name="submit" class="button-link">Se connecter</button>
             </fieldset>
         </form>
-        <p class="text-center">Vous n'avez pas encore de compte? <a href="/blog/register">S'inscrire</a></p>
     </section>
 
 {% endblock %}
