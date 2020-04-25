@@ -14,7 +14,7 @@ class UserRepository
         $this->pdo = $pdo;
     }
 
-    public function findOneByEmail(string $email) 
+    public function findOneByEmail(string $email): ?User
     {
         $req = $this->pdo->prepare("SELECT *
                                     FROM   user
@@ -24,9 +24,8 @@ class UserRepository
         $req->execute(['email' => $email]);
         $userFromDb = $req->fetch();
 
-        if ($userFromDb == null) 
-        {
-            Var_dump("Cet utilisateur n'existe pas!"); exit;
+        if ($userFromDb === false) {
+            return null;
         } 
 
         $user = new User(

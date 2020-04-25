@@ -15,17 +15,9 @@ Class BlogController extends AbstractController
    
     public function index() 
     {
-        $currentUser = '';
         $posts = $this->postRepository->findAll();
-
-        if ($this->getCurrentUser()) 
-        {
-            $currentUser = $this->getCurrentUser();
-        }
-
         return $this->twig->render('blog/blog.html.twig', [
-            'posts' => $posts,
-            'current_user' => $currentUser
+            'posts' => $posts
         ]);
     }
 
@@ -33,8 +25,7 @@ Class BlogController extends AbstractController
     {  
         $post = $this->postRepository->findOneById($id);
         
-        if (isset($_POST['submit'])) 
-        {
+        if (isset($_POST['submit'])) {
             $this->insertComment($post);
         }
 
@@ -48,11 +39,12 @@ Class BlogController extends AbstractController
 
     public function register()
     {
+        $errors = [];
+
         if (isset($_POST['submit'])) {
 
-            if ($_POST['confirm_password'] !== $_POST['password']) 
-            {
-                var_dump("Mot de passe différent"); exit;
+            if ($_POST['confirm_password'] !== $_POST['password']) {
+                $errors['password'][] = "Mot de passe différent";
             } 
 
             $user = new User(
@@ -65,47 +57,41 @@ Class BlogController extends AbstractController
 
            return $this->index();   
         }
-        return $this->twig->render('blog/register.html.twig');
+        return $this->twig->render('blog/register.html.twig', [
+            'errors' => $errors
+        ]);
     }
 
     public function login()
     {
-        if (isset($_POST['submit'])) 
-        {
+        $errors = [];
+        if (isset($_POST['submit'])) {
 
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
-            if (password_verify($_POST['password'], $user->getPassword())) 
-            {
+            if (password_verify($_POST['password'], $user->getPassword())) {
                 $_SESSION['user'] = $user;
                 header('Location: /blog');
-            } else 
-            {
-                var_dump('Le mot de passe est invalide.'); exit;
+            } else {
+                $errors['password'][] = 'Le mot de passe est invalide.'; 
             }
         }
-        
-        return $this->twig->render('blog/login.html.twig');
+        return $this->twig->render('blog/login.html.twig', [
+            'errors' => $errors
+        ]);
     }
 
     private function insertComment(Post $post) 
     {   
-        if (isset($_POST['submit'])) 
-        {
-            if (isset($_SESSION['user'])) 
-            {
+        if (isset($_POST['submit'])) {
+            if (isset($_SESSION['user'])) {
                 $comment = new Comment(
                     $_POST['message'],
                     $post,
                     $_SESSION['user']
                 );
-
                 $this->commentRepository->insert($comment); 
-
                 header('Location:/post/'.$post->getId());
-            }
-            else {
-                var_dump('Il faut être connecté pour pouvoir laisser un commentaire!'); exit;
             }
         }
     }

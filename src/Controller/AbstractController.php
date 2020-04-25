@@ -37,11 +37,18 @@ abstract class AbstractController {
         return $user;
     }
 
-    public function logout()
+    public function logout(): void
     {
-        session_start();
-        $_SESSION = [];
         session_destroy(); 
         header('Location:/');
+    }
+
+    public function isAdmin(): bool 
+    {
+        $currentUser = $this->getCurrentUser();
+        if ($currentUser and $currentUser->getIsAdmin() === true) {
+            return true;
+        }
+        return false;
     }
 }

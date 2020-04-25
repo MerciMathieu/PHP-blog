@@ -20,6 +20,8 @@ $twig = new \Twig\Environment($loader, [
     'auto_reload' => true
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
+$currentUser = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+$twig->addGlobal('current_user', $currentUser);
 /**** /TWIG ****/
 
 /**** Database ****/
@@ -87,12 +89,10 @@ elseif ($_SERVER['REQUEST_URI'] === '/admin/login') {
 elseif ($_SERVER['REQUEST_URI'] === '/blog/register') {
     echo $blogController->register();
 }
-elseif ($_SERVER['REQUEST_URI'] === '/admin/logout') {
-    echo $adminController->logout();
-}
-elseif ($_SERVER['REQUEST_URI'] === '/blog/logout') {
+elseif ($_SERVER['REQUEST_URI'] === '/logout') {
     echo $blogController->logout();
 }
+// IMPLEMENTER 404
 else { 
     echo $homeController->index();
 }
