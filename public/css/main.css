@@ -31,6 +31,10 @@ p {
     font-size: 2rem;
 }
 
+label {
+    font-size: 1.5rem;;
+}
+
 .button-link {
     border-radius: 4px;
     padding: 8px;
@@ -40,6 +44,7 @@ p {
     font-weight: 600;
     border: none;
     outline: none;
+    font-size: 1.5rem;
 }
 
 .button-link:hover {
