@@ -9,8 +9,22 @@ Class HomeController extends AbstractController
 
     public function index()
     {
-        /* TODO */
-        /* SEND MAIL + VALIDATION */
-        return $this->twig->render('homepage/homepage.html.twig');
+        if (isset($_POST['submit'])) {
+            $this->sendMail();
+        }
+
+        return $this->twig->render('homepage/homepage.html.twig', [
+            'errors' => $errors
+        ]);
     }
+
+    private function sendMail(): void
+    {
+        $to      = 'mathieu.delclos@gmail.com';
+        $subject = 'Contact via formulaire de contact';
+        $message = $_POST['message'];
+
+        mail($to, $subject, $headers);
+    }
+
 }
