@@ -13,9 +13,7 @@ Class HomeController extends AbstractController
             $this->sendMail();
         }
 
-        return $this->twig->render('homepage/homepage.html.twig', [
-            'errors' => $errors
-        ]);
+        return $this->twig->render('homepage/homepage.html.twig');
     }
 
     private function sendMail(): void
@@ -24,7 +22,7 @@ Class HomeController extends AbstractController
         $subject = 'Contact via formulaire de contact';
         $message = $_POST['message'];
 
-        mail($to, $subject, $headers);
+        mail($to, $subject, $message);
     }
 
 }
