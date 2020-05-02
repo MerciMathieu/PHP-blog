@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-Class User 
+class User
 {
-
     private int $id;
 
     private string $firstName;
@@ -15,13 +14,15 @@ Class User
 
     private string $password;
 
-    private \DateTime $createdAt;  
+    private \DateTime $createdAt;
     
     private bool $isAdmin;
     
 
-    public function __construct(string $firstName, 
-                                string $lastName)
+    public function __construct(
+        string $firstName,
+        string $lastName
+    )
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;

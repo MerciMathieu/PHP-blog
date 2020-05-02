@@ -1,12 +1,11 @@
-<?php 
+<?php
 
 namespace App\Controller\Home;
 
 use App\Controller\AbstractController;
 
-Class HomeController extends AbstractController
+class HomeController extends AbstractController
 {
-
     public function index()
     {
         /* TODO */

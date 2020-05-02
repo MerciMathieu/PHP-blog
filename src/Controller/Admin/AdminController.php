@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controller\Admin;
 
@@ -8,9 +8,9 @@ use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Controller\AbstractController;
 
-Class AdminController extends AbstractController
+class AdminController extends AbstractController
 {
-    public function index() 
+    public function index()
     {
         $posts = $this->postRepository->findAll();
         return $this->twig->render('admin/admin.html.twig', [
@@ -24,7 +24,7 @@ Class AdminController extends AbstractController
 
         if ($this->isAdmin()) {
             return $this->index();
-        } 
+        }
 
         if (isset($_POST['submit'])) {
             
@@ -47,7 +47,7 @@ Class AdminController extends AbstractController
                 }
             } else {
                 $errors[] = "Cet utilisateur n'existe pas!";
-            }  
+            }
         }
 
         return $this->twig->render('admin/login.html.twig', [
@@ -79,10 +79,8 @@ Class AdminController extends AbstractController
         $post = $this->postRepository->findOneById($id);
 
         if (isset($_POST['submit'])) {
-
-            if ( $this->isAdmin() 
+            if ($this->isAdmin()
             and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
-
                 $post->setTitle($_POST['title']);
                 $post->setIntro($_POST['intro']);
                 $post->setContent($_POST['content']);
@@ -96,7 +94,7 @@ Class AdminController extends AbstractController
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post
         ]);
-    } 
+    }
 
     public function deletePost(int $id)
     {
@@ -105,10 +103,9 @@ Class AdminController extends AbstractController
 
             if ($this->isAdmin()
             and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
+                $this->postRepository->delete($post);
 
-            $this->postRepository->delete($post);   
-
-            header('Location:/admin/posts');
+                header('Location:/admin/posts');
             }
         }
     }
@@ -129,9 +126,8 @@ Class AdminController extends AbstractController
     public function deleteComment(int $id)
     {
         if (isset($_POST['delete'])) {
-            
             $comment = $this->commentRepository->findOneById($id);
-            $this->commentRepository->delete($comment); 
+            $this->commentRepository->delete($comment);
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
@@ -140,13 +136,11 @@ Class AdminController extends AbstractController
     public function approveComment(int $id, bool $validate)
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
-
             $comment = $this->commentRepository->findOneById($id);
-            $comment->setIsValidated($validate); 
+            $comment->setIsValidated($validate);
             $this->commentRepository->approve($comment);
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
     }
 }
-

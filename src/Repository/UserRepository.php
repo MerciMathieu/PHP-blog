@@ -6,7 +6,6 @@ use App\Entity\User;
 
 class UserRepository
 {
-
     private $pdo;
 
     public function __construct(\PDO $pdo)
@@ -19,21 +18,21 @@ class UserRepository
         $req = $this->pdo->prepare("SELECT *
                                     FROM   user
                                     WHERE  email = :email
-                                    ");         
+                                    ");
 
         $req->execute(['email' => $email]);
         $userFromDb = $req->fetch();
 
         if ($userFromDb === false) {
             return null;
-        } 
+        }
 
         $user = new User(
             $userFromDb['first_name'],
             $userFromDb['last_name']
         );
         $user->setId($userFromDb['id']);
-        $user->setEmail($userFromDb['email']); 
+        $user->setEmail($userFromDb['email']);
         $user->setPassword($userFromDb['password']);
         $user->setIsAdmin($userFromDb['is_admin']);
 

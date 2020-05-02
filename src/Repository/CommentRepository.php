@@ -8,7 +8,6 @@ use App\Entity\Comment;
 
 class CommentRepository
 {
-
     private \PDO $pdo;
 
     private PostRepository $postRepository;
@@ -21,10 +20,11 @@ class CommentRepository
 
     public function findOneByID(int $id): Comment
     {
-        $req = $this->pdo->prepare("SELECT *
+        $req = $this->pdo->prepare(
+            "SELECT *
                                     FROM   comment c
                                     WHERE  c.id = :id"
-                                    );
+        );
 
         $req->execute(['id' => $id]);
 
@@ -61,7 +61,6 @@ class CommentRepository
         
         $comments = [];
         foreach ($commentsArrayFromDb as $commentFromDb) {
-
             $author = new User(
                 $commentFromDb['first_name'],
                 $commentFromDb['last_name']
