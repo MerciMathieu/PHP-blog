@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use App\Entity\User;
 
-Class Comment 
+class Comment
 {
-
     private int $id;
 
     private string $content;

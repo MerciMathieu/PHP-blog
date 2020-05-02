@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-Class Post {
-
-
+class Post
+{
     private int $id;
     
     private string $title;
@@ -24,11 +23,12 @@ Class Post {
 
 
     public function __construct(
-                                string $title, 
-                                string $intro,
-                                string $content,
-                                string $imageUrl = null,
-                                User $author = null)
+        string $title,
+        string $intro,
+        string $content,
+        string $imageUrl = null,
+        User $author = null
+    )
     {
         $this->title = $title;
         $this->intro = $intro;

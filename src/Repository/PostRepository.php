@@ -33,7 +33,6 @@ class PostRepository
         $postsArrayFromDb = $req->fetchAll();
         $posts = [];
         foreach ($postsArrayFromDb as $postFromDb) {
-
             $hasUnvalidatedComments = $postFromDb['unvalidated_comments_count'] > 0 ? true : false;
 
             $author = new User(
@@ -58,13 +57,14 @@ class PostRepository
 
     public function findOneById(int $postId): Post
     {
-        $req = $this->pdo->prepare("SELECT p.id, p.user_id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
+        $req = $this->pdo->prepare(
+            "SELECT p.id, p.user_id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
                                            u.first_name, u.last_name
                                     FROM   post p
                                     JOIN   user u
                                     ON     p.user_id = u.id
                                     WHERE  p.id = :post_id"
-                                    );
+        );
         $req->execute(['post_id' => $postId]);
 
         $postFromDb = $req->fetch();
@@ -107,7 +107,6 @@ class PostRepository
 
     public function edit(Post $post): void
     {
-
         $req = $this->pdo->prepare("UPDATE post 
                                     SET title = :title, intro = :intro, content = :content, image_url = :image_url
                                     WHERE id = :post_id");

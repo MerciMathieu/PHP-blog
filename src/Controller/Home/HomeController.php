@@ -1,12 +1,11 @@
-<?php 
+<?php
 
 namespace App\Controller\Home;
 
 use App\Controller\AbstractController;
 
-Class HomeController extends AbstractController
+class HomeController extends AbstractController
 {
-
     public function index()
     {
         if (isset($_POST['submit'])) {
@@ -15,7 +14,7 @@ Class HomeController extends AbstractController
 
         return $this->twig->render('homepage/homepage.html.twig');
     }
-
+  
     private function sendMail(): void
     {
         $to      = 'mathieu.delclos@gmail.com';
@@ -26,5 +25,4 @@ Class HomeController extends AbstractController
 
         mail($to, $subject, $message, $headers);
     }
-
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controller\Blog;
 
@@ -10,10 +10,9 @@ use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
 use App\Controller\AbstractController;
 
-Class BlogController extends AbstractController
+class BlogController extends AbstractController
 {
-   
-    public function index() 
+    public function index()
     {
         $posts = $this->postRepository->findAll();
         return $this->twig->render('blog/blog.html.twig', [
@@ -21,8 +20,8 @@ Class BlogController extends AbstractController
         ]);
     }
 
-    public function showPost(int $id) 
-    {  
+    public function showPost(int $id)
+    {
         $post = $this->postRepository->findOneById($id);
         
         if (isset($_POST['submit'])) {
@@ -42,10 +41,9 @@ Class BlogController extends AbstractController
         $errors = [];
 
         if (isset($_POST['submit'])) {
-
             if ($_POST['confirm_password'] !== $_POST['password']) {
                 $errors['password'][] = "Mot de passe différent";
-            } 
+            }
 
             $user = new User(
                 $_POST['firstname'],
@@ -55,7 +53,7 @@ Class BlogController extends AbstractController
             $user->setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
             $this->userRepository->insert($user);
 
-           return $this->index();   
+            return $this->index();
         }
         return $this->twig->render('blog/register.html.twig', [
             'errors' => $errors
@@ -66,14 +64,13 @@ Class BlogController extends AbstractController
     {
         $errors = [];
         if (isset($_POST['submit'])) {
-
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
             if (password_verify($_POST['password'], $user->getPassword())) {
                 $_SESSION['user'] = $user;
                 header('Location: /blog');
             } else {
-                $errors['password'][] = 'Le mot de passe est invalide.'; 
+                $errors['password'][] = 'Le mot de passe est invalide.';
             }
         }
         return $this->twig->render('blog/login.html.twig', [
@@ -81,8 +78,8 @@ Class BlogController extends AbstractController
         ]);
     }
 
-    private function insertComment(Post $post) 
-    {   
+    private function insertComment(Post $post)
+    {
         if (isset($_POST['submit'])) {
             if (isset($_SESSION['user'])) {
                 $comment = new Comment(
@@ -90,10 +87,9 @@ Class BlogController extends AbstractController
                     $post,
                     $_SESSION['user']
                 );
-                $this->commentRepository->insert($comment); 
+                $this->commentRepository->insert($comment);
                 header('Location:/post/'.$post->getId());
             }
         }
     }
 }
-

@@ -5,14 +5,13 @@ namespace App\Classes;
 use PDO;
 use Exception;
 
-class Database 
+class Database
 {
     public static function connect()
     {
-        $db = new PDO
-        (
-            'mysql:host=localhost;dbname=blogphp;charset=utf8', 
-            'root', 
+        $db = new PDO(
+            'mysql:host=localhost;dbname=blogphp;charset=utf8',
+            'root',
             ''
         );
 
