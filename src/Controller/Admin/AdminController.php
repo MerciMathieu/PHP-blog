@@ -21,7 +21,6 @@ class AdminController extends AbstractController
     public function login()
     {
         $errors = [];
-        $class = null;
 
         if ($this->isAdmin()) {
             return $this->index();
@@ -36,12 +35,10 @@ class AdminController extends AbstractController
                 if ($user->getIsAdmin()) {
                     $success = true;
                 } else {
-                    $errors['admin'][] = "Vous devez être administrateur pour entrer ici!";
-                    $class = 'bg-danger';
+                    $errors['admin'] = "Vous devez être administrateur pour entrer ici!";
                 }
             } else {
-                $errors['user'][] = 'Le login/mot de passe est erroné';
-                $class = 'bg-danger';
+                $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
             if ($success === true) {
@@ -51,8 +48,7 @@ class AdminController extends AbstractController
         }
 
         return $this->twig->render('admin/login.html.twig', [
-            'errors' => $errors,
-            'class' => $class
+            'errors' => $errors
         ]);
     }
 
