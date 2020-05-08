@@ -21,6 +21,7 @@ class AdminController extends AbstractController
     public function login()
     {
         $errors = [];
+        $success = false;
 
         if ($this->isAdmin()) {
             return $this->index();
@@ -33,14 +34,15 @@ class AdminController extends AbstractController
             } */
 
             $user = $this->userRepository->findOneByEmail($_POST['email']);
+
             if ($user) {
                 if (password_verify($_POST['password'], $user->getPassword())) {
                     $_SESSION['user'] = $user;
     
-                    if ($_SESSION['user']->getIsAdmin()) {
-                        Header('Location: /admin/posts');
+                    if ($user->getIsAdmin()) {
+                        $success = true;
                     } else {
-                        $errors[] = "Vous devez être administrateur pour entrer ici!";
+                        return $this->displayError(403);
                     }
                 } else {
                     $errors[] = "Le mot de passe est invalide.";
@@ -48,6 +50,10 @@ class AdminController extends AbstractController
             } else {
                 $errors[] = "Cet utilisateur n'existe pas!";
             }
+        }
+
+        if ($success === true) {
+            Header('Location: /admin/posts');
         }
 
         return $this->twig->render('admin/login.html.twig', [
@@ -96,7 +102,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function deletePost(int $id)
+    public function deletePost(int $id): void
     {
         if (isset($_POST['delete'])) {
             $post = $this->postRepository->findOneById($id);
@@ -123,7 +129,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function deleteComment(int $id)
+    public function deleteComment(int $id): void
     {
         if (isset($_POST['delete'])) {
             $comment = $this->commentRepository->findOneById($id);
@@ -133,7 +139,7 @@ class AdminController extends AbstractController
         }
     }
 
-    public function approveComment(int $id, bool $validate)
+    public function approveComment(int $id, bool $validate): void
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
             $comment = $this->commentRepository->findOneById($id);
