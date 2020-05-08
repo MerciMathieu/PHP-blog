@@ -21,37 +21,38 @@ class AdminController extends AbstractController
     public function login()
     {
         $errors = [];
+        $class = null;
 
         if ($this->isAdmin()) {
             return $this->index();
         }
 
         if (isset($_POST['submit'])) {
-            
-            /* if (){
-                $errors['email'][] = "L'adresse email n'est pas valide.";
-            } */
 
+            $success = false;
             $user = $this->userRepository->findOneByEmail($_POST['email']);
-            if ($user) {
-                if (password_verify($_POST['password'], $user->getPassword())) {
-                    $_SESSION['user'] = $user;
-    
-                    if ($_SESSION['user']->getIsAdmin()) {
-                        Header('Location: /admin/posts');
-                    } else {
-                        $errors[] = "Vous devez être administrateur pour entrer ici!";
-                    }
+
+            if ($user !== null and password_verify($_POST['password'], $user->getPassword())) {
+                if ($user->getIsAdmin()) {
+                    $success = true;
                 } else {
-                    $errors[] = "Le mot de passe est invalide.";
+                    $errors['admin'][] = "Vous devez être administrateur pour entrer ici!";
+                    $class = 'bg-danger';
                 }
             } else {
-                $errors[] = "Cet utilisateur n'existe pas!";
+                $errors['user'][] = 'Le login/mot de passe est erroné';
+                $class = 'bg-danger';
+            }
+
+            if ($success === true) {
+                $_SESSION['user'] = $user;
+                header('Location: /admin/posts');
             }
         }
 
         return $this->twig->render('admin/login.html.twig', [
-            'errors' => $errors
+            'errors' => $errors,
+            'class' => $class
         ]);
     }
 
