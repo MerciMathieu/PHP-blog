@@ -14,10 +14,10 @@
             <h1 class="text-center mb-5">Derniers articles</h1>
 
             {% for post in posts %}
-                <div class="articles mb-5">
-                    <div class="article bg-white mb-3">
+                <div class="articles my-5">
+                    <div class="article bg-white my-5">
                         <div class="article-body">
-                            <h2 class="article-header article-title font-weight-bold mt-5 ml-4">{{ post.title }}</h2>
+                            <h2 class="article-header article-title font-weight-bold ml-4">{{ post.title }}</h2>
                             <small class="text-muted ml-4"><i class="far fa-clock mr-2"></i>
                                 {% if post.updatedAt %}
                                     Modifié le {{ post.updatedAt|date('d-m-Y à H:i:s') }}
