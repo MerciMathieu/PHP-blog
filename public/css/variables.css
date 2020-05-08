@@ -5,6 +5,10 @@
     --third-bg-color: #4A5969;
 }
 
+.bg-blue {
+    background-color: var(--main-bg-color);
+}
+
 .color-black {
     color: rgba(12, 11, 11, 0.924);
 }
@@ -14,5 +18,5 @@
 }
 
 .background-gray {
-    background-color: rgba(230, 230, 230, 0.829);
+    background-color: #e6e6e6d3;
 }
