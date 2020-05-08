@@ -1,53 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Se connecter</title>
-    <link rel="icon" type="image/png" href="/img/avatar.png" />
+{% extends "base.min.html.twig" %}
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="/css/variables.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
-</head>
-    <div id="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand ml-5" href="/">Blog de Mathieu Delclos</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-        
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav ml-auto mr-5">
-                    <li class="nav-item dropdown mr-4">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accueil</a>
-                        <div class="dropdown-menu">
-                            <a class="nav-link dropdown-item" href="/">Page de garde</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="nav-link dropdown-item" href="/#about">A propos</a>
-                            <a class="nav-link dropdown-item" href="/#contact">Contact</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog">Blog</a>
-                    </li>
-                    <li class="nav-item ml-4">
-                        {% if current_user %}
-                            <li class="nav-item dropdown mr-4">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ current_user.firstName }}</a>
-                                <div class="dropdown-menu">
-                                    <a class="nav-link" href="/logout">Se déconnecter</a>
-                                </div>
-                            </li>
-                        {% else %}
-                            <a class="nav-link" href="/login">Se connecter</a>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+{% block title %}Inscription - {{ parent() }}{% endblock %}
+
+{% block content %}
 
     <section id="register" class="color-blue">
         <h1 class="text-center mb-5">Créer un compte</h1>
@@ -99,3 +54,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </body>
 </html>
+
+{% endblock %}
