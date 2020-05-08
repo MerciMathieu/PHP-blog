@@ -39,42 +39,39 @@ class BlogController extends AbstractController
     public function register()
     {
         $post = null;
-        $class = null;
+        $textColorError = null;
         $errors = [];
         
         if (isset($_POST['submit'])) {
 
             $post = $_POST;
             $success = true;
-            $class = 'success';
 
             if (!isset($_POST['lastname']) or empty($_POST['lastname']) or strlen($_POST['lastname']) <3 ) {
                 $success = false;
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
-                $class = 'bg-danger';
+                $textColorError['lastname'] = 'text-danger';
             }
             if (!isset($_POST['firstname']) or empty($_POST['firstname']) or strlen($_POST['firstname']) < 3 ) {
                 $success = false;
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
-                $class = 'bg-danger';
+                $textColorError['firstname'] = 'text-danger';
             }
             if (!isset($_POST['email']) or empty($_POST['email']) or !preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $_POST['email'])) {
                 $success = false;
                 $errors['email'] = "L'email doit être valide";
-                $class = 'bg-danger';
+                $textColorError['email'] = 'text-danger';
             }
             if (!isset($_POST['password']) or empty($_POST['password']) or strlen($_POST['password']) < 4) {
                 $success = false;
-                $errors['password'][] = "Le mot de passe doit contenir au minimum 4 caractères";
-                $class = 'bg-danger';
+                $errors['password'] = "Le mot de passe doit contenir au minimum 4 caractères";
+                $textColorError['password'] = 'text-danger';
             }
             if ($_POST['confirm_password'] !== $_POST['password']) {
                 $success = false;
-                $errors['password'][] = "Mot de passe différent";
-                $class = 'bg-danger';
+                $errors['password'] = "Mot de passe différent";
+                $textColorError['password_confirm'] = 'text-danger';
             }
-
-            var_dump($errors);
 
             if ($success === true) {
                 $user = new User(
@@ -95,25 +92,26 @@ class BlogController extends AbstractController
         return $this->twig->render('blog/register.html.twig', [
             'errors' => $errors,
             'postvariables' => $post,
-            'class' => $class
+            'textColorError' => $textColorError
         ]);
     }
 
     public function login()
     {
         $errors = [];
-        $class = null;
+        $post = null;
 
         if (isset($_POST['submit'])) {
 
+            $post = $_POST;
             $success = false;
+            
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
             if ($user !== null and password_verify($_POST['password'], $user->getPassword())) {
                 $success = true;
             } else {
-                $errors['user'][] = 'Le login/mot de passe est erroné';
-                $class = 'bg-danger';
+                $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
             if ($success === true) {
@@ -124,7 +122,7 @@ class BlogController extends AbstractController
 
         return $this->twig->render('blog/login.html.twig', [
             'errors' => $errors,
-            'class' => $class
+            'postvariables' => $post
         ]);
     }
 
