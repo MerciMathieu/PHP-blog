@@ -11,6 +11,7 @@ use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
+use App\Controller\Error\ErrorController;
 use App\Controller\Login\LoginController;
 
 /**** TWIG ****/
@@ -38,6 +39,7 @@ $userRepository = new UserRepository($db);
 $homeController = new HomeController($twig, $postRepository, $commentRepository, $userRepository);
 $blogController = new BlogController($twig, $postRepository, $commentRepository, $userRepository);
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
+$errorController = new ErrorController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
 if ($_SERVER['REQUEST_URI'] === '/') {
@@ -78,7 +80,7 @@ if ($_SERVER['REQUEST_URI'] === '/') {
 } elseif ($_SERVER['REQUEST_URI'] === '/logout') {
     echo $blogController->logout();
 }
-// IMPLEMENTER 404
 else {
-    echo $homeController->index();
+    http_response_code(404);
+    echo $errorController->display404();
 }
