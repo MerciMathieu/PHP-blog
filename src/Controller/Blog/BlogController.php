@@ -22,14 +22,19 @@ class BlogController extends AbstractController
 
     public function showPost(int $id)
     {
+        $comments = [];
         $post = $this->postRepository->findOneById($id);
-        
-        if (isset($_POST['submit'])) {
-            $this->insertComment($post);
+
+        if ($post !== null ) {
+            if (isset($_POST['submit'])) {
+                $this->insertComment($post);
+            }
+            $comments = $this->commentRepository->findAllByPost($post, true);
+        } else {
+            return $this->displayError(404);
         }
-
-        $comments = $this->commentRepository->findAllByPost($post, true);
-
+        
+        
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,
             'comments' => $comments
@@ -126,7 +131,7 @@ class BlogController extends AbstractController
         ]);
     }
 
-    private function insertComment(Post $post)
+    private function insertComment(Post $post): void
     {
         if (isset($_POST['submit'])) {
             if (isset($_SESSION['user'])) {

@@ -55,8 +55,10 @@ class PostRepository
         return $posts;
     }
 
-    public function findOneById(int $postId): Post
+    public function findOneById(int $postId): ?Post
     {
+        $post = null;
+
         $req = $this->pdo->prepare(
             "SELECT p.id, p.user_id, p.title, p.intro, p.content, p.created_at, p.updated_at, p.image_url,
                                            u.first_name, u.last_name
@@ -69,22 +71,26 @@ class PostRepository
 
         $postFromDb = $req->fetch();
 
-        $author = new User(
-            $postFromDb['first_name'],
-            $postFromDb['last_name']
-        );
-        $author->setId($postFromDb['user_id']);
+        if ($postFromDb) {
 
-        $post = new Post(
-            $postFromDb['title'],
-            $postFromDb['intro'],
-            $postFromDb['content'],
-            $postFromDb['image_url'],
-            $author
-        );
-        $post->setId($postFromDb['id']);
-        $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
-        $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
+            $author = new User(
+                $postFromDb['first_name'],
+                $postFromDb['last_name']
+            );
+            $author->setId($postFromDb['user_id']);
+    
+            $post = new Post(
+                $postFromDb['title'],
+                $postFromDb['intro'],
+                $postFromDb['content'],
+                $postFromDb['image_url'],
+                $author
+            );
+            $post->setId($postFromDb['id']);
+            $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
+            $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
+
+        }
         
         return $post;
     }

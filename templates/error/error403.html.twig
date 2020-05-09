@@ -1,0 +1,18 @@
+{% extends "base.min.html.twig" %}
+
+{% block title %}403 - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <section id="home" class="color-blue bg-blue py-5">
+        <div class="container text-center py-5">
+            <div class="jumbotron py-5">
+                <h1 class="display-1">403 Accès restreint </h1>
+                <p class="lead display-4">Vous devez être administrateur pour entrer ici!</p>
+                <hr class="my-4">
+                <a class="btn btn-danger btn-lg" href="/" role="button">Retour à l'accueil</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

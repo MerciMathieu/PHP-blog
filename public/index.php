@@ -40,6 +40,11 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
+
+if (http_response_code() && http_response_code() === 500) {
+    echo $blogController->displayError(500);
+}
+
 if ($_SERVER['REQUEST_URI'] === '/') {
     echo $homeController->index();
 } elseif ($_SERVER['REQUEST_URI'] === '/blog') {
@@ -78,7 +83,6 @@ if ($_SERVER['REQUEST_URI'] === '/') {
 } elseif ($_SERVER['REQUEST_URI'] === '/logout') {
     echo $blogController->logout();
 }
-// IMPLEMENTER 404
 else {
-    echo $homeController->index();
+    echo $homeController->displayError(404);
 }

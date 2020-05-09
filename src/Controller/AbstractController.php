@@ -53,4 +53,10 @@ abstract class AbstractController
         }
         return false;
     }
+
+    public function displayError(int $errorCode)
+    {
+        http_response_code($errorCode);
+        return $this->twig->render("error/error" . $errorCode . ".html.twig");
+    }
 }
