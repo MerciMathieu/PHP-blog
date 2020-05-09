@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-use App\Classes\Database;
+use App\Classes\ConnectDb;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
@@ -25,13 +25,14 @@ $twig->addGlobal('current_user', $currentUser);
 /**** /TWIG ****/
 
 /**** Database ****/
-$db = Database::connect();
+$instance = ConnectDb::getInstance();
+$conn = $instance->getConnection();
 /*****************/
 
 /**** Repositories ****/
-$postRepository = new PostRepository($db);
-$commentRepository = new CommentRepository($db);
-$userRepository = new UserRepository($db);
+$postRepository = new PostRepository($conn);
+$commentRepository = new CommentRepository($conn);
+$userRepository = new UserRepository($conn);
 /**** /Repositories ****/
 
 /**** Controllers ****/
@@ -39,7 +40,6 @@ $homeController = new HomeController($twig, $postRepository, $commentRepository,
 $blogController = new BlogController($twig, $postRepository, $commentRepository, $userRepository);
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
-
 
 if (http_response_code() && http_response_code() === 500) {
     echo $blogController->displayError(500);
