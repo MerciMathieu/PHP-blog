@@ -1,39 +1,58 @@
-{% extends "base.html.twig" %}
+{% extends "base.min.html.twig" %}
 
-{% block title %}Register - {{ parent() }}{% endblock %}
+{% block title %}Inscription - {{ parent() }}{% endblock %}
 
 {% block content %}
 
     <section id="register" class="color-blue">
+        <h1 class="text-center mb-5">Créer un compte</h1>
+
+        {% if errors %}
+            <div class="alert-danger my-5 w-50 mx-auto">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <form method="post" class="m-auto w-50">
             <fieldset>
-                <legend class="text-center">Créer un compte</legend>
+                <legend class="text-center">Entrez vos informations</legend>
                     <div class="row">
                         <div class="col">
                             <label for="lastname">Nom <abbr title="required">*</abbr></label>
-                            <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Entrez votre nom" required>
+                            <input type="text" name="lastname" class="form-control {{ textColorError.lastname }}" id="lastname" placeholder="Entrez votre nom" {% if postvariables.lastname %}value="{{ postvariables.lastname }}"{% endif %} required>
                         </div>     
                         <div class="col">
                             <label for="firstname">Prénom <abbr title="required">*</abbr></label>
-                            <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Entrez votre prénom" required>
+                            <input type="text" name="firstname" class="form-control {{ textColorError.firstname }}" id="firstname" placeholder="Entrez votre prénom" {% if postvariables.firstname %}value="{{ postvariables.firstname }}"{% endif %} required>
                         </div>           
                     </div>
                     <div class="form-group">
                         <label for="email">Email <abbr title="required">*</abbr></label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre email" required>
+                        <input type="email" name="email" class="form-control {{ textColorError.email }}" id="email" placeholder="Entrez votre email" {% if postvariables.email %}value="{{ postvariables.email }}"{% endif %} required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password <abbr title="required">*</abbr></label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" required>
+                        <input type="password" name="password" class="form-control {{ textColorError.password }}" id="password" placeholder="Mot de passe" required>
                     </div>
                     <div class="form-group">
                         <label for="confirm_password">Confirm password <abbr title="required">*</abbr></label>
-                        <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirmez votre mot de passe" required>
+                        <input type="password" name="confirm_password" class="form-control {{ textColorError.confirm_password }}" id="confirm_password" placeholder="Confirmez votre mot de passe" required>
                     </div>
-                    <button type="submit" name="submit" class="button-link">S'enregistrer</button>
+                    <button type="submit" name="submit" class="button-link w-100 mb-4">S'enregistrer</button>
             </fieldset>
         </form>
-        <p class="text-center">Vous avez déjà un compte? <a href="/login">Se connecter</a></p>
+        <p class="text-center mt-5">Vous avez déjà un compte? <a href="/login">Se connecter</a></p>
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+</body>
+</html>
 
 {% endblock %}

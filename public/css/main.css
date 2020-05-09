@@ -59,7 +59,7 @@ button:focus {
     outline: none;
 }
 
-div#content {
+div#content, li {
     font-size: 1.6rem;
 }
 

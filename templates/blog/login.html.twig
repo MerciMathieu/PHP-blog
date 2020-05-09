@@ -1,25 +1,44 @@
-{% extends "base.html.twig" %}
+{% extends "base.min.html.twig" %}
 
-{% block title %}Login - {{ parent() }}{% endblock %}
+{% block title %}Connexion - {{ parent() }}{% endblock %}
 
 {% block content %}
 
     <section id="login" class="color-blue">
+        <h1 class="text-center">Connexion</h1>
+
+        {% if errors %}
+            <div class="alert-danger my-5 w-50 mx-auto">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
         <form method="post" class="m-auto w-50 py-5">
             <fieldset>
-                <legend class="text-center">Se connecter</legend>
+                <legend class="text-center">Entrez vos identifiants</legend>
                     <div class="form-group">
                         <label for="email">Email <abbr title="required">*</abbr></label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre email" required>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre email" value="{{ postvariables.email }}" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password <abbr title="required">*</abbr></label>
                         <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" required>
                     </div>
-                    <button type="submit" name="submit" class="button-link">Se connecter</button>
+                    <button type="submit" name="submit" class="button-link w-100 mb-3">Se connecter</button>
             </fieldset>
         </form>
         <p class="text-center">Vous n'avez pas encore de compte? <a href="/blog/register">S'inscrire</a></p>
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+</body>
+</html>
 
 {% endblock %}

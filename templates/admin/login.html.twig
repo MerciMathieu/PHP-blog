@@ -14,9 +14,21 @@
 </head>
 <body>
     <section>
+        <h1 class="text-center">Connexion à l'administration</h1>
+
+        {% if errors %}
+            <div class="alert-danger my-5 w-50 mx-auto">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
         <form method="post" class="m-auto w-50 py-5">
             <fieldset>
-                <legend class="text-center">Se connecter</legend>
+                <legend class="text-center">Entrez vos identifiants administrateur</legend>
                     <div class="form-group">
                         <label for="email">Email <abbr title="required">*</abbr></label>
                         <input type="email" name="email" class="form-control" id="email" placeholder="Entrez votre email" required>
@@ -37,5 +49,3 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
 </body>
 </html>
-
-    
