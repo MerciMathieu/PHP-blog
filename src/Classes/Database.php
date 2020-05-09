@@ -7,16 +7,22 @@ use Exception;
 
 class Database
 {
+
+    private static ?\PDO $db;
+
     public static function connect()
     {
-        $db = new PDO(
-            'mysql:host=localhost;dbname=blogphp;charset=utf8',
-            'root',
-            ''
-        );
+        if (!self::$db) {
 
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$db = new PDO(
+                'mysql:host=localhost;dbname=blogphp;charset=utf8',
+                'root',
+                ''
+            );
 
-        return $db;
+            self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+
+        return self::$db;
     }
 }

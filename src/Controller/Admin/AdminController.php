@@ -23,25 +23,22 @@ class AdminController extends AbstractController
         $errors = [];
 
         if ($this->isAdmin()) {
-            return $this->index();
+            header('Location: /admin/posts');
         }
 
         if (isset($_POST['submit'])) {
 
-            $success = false;
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
-            if ($user !== null and password_verify($_POST['password'], $user->getPassword())) {
-                if ($user->getIsAdmin()) {
-                    $success = true;
-                } else {
-                    $errors['admin'] = "Vous devez être administrateur pour entrer ici!";
-                }
-            } else {
-                $errors['user'] = 'Le login/mot de passe est erroné';
+            if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
+                $errors['user'] = 'Le login/mot de passe est erroné'; 
             }
 
-            if ($success === true) {
+            if ($user->getIsAdmin() === false) {
+                $errors['admin'] = "Vous devez être administrateur pour entrer ici!";
+            }
+            
+            if (empty($errors)) {
                 $_SESSION['user'] = $user;
                 header('Location: /admin/posts');
             }

@@ -53,10 +53,10 @@ class HomeController extends AbstractController
     private function sendMail(): void
     {
         $to      = 'mathieu.delclos@gmail.com';
-        $subject = $_POST['firstname'] . ' ' . $_POST['lastname'] . ' via formulaire de contact blog-php' ;
-        $message = $_POST['message'];
-        $headers = 'From: '. $_POST['email'] . "\r\n" .
-        'Reply-To: ' . $_POST['email'] . "\r\n" ;
+        $subject = htmlspecialchars($_POST['firstname']) . ' ' . htmlspecialchars($_POST['lastname']) . ' via formulaire de contact blog-php' ;
+        $message = htmlspecialchars($_POST['message']);
+        $headers = 'From: '. htmlspecialchars($_POST['email']) . "\r\n" .
+        'Reply-To: ' . htmlspecialchars($_POST['email']) . "\r\n" ;
 
         mail($to, $subject, $message, $headers);
 
