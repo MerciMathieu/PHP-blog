@@ -32,12 +32,11 @@ class AdminController extends AbstractController
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
             if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
-                $errors['user'] = 'Le login/mot de passe est erroné'; 
+                $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
-            if ($user->getIsAdmin() === false) {
-                $this->displayError(403);
-                $errors['admin'] = "Vous devez être administrateur pour entrer ici!";
+            if ($user and $user->getIsAdmin() === false) {
+                return $this->displayError(403);
             }
             
             if (empty($errors)) {

@@ -48,10 +48,11 @@ abstract class AbstractController
     public function isAdmin(): bool
     {
         $currentUser = $this->getCurrentUser();
-        if ($currentUser and $currentUser->getIsAdmin() === true) {
-            return true;
+
+        if ($currentUser === null or $currentUser->getIsAdmin() === false) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public function displayError(int $errorCode)
