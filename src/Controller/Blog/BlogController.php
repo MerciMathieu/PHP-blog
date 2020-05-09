@@ -22,18 +22,18 @@ class BlogController extends AbstractController
 
     public function showPost(int $id)
     {
-        $comments = [];
         $post = $this->postRepository->findOneById($id);
+        $comments = [];
 
-        if ($post !== null ) {
-            if (isset($_POST['submit'])) {
-                $this->insertComment($post);
-            }
-            $comments = $this->commentRepository->findAllByPost($post, true);
-        } else {
+        if ($post === null ) {
             return $this->displayError(404);
+        } 
+
+        if (isset($_POST['submit'])) {
+            $this->insertComment($post);
         }
         
+        $comments = $this->commentRepository->findAllByPost($post, true);
         
         return $this->twig->render('blog/showpost.html.twig', [
             'post' => $post,
@@ -50,44 +50,39 @@ class BlogController extends AbstractController
         if (isset($_POST['submit'])) {
 
             $post = $_POST;
-            $success = true;
 
-            if (!isset($_POST['lastname']) or empty($_POST['lastname']) or strlen($_POST['lastname']) <3 ) {
-                $success = false;
+            $firstName = htmlspecialchars($_POST['firstname']);
+            $lastName = htmlspecialchars($_POST['lastname']);
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
+            $confirmPassword = htmlspecialchars($_POST['confirm_password']);
+
+            if (!isset($lastName) or empty($lastName) or strlen($lastName) <3 ) {
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
-                $textColorError['lastname'] = 'text-danger';
             }
-            if (!isset($_POST['firstname']) or empty($_POST['firstname']) or strlen($_POST['firstname']) < 3 ) {
-                $success = false;
+            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3 ) {
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
-                $textColorError['firstname'] = 'text-danger';
             }
-            if (!isset($_POST['email']) or empty($_POST['email']) or !preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $_POST['email'])) {
-                $success = false;
+            if (!isset($email) or empty($email) or !preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $email)) {
                 $errors['email'] = "L'email doit être valide";
-                $textColorError['email'] = 'text-danger';
             }
-            if (!isset($_POST['password']) or empty($_POST['password']) or strlen($_POST['password']) < 4) {
-                $success = false;
+            if (!isset($password) or empty($password) or strlen($password) < 4) {
                 $errors['password'] = "Le mot de passe doit contenir au minimum 4 caractères";
-                $textColorError['password'] = 'text-danger';
             }
-            if ($_POST['confirm_password'] !== $_POST['password']) {
-                $success = false;
+            if ($confirmPassword !== $password) {
                 $errors['password'] = "Mot de passe différent";
-                $textColorError['password_confirm'] = 'text-danger';
             }
 
-            if ($success === true) {
+            if (empty($errors)) {
+
                 $user = new User(
-                    $_POST['firstname'],
-                    $_POST['lastname']
+                    $firstName,
+                    $lastName
                 );
-                $user->setEmail(strtolower($_POST['email']));
-                $user->setPassword(password_hash($_POST['password'], PASSWORD_DEFAULT));
+                $user->setEmail(strtolower($email));
+                $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
                 $this->userRepository->insert($user);
 
-                $errors['success'] = "L'enregistrement s'est bien passé"; 
                 $_SESSION['user'] = $user;
     
                 header('Location: /blog');
@@ -96,30 +91,25 @@ class BlogController extends AbstractController
 
         return $this->twig->render('blog/register.html.twig', [
             'errors' => $errors,
-            'postvariables' => $post,
-            'textColorError' => $textColorError
+            'postvariables' => $post
         ]);
     }
 
     public function login()
     {
-        $errors = [];
         $post = null;
+        $errors = [];
 
         if (isset($_POST['submit'])) {
 
             $post = $_POST;
-            $success = false;
-            
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
-            if ($user !== null and password_verify($_POST['password'], $user->getPassword())) {
-                $success = true;
-            } else {
+            if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
-            }
+            } 
 
-            if ($success === true) {
+            if (empty($errors)) {
                 $_SESSION['user'] = $user;
                 header('Location: /blog');
             }
@@ -135,12 +125,15 @@ class BlogController extends AbstractController
     {
         if (isset($_POST['submit'])) {
             if (isset($_SESSION['user'])) {
+
                 $comment = new Comment(
-                    $_POST['message'],
+                    htmlspecialchars($_POST['message']),
                     $post,
                     $_SESSION['user']
                 );
+
                 $this->commentRepository->insert($comment);
+                
                 header('Location:/post/'.$post->getId());
             }
         }

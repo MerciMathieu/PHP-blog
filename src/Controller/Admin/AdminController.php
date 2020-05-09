@@ -13,6 +13,7 @@ class AdminController extends AbstractController
     public function index()
     {
         $posts = $this->postRepository->findAll();
+
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts
         ]);
@@ -53,12 +54,19 @@ class AdminController extends AbstractController
     public function addPost()
     {
         if (isset($_POST['submit'])) {
+
+            $title = $_POST['title'];
+            $intro = $_POST['intro'];
+            $content = $_POST['content'];
+            $image = $_POST['image'];
+
             if ($this->isAdmin()) {
+
                 $post = new Post(
-                    $_POST['title'],
-                    $_POST['intro'],
-                    $_POST['content'],
-                    $_POST['image'],
+                    $title,
+                    $intro,
+                    $content,
+                    $image,
                     $_SESSION['user']
                 );
                 $postId = $this->postRepository->insert($post);
@@ -71,15 +79,23 @@ class AdminController extends AbstractController
 
     public function editPost(int $id)
     {
+
         $post = $this->postRepository->findOneById($id);
 
         if (isset($_POST['submit'])) {
+
+            $title = $_POST['title'];
+            $intro = $_POST['intro'];
+            $content = $_POST['content'];
+            $image = $_POST['image'];
+
             if ($this->isAdmin()
             and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
-                $post->setTitle($_POST['title']);
-                $post->setIntro($_POST['intro']);
-                $post->setContent($_POST['content']);
-                $post->setImageUrl($_POST['image']);
+
+                $post->setTitle($title);
+                $post->setIntro($intro);
+                $post->setContent($content);
+                $post->setImageUrl($image);
 
                 $this->postRepository->edit($post);
 
@@ -94,10 +110,11 @@ class AdminController extends AbstractController
     public function deletePost(int $id): void
     {
         if (isset($_POST['delete'])) {
+
             $post = $this->postRepository->findOneById($id);
 
-            if ($this->isAdmin()
-            and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
+            if ($this->isAdmin() and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
+
                 $this->postRepository->delete($post);
 
                 header('Location:/admin/posts');
@@ -107,6 +124,7 @@ class AdminController extends AbstractController
     
     public function showCommentsFromPost(int $id)
     {
+
         $post = $this->postRepository->findOneById($id);
         $approvedComments = $this->commentRepository->findAllByPost($post, true);
         $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
@@ -121,6 +139,7 @@ class AdminController extends AbstractController
     public function deleteComment(int $id): void
     {
         if (isset($_POST['delete'])) {
+
             $comment = $this->commentRepository->findOneById($id);
             $this->commentRepository->delete($comment);
 
@@ -131,8 +150,10 @@ class AdminController extends AbstractController
     public function approveComment(int $id, bool $validate): void
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
+
             $comment = $this->commentRepository->findOneById($id);
             $comment->setIsValidated($validate);
+
             $this->commentRepository->approve($comment);
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());

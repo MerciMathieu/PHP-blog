@@ -12,14 +12,13 @@ class Database
 
     public static function connect()
     {
-        if (!self::$db) {
 
+        if (!self::$db) {
             self::$db = new PDO(
                 'mysql:host=localhost;dbname=blogphp;charset=utf8',
                 'root',
                 ''
             );
-
             self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
 

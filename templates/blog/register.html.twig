@@ -23,24 +23,24 @@
                     <div class="row">
                         <div class="col">
                             <label for="lastname">Nom <abbr title="required">*</abbr></label>
-                            <input type="text" name="lastname" class="form-control {{ textColorError.lastname }}" id="lastname" placeholder="Entrez votre nom" {% if postvariables.lastname %}value="{{ postvariables.lastname }}"{% endif %} required>
+                            <input type="text" name="lastname" class="form-control {% if errors.lastname %}text-danger{% endif %}" id="lastname" placeholder="Entrez votre nom" {% if postvariables.lastname %}value="{{ postvariables.lastname }}"{% endif %} required>
                         </div>     
                         <div class="col">
                             <label for="firstname">Prénom <abbr title="required">*</abbr></label>
-                            <input type="text" name="firstname" class="form-control {{ textColorError.firstname }}" id="firstname" placeholder="Entrez votre prénom" {% if postvariables.firstname %}value="{{ postvariables.firstname }}"{% endif %} required>
+                            <input type="text" name="firstname" class="form-control {% if errors.firstname %}text-danger{% endif %}" id="firstname" placeholder="Entrez votre prénom" {% if postvariables.firstname %}value="{{ postvariables.firstname }}"{% endif %} required>
                         </div>           
                     </div>
                     <div class="form-group">
                         <label for="email">Email <abbr title="required">*</abbr></label>
-                        <input type="email" name="email" class="form-control {{ textColorError.email }}" id="email" placeholder="Entrez votre email" {% if postvariables.email %}value="{{ postvariables.email }}"{% endif %} required>
+                        <input type="email" name="email" class="form-control {% if errors.email %}text-danger{% endif %}" id="email" placeholder="Entrez votre email" {% if postvariables.email %}value="{{ postvariables.email }}"{% endif %} required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password <abbr title="required">*</abbr></label>
-                        <input type="password" name="password" class="form-control {{ textColorError.password }}" id="password" placeholder="Mot de passe" required>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Mot de passe" required>
                     </div>
                     <div class="form-group">
                         <label for="confirm_password">Confirm password <abbr title="required">*</abbr></label>
-                        <input type="password" name="confirm_password" class="form-control {{ textColorError.confirm_password }}" id="confirm_password" placeholder="Confirmez votre mot de passe" required>
+                        <input type="password" name="confirm_password" class="form-control" id="confirm_password" placeholder="Confirmez votre mot de passe" required>
                     </div>
                     <button type="submit" name="submit" class="button-link w-100 mb-4">S'enregistrer</button>
             </fieldset>
