@@ -29,7 +29,13 @@ class HomeController extends AbstractController
             } 
 
             if (empty($errors)) {
-                $this->sendMail();
+
+                $sendMail =  $this->sendMail();
+                
+                if ($sendMail === false) {
+                    return $this->displayError(500); 
+                }
+
             } 
             
         }
