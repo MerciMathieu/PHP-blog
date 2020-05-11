@@ -15,7 +15,7 @@ class AdminController extends AbstractController
         if ($this->isAdmin() === false) {
             return $this->displayError(403);  
         }
-        
+
         $posts = $this->postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
@@ -89,12 +89,12 @@ class AdminController extends AbstractController
     public function editPost(int $id)
     {
 
+        $post = $this->postRepository->findOneById($id);
+
         if ($this->isAdmin() === false
         or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
             return $this->displayError(403);  
         }
-
-        $post = $this->postRepository->findOneById($id);
 
         if (isset($_POST['submit'])) {
 
@@ -145,12 +145,13 @@ class AdminController extends AbstractController
     public function showCommentsFromPost(int $id)
     {
 
+        $post = $this->postRepository->findOneById($id);
+
         if ($this->isAdmin() === false
         or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
             return $this->displayError(403);  
         }
 
-        $post = $this->postRepository->findOneById($id);
         $approvedComments = $this->commentRepository->findAllByPost($post, true);
         $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
     
@@ -163,16 +164,17 @@ class AdminController extends AbstractController
 
     public function deleteComment(int $id)
     {
-
-        if ($this->isAdmin() === false
-        or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-            return $this->displayError(403);  
-        }
-
         if (isset($_POST['delete'])) {
 
             $comment = $this->commentRepository->findOneById($id);
+            $post = $comment->getPost();
+            
             $deletedComment = $this->commentRepository->delete($comment);
+
+            if ($this->isAdmin() === false
+            or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+                return $this->displayError(403);  
+            }
 
             if ($deletedComment === false) {
                 return $this->displayError(500);  
@@ -185,17 +187,19 @@ class AdminController extends AbstractController
 
     public function approveComment(int $id, bool $validate)
     {
-        if ($this->isAdmin() === false
-        or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-            return $this->displayError(403);  
-        }
-
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
 
             $comment = $this->commentRepository->findOneById($id);
-            $comment->setIsValidated($validate);
+            $post = $comment->getPost();
 
+            $comment->setIsValidated($validate);
+            
             $approveComment = $this->commentRepository->approve($comment);
+
+            if ($this->isAdmin() === false
+            or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+                return $this->displayError(403);  
+            }
 
             if ($approveComment === false) {
                 return $this->displayError(500);  
