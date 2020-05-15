@@ -141,6 +141,6 @@ class BlogController extends AbstractController
 
     public function displayConfirmationSendComment()
     {
-        return  $this->twig->render('confirmation/confirmationComment.html.twig');
+        return  $this->twig->render('confirmation/confirmComment.html.twig');
     }
 }

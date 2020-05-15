@@ -48,7 +48,7 @@ class HomeController extends AbstractController
 
     public function displayConfirmationSendMail()
     {
-        return  $this->twig->render('confirmation/confirmationMail.html.twig');
+        return  $this->twig->render('confirmation/confirmEmail.html.twig');
     }
 
     private function sendMail(): void
