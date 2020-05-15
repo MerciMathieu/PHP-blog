@@ -133,9 +133,14 @@ class BlogController extends AbstractController
                 );
 
                 $this->commentRepository->insert($comment);
-                
-                header('Location:/post/'.$post->getId());
+
+                header('Location:/commentaire/confirmation');
             }
         }
+    }
+
+    public function displayConfirmationSendComment()
+    {
+        return  $this->twig->render('confirmation/confirmationComment.html.twig');
     }
 }

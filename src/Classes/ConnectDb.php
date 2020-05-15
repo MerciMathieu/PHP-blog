@@ -3,7 +3,6 @@
 namespace App\Classes;
 
 use PDO;
-use Exception;
 
 class ConnectDb
 {

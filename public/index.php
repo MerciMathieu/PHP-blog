@@ -47,6 +47,10 @@ if (http_response_code() && http_response_code() === 500) {
 
 if ($_SERVER['REQUEST_URI'] === '/') {
     echo $homeController->index();
+} elseif ($_SERVER['REQUEST_URI'] === '/email/confirmation') {
+    echo $homeController->displayConfirmationSendMail();
+} elseif ($_SERVER['REQUEST_URI'] === '/commentaire/confirmation') {
+    echo $blogController->displayConfirmationSendComment();
 } elseif ($_SERVER['REQUEST_URI'] === '/blog') {
     echo $blogController->index();
 } elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {

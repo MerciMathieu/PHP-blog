@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Accueil - {{ parent() }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <meta http-equiv="refresh" url="{{ urlRedirect}}">
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="/css/homepage/homepage.css">
+{% endblock %}
+
+{% block content %}
+
+    <section id="home" class="color-white">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-3">Votre commentaire a bien été soumis pour validation. <br />Il sera publié très prochainement.</p>
+                <small>Vous allez être redirigé dans 3 secondes</small>
+                <a href="/blog"><p><i class="fas fa-arrow-left mr-3"></i>Retour au blog</p></a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

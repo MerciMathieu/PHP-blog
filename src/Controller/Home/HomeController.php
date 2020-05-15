@@ -10,6 +10,7 @@ class HomeController extends AbstractController
     {
         $post = null;
         $errors = [];
+        $success = false;
 
         if (isset($_POST['submit'])) {
 
@@ -30,14 +31,24 @@ class HomeController extends AbstractController
 
             if (empty($errors)) {
                 $this->sendMail();
+                $success = true;
+
+                if ($success) {
+                    header("Location: /email/confirmation");
+                }
             } 
-            
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [
             'postVariables' => $post,
-            'errors' => $errors
+            'errors' => $errors,
+            'success' => $success
         ]);
+    }
+
+    public function displayConfirmationSendMail()
+    {
+        return  $this->twig->render('confirmation/confirmationMail.html.twig');
     }
 
     private function sendMail(): void
@@ -55,8 +66,6 @@ class HomeController extends AbstractController
         'Reply-To: ' . $email . "\r\n" ;
 
         mail($to, $subject, $text, $headers);
-
-        header('Location: /');
     }
 
 }
