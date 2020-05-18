@@ -57,7 +57,11 @@ abstract class AbstractController
 
     public function displayError(int $errorCode)
     {
-        http_response_code($errorCode);
-        return $this->twig->render("error/error" . $errorCode . ".html.twig");
+        if (http_response_code()) {
+            
+            http_response_code($errorCode);
+
+            return $this->twig->render("error/error" . $errorCode . ".html.twig");
+        }
     }
 }

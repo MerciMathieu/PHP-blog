@@ -83,7 +83,13 @@ class BlogController extends AbstractController
                 $user->setIsAdmin(0);
                 $this->userRepository->insert($user);
 
-                $_SESSION['user'] = $user;
+                $insertedUser = $this->userRepository->insert($user);
+
+                if ($insertedUser === false) {
+                    return $this->displayError(500); 
+                }
+
+                $_SESSION['user'] = $insertedUser;
     
                 header('Location: /blog');
             } 
@@ -110,7 +116,13 @@ class BlogController extends AbstractController
             } 
 
             if (empty($errors)) {
+
                 $_SESSION['user'] = $user;
+
+                if (empty($_SESSION['user'])) {
+                    return $this->displayError(500); 
+                }
+                
                 header('Location: /blog');
             }
         }
@@ -121,7 +133,7 @@ class BlogController extends AbstractController
         ]);
     }
 
-    private function insertComment(Post $post): void
+    private function insertComment(Post $post)
     {
         if (isset($_POST['submit'])) {
             if (isset($_SESSION['user'])) {
@@ -132,9 +144,14 @@ class BlogController extends AbstractController
                     $_SESSION['user']
                 );
 
-                $this->commentRepository->insert($comment);
+                $insertedComment = $this->commentRepository->insert($comment);
 
+                if ($insertedComment === false) {
+                    return $this->displayError(500); 
+                }
+                
                 header('Location:/commentaire/confirmation');
+
             }
         }
     }

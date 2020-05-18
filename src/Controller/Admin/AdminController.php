@@ -12,6 +12,10 @@ class AdminController extends AbstractController
 {
     public function index()
     {
+        if ($this->isAdmin() === false) {
+            return $this->displayError(403);  
+        }
+
         $posts = $this->postRepository->findAll();
 
         return $this->twig->render('admin/admin.html.twig', [
@@ -52,6 +56,11 @@ class AdminController extends AbstractController
 
     public function addPost()
     {
+
+        if ($this->isAdmin() === false) {
+            return $this->displayError(403);  
+        }
+
         if (isset($_POST['submit'])) {
 
             $title = $_POST['title'];
@@ -59,19 +68,20 @@ class AdminController extends AbstractController
             $content = $_POST['content'];
             $image = $_POST['image'];
 
-            if ($this->isAdmin()) {
+            $post = new Post(
+                $title,
+                $intro,
+                $content,
+                $image,
+                $_SESSION['user']
+            );
+            $postId = $this->postRepository->insert($post);
 
-                $post = new Post(
-                    $title,
-                    $intro,
-                    $content,
-                    $image,
-                    $_SESSION['user']
-                );
-                $postId = $this->postRepository->insert($post);
-                
-                header("Location:/admin/edit/post/$postId");
+            if ($postId === null) {
+                return $this->displayError(500);  
             }
+
+            header("Location:/admin/edit/post/$postId");
         }
         return $this->twig->render('admin/add.html.twig');
     }
@@ -81,6 +91,11 @@ class AdminController extends AbstractController
 
         $post = $this->postRepository->findOneById($id);
 
+        if ($this->isAdmin() === false
+        or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+            return $this->displayError(403);  
+        }
+
         if (isset($_POST['submit'])) {
 
             $title = $_POST['title'];
@@ -88,36 +103,42 @@ class AdminController extends AbstractController
             $content = $_POST['content'];
             $image = $_POST['image'];
 
-            if ($this->isAdmin()
-            and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
+            $post->setTitle($title);
+            $post->setIntro($intro);
+            $post->setContent($content);
+            $post->setImageUrl($image);
 
-                $post->setTitle($title);
-                $post->setIntro($intro);
-                $post->setContent($content);
-                $post->setImageUrl($image);
+            $postEdited = $this->postRepository->edit($post);
 
-                $this->postRepository->edit($post);
-
-                header('Location: /admin/posts');
+            if ($postEdited === false) {
+                return $this->displayError(500); 
             }
+
+            header('Location: /admin/posts');
         }
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post
         ]);
     }
 
-    public function deletePost(int $id): void
+    public function deletePost(int $id)
     {
         if (isset($_POST['delete'])) {
 
             $post = $this->postRepository->findOneById($id);
 
-            if ($this->isAdmin() and $this->getCurrentUser()->getId() === $post->getAuthor()->getId()) {
-
-                $this->postRepository->delete($post);
-
-                header('Location:/admin/posts');
+            if ($this->isAdmin() === false
+            or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+                return $this->displayError(403);  
             }
+
+            $deletedPost = $this->postRepository->delete($post);
+
+            if ($deletedPost === false) {
+                return $this->displayError(500);  
+            }
+
+            header('Location:/admin/posts');
         }
     }
     
@@ -125,6 +146,12 @@ class AdminController extends AbstractController
     {
 
         $post = $this->postRepository->findOneById($id);
+
+        if ($this->isAdmin() === false
+        or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+            return $this->displayError(403);  
+        }
+
         $approvedComments = $this->commentRepository->findAllByPost($post, true);
         $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
     
@@ -135,25 +162,48 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function deleteComment(int $id): void
+    public function deleteComment(int $id)
     {
         if (isset($_POST['delete'])) {
 
             $comment = $this->commentRepository->findOneById($id);
-            $this->commentRepository->delete($comment);
+            $post = $comment->getPost();
+            
+            $deletedComment = $this->commentRepository->delete($comment);
+
+            if ($this->isAdmin() === false
+            or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+                return $this->displayError(403);  
+            }
+
+            if ($deletedComment === false) {
+                return $this->displayError(500);  
+            }
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
+
     }
 
-    public function approveComment(int $id, bool $validate): void
+    public function approveComment(int $id, bool $validate)
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
 
             $comment = $this->commentRepository->findOneById($id);
-            $comment->setIsValidated($validate);
+            $post = $comment->getPost();
 
-            $this->commentRepository->approve($comment);
+            $comment->setIsValidated($validate);
+            
+            $approveComment = $this->commentRepository->approve($comment);
+
+            if ($this->isAdmin() === false
+            or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
+                return $this->displayError(403);  
+            }
+
+            if ($approveComment === false) {
+                return $this->displayError(500);  
+            }
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }

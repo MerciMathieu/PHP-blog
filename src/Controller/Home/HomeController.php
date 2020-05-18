@@ -10,7 +10,6 @@ class HomeController extends AbstractController
     {
         $post = null;
         $errors = [];
-        $success = false;
 
         if (isset($_POST['submit'])) {
 
@@ -30,19 +29,20 @@ class HomeController extends AbstractController
             } 
 
             if (empty($errors)) {
-                $this->sendMail();
-                $success = true;
 
-                if ($success) {
-                    header("Location: /email/confirmation");
+                $sendMail =  $this->sendMail();
+                
+                if ($sendMail === false) {
+                    return $this->displayError(500); 
                 }
+              
+                header("Location: /email/confirmation");
             } 
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [
             'postVariables' => $post,
-            'errors' => $errors,
-            'success' => $success
+            'errors' => $errors
         ]);
     }
 
