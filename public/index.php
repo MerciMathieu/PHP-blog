@@ -51,29 +51,29 @@ if ($_SERVER['REQUEST_URI']) {
         echo $blogController->index();
     } elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $postId = (int)$matches[1];
-        echo $blogController->showPost($postId);
+        echo $blogController->showPost(htmlspecialchars($postId));
     } elseif ($_SERVER['REQUEST_URI'] === '/admin/posts') {
         echo $adminController->index();
     } elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->editPost($postId);
+        echo $adminController->editPost(htmlspecialchars($postId));
     } elseif ($_SERVER['REQUEST_URI'] === '/admin/post/add') {
         echo $adminController->addPost();
     } elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->deletePost($postId);
+        echo $adminController->deletePost(htmlspecialchars($postId));
     } elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->showCommentsFromPost($postId);
+        echo $adminController->showCommentsFromPost(htmlspecialchars($postId));
     } elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->deleteComment($commentId);
+        echo $adminController->deleteComment(htmlspecialchars($commentId));
     } elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->approveComment($commentId, true);
+        echo $adminController->approveComment(htmlspecialchars($commentId), true);
     } elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->approveComment($commentId, false);
+        echo $adminController->approveComment(htmlspecialchars($commentId), false);
     } elseif ($_SERVER['REQUEST_URI'] === '/login') {
         echo $blogController->login();
     } elseif ($_SERVER['REQUEST_URI'] === '/admin/login') {
