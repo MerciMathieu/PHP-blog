@@ -13,7 +13,7 @@ class AdminController extends AbstractController
     public function index()
     {
         if ($this->isAdmin() === false) {
-            return $this->displayError(403);  
+            return $this->displayError(403);
         }
 
         $posts = $this->postRepository->findAll();
@@ -32,7 +32,6 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
             if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
@@ -56,13 +55,11 @@ class AdminController extends AbstractController
 
     public function addPost()
     {
-
         if ($this->isAdmin() === false) {
-            return $this->displayError(403);  
+            return $this->displayError(403);
         }
 
         if (isset($_POST['submit'])) {
-
             $title = $_POST['title'];
             $intro = $_POST['intro'];
             $content = $_POST['content'];
@@ -78,7 +75,7 @@ class AdminController extends AbstractController
             $postId = $this->postRepository->insert($post);
 
             if ($postId === null) {
-                return $this->displayError(500);  
+                return $this->displayError(500);
             }
 
             header("Location:/admin/edit/post/$postId");
@@ -88,16 +85,14 @@ class AdminController extends AbstractController
 
     public function editPost(int $id)
     {
-
         $post = $this->postRepository->findOneById($id);
 
         if ($this->isAdmin() === false
         or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-            return $this->displayError(403);  
+            return $this->displayError(403);
         }
 
         if (isset($_POST['submit'])) {
-
             $title = $_POST['title'];
             $intro = $_POST['intro'];
             $content = $_POST['content'];
@@ -111,7 +106,7 @@ class AdminController extends AbstractController
             $postEdited = $this->postRepository->edit($post);
 
             if ($postEdited === false) {
-                return $this->displayError(500); 
+                return $this->displayError(500);
             }
 
             header('Location: /admin/posts');
@@ -124,18 +119,17 @@ class AdminController extends AbstractController
     public function deletePost(int $id)
     {
         if (isset($_POST['delete'])) {
-
             $post = $this->postRepository->findOneById($id);
 
             if ($this->isAdmin() === false
             or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-                return $this->displayError(403);  
+                return $this->displayError(403);
             }
 
             $deletedPost = $this->postRepository->delete($post);
 
             if ($deletedPost === false) {
-                return $this->displayError(500);  
+                return $this->displayError(500);
             }
 
             header('Location:/admin/posts');
@@ -144,12 +138,11 @@ class AdminController extends AbstractController
     
     public function showCommentsFromPost(int $id)
     {
-
         $post = $this->postRepository->findOneById($id);
 
         if ($this->isAdmin() === false
         or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-            return $this->displayError(403);  
+            return $this->displayError(403);
         }
 
         $approvedComments = $this->commentRepository->findAllByPost($post, true);
@@ -165,7 +158,6 @@ class AdminController extends AbstractController
     public function deleteComment(int $id)
     {
         if (isset($_POST['delete'])) {
-
             $comment = $this->commentRepository->findOneById($id);
             $post = $comment->getPost();
             
@@ -173,22 +165,20 @@ class AdminController extends AbstractController
 
             if ($this->isAdmin() === false
             or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-                return $this->displayError(403);  
+                return $this->displayError(403);
             }
 
             if ($deletedComment === false) {
-                return $this->displayError(500);  
+                return $this->displayError(500);
             }
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
         }
-
     }
 
     public function approveComment(int $id, bool $validate)
     {
         if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
-
             $comment = $this->commentRepository->findOneById($id);
             $post = $comment->getPost();
 
@@ -198,11 +188,11 @@ class AdminController extends AbstractController
 
             if ($this->isAdmin() === false
             or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
-                return $this->displayError(403);  
+                return $this->displayError(403);
             }
 
             if ($approveComment === false) {
-                return $this->displayError(500);  
+                return $this->displayError(500);
             }
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());

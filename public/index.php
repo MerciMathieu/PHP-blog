@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_URI'] === '/') {
     echo $blogController->register();
 } elseif ($_SERVER['REQUEST_URI'] === '/logout') {
     echo $blogController->logout();
-}
-else {
+} else {
     echo $homeController->displayError(404);
 }

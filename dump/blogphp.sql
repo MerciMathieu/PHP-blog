@@ -20,9 +20,6 @@ SET time_zone = "+00:00";
 
 --
 -- Base de données :  `blogphp`
---
-
-DROP DATABASE IF EXISTS `blogphp`;
 
 CREATE DATABASE IF NOT EXISTS `blogphp` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `blogphp`;

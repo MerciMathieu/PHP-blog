@@ -22,8 +22,7 @@ abstract class AbstractController
         PostRepository $postRepository,
         CommentRepository $commentRepository,
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->twig = $twig;
         $this->postRepository = $postRepository;
         $this->commentRepository = $commentRepository;
@@ -58,7 +57,6 @@ abstract class AbstractController
     public function displayError(int $errorCode)
     {
         if (http_response_code()) {
-            
             http_response_code($errorCode);
 
             return $this->twig->render("error/error" . $errorCode . ".html.twig");

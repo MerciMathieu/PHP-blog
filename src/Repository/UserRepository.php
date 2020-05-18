@@ -34,7 +34,7 @@ class UserRepository
             $user->setEmail($userFromDb['email']);
             $user->setPassword($userFromDb['password']);
             $user->setIsAdmin($userFromDb['is_admin']);
-        } 
+        }
         
         return $user;
     }

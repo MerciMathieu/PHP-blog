@@ -72,7 +72,6 @@ class PostRepository
         $postFromDb = $req->fetch();
 
         if ($postFromDb) {
-
             $author = new User(
                 $postFromDb['first_name'],
                 $postFromDb['last_name']
@@ -89,7 +88,6 @@ class PostRepository
             $post->setId($postFromDb['id']);
             $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
             $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
-
         }
         
         return $post;

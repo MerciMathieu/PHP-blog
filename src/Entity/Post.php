@@ -28,8 +28,7 @@ class Post
         string $content,
         string $imageUrl = null,
         User $author = null
-    )
-    {
+    ) {
         $this->title = $title;
         $this->intro = $intro;
         $this->content = $content;

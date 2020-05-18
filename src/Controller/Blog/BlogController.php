@@ -25,9 +25,9 @@ class BlogController extends AbstractController
         $post = $this->postRepository->findOneById($id);
         $comments = [];
 
-        if ($post === null ) {
+        if ($post === null) {
             return $this->displayError(404);
-        } 
+        }
 
         if (isset($_POST['submit'])) {
             $this->insertComment($post);
@@ -47,7 +47,6 @@ class BlogController extends AbstractController
         $errors = [];
         
         if (isset($_POST['submit'])) {
-
             $post = $_POST;
 
             $firstName = htmlspecialchars($_POST['firstname']);
@@ -56,13 +55,13 @@ class BlogController extends AbstractController
             $password = htmlspecialchars($_POST['password']);
             $confirmPassword = htmlspecialchars($_POST['confirm_password']);
 
-            if (!isset($lastName) or empty($lastName) or strlen($lastName) <3 ) {
+            if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
             }
-            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3 ) {
+            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
             }
-            if (!isset($email) or empty($email) or !preg_match ( " /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ " , $email)) {
+            if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
                 $errors['email'] = "L'email doit être valide";
             }
             if (!isset($password) or empty($password) or strlen($password) < 4) {
@@ -73,7 +72,6 @@ class BlogController extends AbstractController
             }
 
             if (empty($errors)) {
-
                 $user = new User(
                     $firstName,
                     $lastName
@@ -86,13 +84,13 @@ class BlogController extends AbstractController
                 $insertedUser = $this->userRepository->insert($user);
 
                 if ($insertedUser === false) {
-                    return $this->displayError(500); 
+                    return $this->displayError(500);
                 }
 
                 $_SESSION['user'] = $insertedUser;
     
                 header('Location: /blog');
-            } 
+            }
         }
 
         return $this->twig->render('blog/register.html.twig', [
@@ -107,20 +105,18 @@ class BlogController extends AbstractController
         $errors = [];
 
         if (isset($_POST['submit'])) {
-
             $post = $_POST;
             $user = $this->userRepository->findOneByEmail($_POST['email']);
 
             if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
-            } 
+            }
 
             if (empty($errors)) {
-
                 $_SESSION['user'] = $user;
 
                 if (empty($_SESSION['user'])) {
-                    return $this->displayError(500); 
+                    return $this->displayError(500);
                 }
                 
                 header('Location: /blog');
@@ -137,7 +133,6 @@ class BlogController extends AbstractController
     {
         if (isset($_POST['submit'])) {
             if (isset($_SESSION['user'])) {
-
                 $comment = new Comment(
                     htmlspecialchars($_POST['message']),
                     $post,
@@ -147,11 +142,10 @@ class BlogController extends AbstractController
                 $insertedComment = $this->commentRepository->insert($comment);
 
                 if ($insertedComment === false) {
-                    return $this->displayError(500); 
+                    return $this->displayError(500);
                 }
                 
                 header('Location:/commentaire/confirmation');
-
             }
         }
     }
