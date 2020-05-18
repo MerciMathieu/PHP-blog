@@ -1,6 +1,7 @@
 /* GENERAL */
 
-html, body {
+html, 
+body {
     margin: 0;
     padding: 0;
     font-size: 62.5%; /** 1rem = 10px **/
@@ -64,7 +65,8 @@ button:focus {
     outline: none;
 }
 
-div#content, li {
+div#content, 
+li {
     font-size: 1.6rem;
 }
 
@@ -72,16 +74,19 @@ section {
     padding: 40px;
 }
 
-form input, form textarea {
+form input, 
+form textarea {
     margin-bottom: 25px;
     font-size: 1.7rem !important;
 }
 
-form input::placeholder, form textarea::placeholder {
+form input::placeholder, 
+form textarea::placeholder {
     font-size: 1.7rem;
 }
 
-form input:focus, form textarea:focus {
+form input:focus, 
+form textarea:focus {
     margin-bottom: 25px;
     outline: none;
     box-shadow: none;

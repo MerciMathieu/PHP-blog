@@ -22,7 +22,8 @@ section#home h1 {
 
 /* ABOUT */
 
-section#about, section#contact{
+section#about, 
+section#contact{
     position: initial;
     height: initial;
 }
@@ -49,12 +50,14 @@ section#contact form {
     margin: auto;
 }
 
-section#contact form input::placeholder, section#contact form textarea::placeholder {
+section#contact form input::placeholder, 
+section#contact form textarea::placeholder {
     color: rgba(255, 255, 255, 0.596);
     font-size: 1.7rem;
 }
 
- section#contact form input, section#contact form textarea {
+ section#contact form input, 
+ section#contact form textarea {
     background-color: inherit;
     border-left: none;
     border-right: none;
@@ -63,7 +66,8 @@ section#contact form input::placeholder, section#contact form textarea::placehol
     color: white;
 }
 
-section#contact form input:focus, section#contact form textarea:focus {
+section#contact form input:focus, 
+section#contact form textarea:focus {
     background-color: inherit;
     border-left: none;
     border-right: none;
