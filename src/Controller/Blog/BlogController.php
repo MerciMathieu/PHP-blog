@@ -80,6 +80,8 @@ class BlogController extends AbstractController
                 );
                 $user->setEmail(strtolower($email));
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+                $user->setIsAdmin(0);
+                $this->userRepository->insert($user);
 
                 $insertedUser = $this->userRepository->insert($user);
 
@@ -148,8 +150,14 @@ class BlogController extends AbstractController
                     return $this->displayError(500); 
                 }
                 
-                header('Location:/post/'.$post->getId());
+                header('Location:/commentaire/confirmation');
+
             }
         }
+    }
+
+    public function displayConfirmationSendComment()
+    {
+        return  $this->twig->render('confirm/confirmComment.html.twig');
     }
 }

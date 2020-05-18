@@ -35,15 +35,20 @@ class HomeController extends AbstractController
                 if ($sendMail === false) {
                     return $this->displayError(500); 
                 }
-
+              
+                header("Location: /email/confirmation");
             } 
-            
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [
             'postVariables' => $post,
             'errors' => $errors
         ]);
+    }
+
+    public function displayConfirmationSendMail()
+    {
+        return  $this->twig->render('confirm/confirmEmail.html.twig');
     }
 
     private function sendMail(): void
@@ -61,8 +66,6 @@ class HomeController extends AbstractController
         'Reply-To: ' . $email . "\r\n" ;
 
         mail($to, $subject, $text, $headers);
-
-        header('Location: /');
     }
 
 }

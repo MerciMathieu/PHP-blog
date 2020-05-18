@@ -13,8 +13,6 @@ class User
     private string $email;
 
     private string $password;
-
-    private \DateTime $createdAt;
     
     private bool $isAdmin;
     

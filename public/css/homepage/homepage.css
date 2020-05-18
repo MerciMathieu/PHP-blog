@@ -1,7 +1,6 @@
 /* Page de garde */
 
 section#home {
-    background-color: var(--main-bg-color);
     height: calc(100vh - 61px);
     position: relative;
 }
@@ -23,8 +22,9 @@ section#home h1 {
 
 /* ABOUT */
 
-section#about{
-    background-color: var(--second-bg-color);
+section#about, section#contact{
+    position: initial;
+    height: initial;
 }
 
 .about-content {
@@ -43,10 +43,6 @@ section#about{
 }
 
 /* CONTACT */
-
-section#contact {
-    background-color: var(--main-bg-color);
-}
 
 section#contact form {
     width: 60%;

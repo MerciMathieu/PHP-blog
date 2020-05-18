@@ -11,7 +11,6 @@ use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
-use App\Controller\Login\LoginController;
 
 /**** TWIG ****/
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
@@ -43,6 +42,10 @@ $adminController = new AdminController($twig, $postRepository, $commentRepositor
 
 if ($_SERVER['REQUEST_URI'] === '/') {
     echo $homeController->index();
+} elseif ($_SERVER['REQUEST_URI'] === '/email/confirmation') {
+    echo $homeController->displayConfirmationSendMail();
+} elseif ($_SERVER['REQUEST_URI'] === '/commentaire/confirmation') {
+    echo $blogController->displayConfirmationSendComment();
 } elseif ($_SERVER['REQUEST_URI'] === '/blog') {
     echo $blogController->index();
 } elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
