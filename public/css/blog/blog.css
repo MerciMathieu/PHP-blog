@@ -1,14 +1,7 @@
 /* ARTICLES */
-
 .articles {
   display: flex;
   flex-direction: column;
-}
-  
-.article {
-  justify-content: center;
-  border-bottom: lightgrey 1px solid;
-  padding-bottom: 15px;
 }
 
 .articles .article-content img {
@@ -18,6 +11,12 @@
 
 .articles .article-content img p {
   clear: both;
+}
+
+.article {
+  justify-content: center;
+  border-bottom: lightgrey 1px solid;
+  padding-bottom: 15px;
 }
 
 .article-body h2 {

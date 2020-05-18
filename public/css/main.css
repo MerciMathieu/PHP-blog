@@ -1,5 +1,4 @@
 /* GENERAL */
-
 html,
 body {
   margin: 0;
@@ -138,9 +137,7 @@ legend {
   color: cornsilk;
 }
 
-
 /* HEADER */
-
 #header nav .navbar-brand {
   font-size: 3rem;
   user-select: none;
@@ -173,9 +170,7 @@ legend {
   border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-
 /* FOOTER */
-
 .socials-footer {
   background-color: #4a5969;
 }

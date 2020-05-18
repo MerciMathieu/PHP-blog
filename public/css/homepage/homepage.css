@@ -1,10 +1,9 @@
 /* Page de garde */
-
 section#home {
   height: calc(100vh - 61px);
   position: relative;
 }
-  
+
 section#home .container {
   position: absolute;
   top: 50%;
@@ -20,9 +19,7 @@ section#home h1 {
   font-size: 3.5rem;
 }
 
-
 /* ABOUT */
-
 section#about,
 section#contact {
   position: initial;
@@ -44,9 +41,7 @@ section#contact {
   width: 40%;
 }
 
-
 /* CONTACT */
-
 section#contact form {
   width: 60%;
   margin: auto;
