@@ -1,6 +1,6 @@
 /* GENERAL */
 
-html, 
+html,
 body {
     margin: 0;
     padding: 0;
@@ -65,7 +65,7 @@ button:focus {
     outline: none;
 }
 
-div#content, 
+div#content,
 li {
     font-size: 1.6rem;
 }
@@ -74,18 +74,18 @@ section {
     padding: 40px;
 }
 
-form input, 
+form input,
 form textarea {
     margin-bottom: 25px;
     font-size: 1.7rem !important;
 }
 
-form input::placeholder, 
+form input::placeholder,
 form textarea::placeholder {
     font-size: 1.7rem;
 }
 
-form input:focus, 
+form input:focus,
 form textarea:focus {
     margin-bottom: 25px;
     outline: none;
@@ -157,7 +157,8 @@ legend
     font-size: 1.4rem;
 }
 
-.dropdown-item:focus, .dropdown-item:hover {
+.dropdown-item:focus,
+.dropdown-item:hover {
     background-color: darkgray;
     color: black !important;
 }
