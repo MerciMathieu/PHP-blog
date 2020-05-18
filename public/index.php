@@ -40,47 +40,51 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
-if ($_SERVER['REQUEST_URI'] === '/') {
-    echo $homeController->index();
-} elseif ($_SERVER['REQUEST_URI'] === '/email/confirmation') {
-    echo $homeController->displayConfirmationSendMail();
-} elseif ($_SERVER['REQUEST_URI'] === '/commentaire/confirmation') {
-    echo $blogController->displayConfirmationSendComment();
-} elseif ($_SERVER['REQUEST_URI'] === '/blog') {
-    echo $blogController->index();
-} elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $postId = (int)$matches[1];
-    echo $blogController->showPost($postId);
-} elseif ($_SERVER['REQUEST_URI'] === '/admin/posts') {
-    echo $adminController->index();
-} elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $postId = (int)$matches[1];
-    echo $adminController->editPost($postId);
-} elseif ($_SERVER['REQUEST_URI'] === '/admin/post/add') {
-    echo $adminController->addPost();
-} elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $postId = (int)$matches[1];
-    echo $adminController->deletePost($postId);
-} elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $postId = (int)$matches[1];
-    echo $adminController->showCommentsFromPost($postId);
-} elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $commentId = (int)$matches[1];
-    echo $adminController->deleteComment($commentId);
-} elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $commentId = (int)$matches[1];
-    echo $adminController->approveComment($commentId, true);
-} elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
-    $commentId = (int)$matches[1];
-    echo $adminController->approveComment($commentId, false);
-} elseif ($_SERVER['REQUEST_URI'] === '/login') {
-    echo $blogController->login();
-} elseif ($_SERVER['REQUEST_URI'] === '/admin/login') {
-    echo $adminController->login();
-} elseif ($_SERVER['REQUEST_URI'] === '/blog/register') {
-    echo $blogController->register();
-} elseif ($_SERVER['REQUEST_URI'] === '/logout') {
-    echo $blogController->logout();
+if ($_SERVER['REQUEST_URI']) {
+    if ($_SERVER['REQUEST_URI'] === '/') {
+        echo $homeController->index();
+    } elseif ($_SERVER['REQUEST_URI'] === '/email/confirmation') {
+        echo $homeController->displayConfirmationSendMail();
+    } elseif ($_SERVER['REQUEST_URI'] === '/commentaire/confirmation') {
+        echo $blogController->displayConfirmationSendComment();
+    } elseif ($_SERVER['REQUEST_URI'] === '/blog') {
+        echo $blogController->index();
+    } elseif (preg_match('/^\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $postId = (int)$matches[1];
+        echo $blogController->showPost($postId);
+    } elseif ($_SERVER['REQUEST_URI'] === '/admin/posts') {
+        echo $adminController->index();
+    } elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $postId = (int)$matches[1];
+        echo $adminController->editPost($postId);
+    } elseif ($_SERVER['REQUEST_URI'] === '/admin/post/add') {
+        echo $adminController->addPost();
+    } elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $postId = (int)$matches[1];
+        echo $adminController->deletePost($postId);
+    } elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $postId = (int)$matches[1];
+        echo $adminController->showCommentsFromPost($postId);
+    } elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $commentId = (int)$matches[1];
+        echo $adminController->deleteComment($commentId);
+    } elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $commentId = (int)$matches[1];
+        echo $adminController->approveComment($commentId, true);
+    } elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $_SERVER['REQUEST_URI'], $matches)) {
+        $commentId = (int)$matches[1];
+        echo $adminController->approveComment($commentId, false);
+    } elseif ($_SERVER['REQUEST_URI'] === '/login') {
+        echo $blogController->login();
+    } elseif ($_SERVER['REQUEST_URI'] === '/admin/login') {
+        echo $adminController->login();
+    } elseif ($_SERVER['REQUEST_URI'] === '/blog/register') {
+        echo $blogController->register();
+    } elseif ($_SERVER['REQUEST_URI'] === '/logout') {
+        echo $blogController->logout();
+    } else {
+        echo $homeController->displayError(404);
+    }
 } else {
-    echo $homeController->displayError(404);
+    echo $homeController->displayError(500);
 }
