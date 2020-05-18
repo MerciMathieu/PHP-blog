@@ -43,7 +43,7 @@ label {
 .button-link {
     border-radius: 4px;
     padding: 8px;
-    background-color: #4A5969;
+    background-color: #4a5969;
     color: rgba(245, 245, 245, 0.815);
     box-shadow: black 1px 1px 5px;
     font-weight: 600;
@@ -170,7 +170,7 @@ legend
 /* FOOTER */
 
 .socials-footer {
-    background-color: #4A5969;
+    background-color: #4a5969;
 }
 
 .socials-footer h3 {
