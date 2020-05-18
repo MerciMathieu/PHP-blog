@@ -1,9 +1,9 @@
 /* Page de garde */
 
 section#home {
-    height: calc(100vh - 61px);
-    position: relative;
-  }
+  height: calc(100vh - 61px);
+  position: relative;
+}
   
 section#home .container {
   position: absolute;
@@ -76,5 +76,5 @@ section#contact form textarea:focus {
   border-top: none;
   border-bottom: white 1px solid;
   margin-bottom: 25px;
-  box-shadow: 0 1px 0px 0 #4a5969;
+  box-shadow: 0px 1px 0px 0px #4a5969;
 }

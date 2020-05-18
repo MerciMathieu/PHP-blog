@@ -1,7 +1,7 @@
 table {
-    font-size: 1.8rem;
-  }
-  
+  font-size: 1.8rem;
+}
+
 table tbody {
   font-size: 1.6rem;
 }
@@ -11,13 +11,13 @@ table.comments tbody td i {
   height: 10px;
 }
 
+.table td.actions {
+  padding-bottom: 60px;
+}
+
 table.comments td.actions {
   display: flex;
   justify-content: center;
-}
-
-.table td.actions {
-  padding-bottom: 60px;
 }
 
 .img-fluid.img-thumbnail {

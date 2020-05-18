@@ -1,9 +1,9 @@
 /* ARTICLES */
 
 .articles {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
   
 .article {
   justify-content: center;
