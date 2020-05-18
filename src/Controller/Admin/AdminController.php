@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Classes\Session;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Controller\AbstractController;
@@ -70,7 +71,7 @@ class AdminController extends AbstractController
                 $intro,
                 $content,
                 $image,
-                $_SESSION['user']
+                Session::getCurrent('user')
             );
             $postId = $this->postRepository->insert($post);
 

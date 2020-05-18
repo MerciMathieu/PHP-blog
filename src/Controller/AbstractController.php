@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Classes\Session;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
@@ -32,8 +33,8 @@ abstract class AbstractController
     protected function getCurrentUser(): ?User
     {
         $user = null;
-        if (isset($_SESSION['user'])) {
-            $user = $_SESSION['user'];
+        if (Session::getCurrent('user')) {
+            $user = Session::getCurrent('user');
         }
         return $user;
     }

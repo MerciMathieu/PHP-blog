@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
+use App\Classes\Session;
 use App\Classes\ConnectDb;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
@@ -19,7 +20,7 @@ $twig = new \Twig\Environment($loader, [
     'auto_reload' => true
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-$currentUser = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+$currentUser = Session::getCurrent('user') ? Session::getCurrent('user') : null;
 $twig->addGlobal('current_user', $currentUser);
 /**** /TWIG ****/
 

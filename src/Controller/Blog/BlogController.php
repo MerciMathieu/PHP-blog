@@ -5,6 +5,7 @@ namespace App\Controller\Blog;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Comment;
+use App\Classes\Session;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Repository\CommentRepository;
@@ -115,7 +116,7 @@ class BlogController extends AbstractController
             if (empty($errors)) {
                 $_SESSION['user'] = $user;
 
-                if (empty($_SESSION['user'])) {
+                if (!Session::getCurrent('user')) {
                     return $this->displayError(500);
                 }
                 
@@ -132,11 +133,11 @@ class BlogController extends AbstractController
     private function insertComment(Post $post)
     {
         if (isset($_POST['submit'])) {
-            if (isset($_SESSION['user'])) {
+            if (Session::getCurrent('user')) {
                 $comment = new Comment(
                     htmlspecialchars($_POST['message']),
                     $post,
-                    $_SESSION['user']
+                    Session::getCurrent('user')
                 );
 
                 $insertedComment = $this->commentRepository->insert($comment);
