@@ -38,5 +38,4 @@ class ConnectDb
     {
         return $this->conn;
     }
-
 }

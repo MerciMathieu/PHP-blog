@@ -70,5 +70,5 @@ section#contact form input:focus, section#contact form textarea:focus {
     border-top: none;
     border-bottom: white 1px solid;
     margin-bottom: 25px;
-    box-shadow: 0 1px 0px 0 var(--third-bg-color);
+    box-shadow: 0 1px 0px 0 #4A5969;
 }

@@ -1,16 +1,13 @@
-/* VARIABLES CSS */
-:root {
-    --main-bg-color: rgb(92, 107, 192);
-    --second-bg-color: #e6e6e69e;
-    --third-bg-color: #4A5969;
-}
-
 .bg-blue {
-    background-color: var(--main-bg-color);
+    background-color: rgb(92, 107, 192);
 }
 
 .bg-grey {
-    background-color: var(--second-bg-color);
+    background-color: #e6e6e69e;
+}
+
+.bg-darkgrey {
+    background-color: #4A5969;
 }
 
 .color-black {
