@@ -61,17 +61,21 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
+
             $title = $_POST['title'];
             $intro = $_POST['intro'];
             $content = $_POST['content'];
             $image = $_POST['image'];
+
+            $session = new Session();
+            $user = $session->getCurrent('user');
 
             $post = new Post(
                 $title,
                 $intro,
                 $content,
                 $image,
-                Session::getCurrent('user')
+                $user
             );
             $postId = $this->postRepository->insert($post);
 

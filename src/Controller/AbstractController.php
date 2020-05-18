@@ -33,8 +33,10 @@ abstract class AbstractController
     protected function getCurrentUser(): ?User
     {
         $user = null;
-        if (Session::getCurrent('user')) {
-            $user = Session::getCurrent('user');
+        $session = new Session();
+
+        if ($session->getCurrent('user')) {
+            $user = $session->getCurrent('user');
         }
         return $user;
     }

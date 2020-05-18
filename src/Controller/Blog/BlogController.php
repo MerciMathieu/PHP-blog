@@ -116,7 +116,10 @@ class BlogController extends AbstractController
             if (empty($errors)) {
                 $_SESSION['user'] = $user;
 
-                if (!Session::getCurrent('user')) {
+                $session = new Session();
+                $user = $session->getCurrent('user');
+
+                if (!$user) {
                     return $this->displayError(500);
                 }
                 
@@ -133,11 +136,15 @@ class BlogController extends AbstractController
     private function insertComment(Post $post)
     {
         if (isset($_POST['submit'])) {
-            if (Session::getCurrent('user')) {
+
+            $session = new Session();
+            $user = $session->getCurrent('user');
+
+            if ($user) {
                 $comment = new Comment(
                     htmlspecialchars($_POST['message']),
                     $post,
-                    Session::getCurrent('user')
+                    $user
                 );
 
                 $insertedComment = $this->commentRepository->insert($comment);

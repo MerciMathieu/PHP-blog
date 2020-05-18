@@ -20,7 +20,8 @@ $twig = new \Twig\Environment($loader, [
     'auto_reload' => true
 ]);
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-$currentUser = Session::getCurrent('user') ? Session::getCurrent('user') : null;
+$session = new Session();
+$currentUser = $session->getCurrent('user') ? $session->getCurrent('user') : null;
 $twig->addGlobal('current_user', $currentUser);
 /**** /TWIG ****/
 
