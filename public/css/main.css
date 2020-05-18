@@ -20,6 +20,11 @@ textarea {
     outline: none;
 }
 
+section {
+    height: calc(100vh - 240px);
+    position: relative;
+}
+
 h1 {
     margin: 0;
     font-size: 4rem;

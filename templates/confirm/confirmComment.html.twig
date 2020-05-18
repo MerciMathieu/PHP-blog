@@ -4,13 +4,13 @@
 
 {% block head %}
     {{ parent() }}
-    <meta http-equiv="refresh" url="{{ urlRedirect}}">
+    <meta http-equiv="refresh" content="3; url=/blog">
 {% endblock %}
 
 {% block content %}
 
-    <section id="home" class="color-white">
-        <div class="container">
+    <section class="bg-blue color-white">
+        <div class="container bg-blue">
             <div class="text-center">
                 <p class="mb-3">Votre commentaire a bien été soumis pour validation. <br />Il sera publié très prochainement.</p>
                 <small>Vous allez être redirigé dans 3 secondes</small>

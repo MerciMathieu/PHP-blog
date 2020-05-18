@@ -9,14 +9,14 @@
     background-color: var(--main-bg-color);
 }
 
+.bg-grey {
+    background-color: var(--second-bg-color);
+}
+
 .color-black {
     color: rgba(12, 11, 11, 0.924);
 }
 
 .color-white {
     color: whitesmoke;
-}
-
-.background-gray {
-    background-color: #e6e6e6d3;
 }

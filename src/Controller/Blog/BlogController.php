@@ -44,7 +44,6 @@ class BlogController extends AbstractController
     public function register()
     {
         $post = null;
-        $textColorError = null;
         $errors = [];
         
         if (isset($_POST['submit'])) {
@@ -81,6 +80,7 @@ class BlogController extends AbstractController
                 );
                 $user->setEmail(strtolower($email));
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+                $user->setIsAdmin(0);
                 $this->userRepository->insert($user);
 
                 $_SESSION['user'] = $user;
@@ -141,6 +141,6 @@ class BlogController extends AbstractController
 
     public function displayConfirmationSendComment()
     {
-        return  $this->twig->render('confirmation/confirmComment.html.twig');
+        return  $this->twig->render('confirm/confirmComment.html.twig');
     }
 }
