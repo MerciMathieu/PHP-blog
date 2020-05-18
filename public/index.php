@@ -41,10 +41,6 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
-if (http_response_code() && http_response_code() === 500) {
-    echo $blogController->displayError(500);
-}
-
 if ($_SERVER['REQUEST_URI'] === '/') {
     echo $homeController->index();
 } elseif ($_SERVER['REQUEST_URI'] === '/blog') {
