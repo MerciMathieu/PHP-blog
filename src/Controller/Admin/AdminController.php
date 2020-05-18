@@ -61,7 +61,6 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-
             $title = $_POST['title'];
             $intro = $_POST['intro'];
             $content = $_POST['content'];

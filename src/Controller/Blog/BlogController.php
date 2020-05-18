@@ -136,7 +136,6 @@ class BlogController extends AbstractController
     private function insertComment(Post $post)
     {
         if (isset($_POST['submit'])) {
-
             $session = new Session();
             $user = $session->getCurrent('user');
 
