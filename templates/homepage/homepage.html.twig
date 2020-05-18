@@ -34,7 +34,7 @@
 
     <section id="contact" class="color-white">
         <div class="container my-5">
-            <h1 class="text-center mb-5">Me contacter</h1>
+            <h1 id="contact-form" class="text-center mb-5">Me contacter</h1>
 
             {% if errors %}
                 <div class="alert alert-{% if success %}success{% else %}danger{% endif %} my-5 w-50 mx-auto" role="alert">
@@ -46,7 +46,7 @@
                 </div>
             {% endif %}
 
-            <form method="post">
+            <form action="#contact-form" method="post">
                 <div class="form-group">
                     <label for="lastname" hidden>Nom:</label>
                     <input type="text" class="form-control {% if errors.lastname %}text-danger{% endif %}" name="lastname" id="lastname" {% if postVariables.firstname %}value="{{postVariables.lastname}}"{% endif %} placeholder="Entrez votre nom" required/>

@@ -11,7 +11,6 @@ use App\Repository\CommentRepository;
 use App\Controller\Blog\BlogController;
 use App\Controller\Home\HomeController;
 use App\Controller\Admin\AdminController;
-use App\Controller\Login\LoginController;
 
 /**** TWIG ****/
 $loader = new \Twig\Loader\FilesystemLoader('../templates');
