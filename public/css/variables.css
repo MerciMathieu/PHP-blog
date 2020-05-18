@@ -1,19 +1,19 @@
 .bg-blue {
     background-color: rgb(92, 107, 192);
-}
-
+  }
+  
 .bg-grey {
-    background-color: #e6e6e69e;
+  background-color: #e6e6e69e;
 }
 
 .bg-darkgrey {
-    background-color: #4a5969;
+  background-color: #4a5969;
 }
 
 .color-black {
-    color: rgba(12, 11, 11, 0.924);
+  color: rgba(12, 11, 11, 0.924);
 }
 
 .color-white {
-    color: whitesmoke;
+  color: whitesmoke;
 }

@@ -3,76 +3,78 @@
 section#home {
     height: calc(100vh - 61px);
     position: relative;
-}
-
+  }
+  
 section#home .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 section#home img {
-    width: 300px;
+  width: 300px;
 }
 
 section#home h1 {
-    font-size: 3.5rem;
+  font-size: 3.5rem;
 }
+
 
 /* ABOUT */
 
 section#about,
-section#contact{
-    position: initial;
-    height: initial;
+section#contact {
+  position: initial;
+  height: initial;
 }
 
 .about-content {
-    padding-top: 50px;
-    padding-bottom: 100px;
+  padding-top: 50px;
+  padding-bottom: 100px;
 }
 
 .text-about {
-    padding: 50px;
-    display: flex;
-    justify-content: space-evenly;
+  padding: 50px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .text-about p {
-    width: 40%;
+  width: 40%;
 }
+
 
 /* CONTACT */
 
 section#contact form {
-    width: 60%;
-    margin: auto;
+  width: 60%;
+  margin: auto;
 }
 
 section#contact form input::placeholder,
 section#contact form textarea::placeholder {
-    color: rgba(255, 255, 255, 0.596);
-    font-size: 1.7rem;
+  color: rgba(255, 255, 255, 0.596);
+  font-size: 1.7rem;
 }
 
- section#contact form input,
- section#contact form textarea {
-    background-color: inherit;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    border-bottom: rgba(211, 211, 211, 0.507) 1px solid;
-    color: white;
+section#contact form input,
+section#contact form textarea {
+  background-color: inherit;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: rgba(211, 211, 211, 0.507) 1px solid;
+  color: white;
 }
 
 section#contact form input:focus,
 section#contact form textarea:focus {
-    background-color: inherit;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    border-bottom: white 1px solid;
-    margin-bottom: 25px;
-    box-shadow: 0 1px 0px 0 #4a5969;
+  background-color: inherit;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: white 1px solid;
+  margin-bottom: 25px;
+  box-shadow: 0 1px 0px 0 #4a5969;
 }

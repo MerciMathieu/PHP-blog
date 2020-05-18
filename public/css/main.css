@@ -2,192 +2,195 @@
 
 html,
 body {
-    margin: 0;
-    padding: 0;
-    font-size: 62.5%; /** 1rem = 10px **/
-    scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-size: 62.5%;
+  /** 1rem = 10px **/
+  scroll-behavior: smooth;
 }
 
 ::selection {
-    background-color: #e6e6e69e;
-    color: white;
+  background-color: #e6e6e69e;
+  color: white;
 }
 
 textarea {
-    resize: none;
+  resize: none;
 }
 
 :focus {
-    outline: none;
+  outline: none;
 }
 
 section {
-    height: calc(100vh - 240px);
-    position: relative;
+  height: calc(100vh - 240px);
+  position: relative;
 }
 
 h1 {
-    margin: 0;
-    font-size: 4rem;
-    padding: 20px 0;
+  margin: 0;
+  font-size: 4rem;
+  padding: 20px 0;
 }
 
 p {
-    margin: 0;
-    font-size: 2rem;
+  margin: 0;
+  font-size: 2rem;
 }
 
 label {
-    font-size: 1.5rem;;
+  font-size: 1.5rem;
+  ;
 }
 
 .button-link {
-    border-radius: 4px;
-    padding: 8px;
-    background-color: #4a5969;
-    color: rgba(245, 245, 245, 0.815);
-    box-shadow: black 1px 1px 5px;
-    font-weight: 600;
-    border: none;
-    outline: none;
-    font-size: 1.5rem;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #4a5969;
+  color: rgba(245, 245, 245, 0.815);
+  box-shadow: black 1px 1px 5px;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
 }
 
 .button-link:hover {
-    background-color: #363b40c5;
-    color: white;
-    box-shadow: darkgrey 1px 1px 5px;
-    outline: none;
-    text-decoration: none;
+  background-color: #363b40c5;
+  color: white;
+  box-shadow: darkgrey 1px 1px 5px;
+  outline: none;
+  text-decoration: none;
 }
 
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 div#content,
 li {
-    font-size: 1.6rem;
+  font-size: 1.6rem;
 }
 
 section {
-    padding: 40px;
+  padding: 40px;
 }
 
 form input,
 form textarea {
-    margin-bottom: 25px;
-    font-size: 1.7rem !important;
+  margin-bottom: 25px;
+  font-size: 1.7rem !important;
 }
 
 form input::placeholder,
 form textarea::placeholder {
-    font-size: 1.7rem;
+  font-size: 1.7rem;
 }
 
 form input:focus,
 form textarea:focus {
-    margin-bottom: 25px;
-    outline: none;
-    box-shadow: none;
-    border-color: lightgray;
+  margin-bottom: 25px;
+  outline: none;
+  box-shadow: none;
+  border-color: lightgray;
 }
 
 fieldset {
-    display: block;
-    margin-inline-start: 2px;
-    margin-inline-end: 2px;
-    padding-block-start: 0.35em;
-    padding-inline-start: 0.75em;
-    padding-inline-end: 0.75em;
-    padding-block-end: 0.625em;
-    min-inline-size: min-content;
-    border-width: 2px;
-    border-style: groove;
-    border-color: threedface;
-    border-image: initial;
+  display: block;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
 }
 
-legend
-{
-    width: initial;
-    padding: 0.8rem;
-    margin-bottom: .5rem; 
-    font-size: 2rem;
-    line-height: inherit; 
-    color: inherit; 
-    white-space: normal;
+legend {
+  width: initial;
+  padding: 0.8rem;
+  margin-bottom: .5rem;
+  font-size: 2rem;
+  line-height: inherit;
+  color: inherit;
+  white-space: normal;
 }
 
 #back-top {
-    padding: 8px 15px;
-    position: fixed;
-    bottom: 50px;
-    right: 50px;
-    border-radius: 5px;
-    background: rgba(125, 144, 160, 0.7);
-    z-index: 1000;
-    color: wheat;
+  padding: 8px 15px;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  border-radius: 5px;
+  background: rgba(125, 144, 160, 0.7);
+  z-index: 1000;
+  color: wheat;
 }
 
-#back-top:hover{
-    background-color: #212529;
-    transition:all ease-in 0.2s;
+#back-top:hover {
+  background-color: #212529;
+  transition: all ease-in 0.2s;
 }
 
 #back-top i {
-    color: cornsilk;
+  color: cornsilk;
 }
+
 
 /* HEADER */
 
 #header nav .navbar-brand {
-    font-size: 3rem;
-    user-select: none;
+  font-size: 3rem;
+  user-select: none;
 }
 
 #header nav .nav-link {
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.7);
-    user-select: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  user-select: none;
 }
 
 .dropdown-item {
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .dropdown-item:focus,
 .dropdown-item:hover {
-    background-color: darkgray;
-    color: black !important;
+  background-color: darkgray;
+  color: black !important;
 }
 
 .dropdown-menu {
-    font-size: 1rem;
-    color: #212529;
-    margin-left: 15px;
-    background-color: rgb(52, 58, 64);
-    border: none;
-    border-bottom: 1px solid rgba(0,0,0,.15);
-    border-top: 1px solid rgba(0,0,0,.15);
+  font-size: 1rem;
+  color: #212529;
+  margin-left: 15px;
+  background-color: rgb(52, 58, 64);
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  border-top: 1px solid rgba(0, 0, 0, .15);
 }
+
 
 /* FOOTER */
 
 .socials-footer {
-    background-color: #4a5969;
+  background-color: #4a5969;
 }
 
 .socials-footer h3 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 #icons {
-    font-size: 2.25rem;
+  font-size: 2.25rem;
 }
 
 #icons a {
-    color: white;
-    margin: 10px;
+  color: white;
+  margin: 10px;
 }
