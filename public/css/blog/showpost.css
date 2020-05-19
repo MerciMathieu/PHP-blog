@@ -7,3 +7,8 @@ img {
   margin-top: 50px;
 }
 
+section#show-post {
+  height: initial;
+  position: initial;
+}
+

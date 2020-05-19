@@ -34,16 +34,21 @@
             <div style="clear: both;" class="pt-5 comments">
                 <div id="space-comments" class="w-50 my-3">
                     <h3>{{ comments|length }} commentaire(s)</h3>
-                    {% for comment in comments %}
-                        <div class="comment my-4 background-gray">
-                            <p class="font-weight-bold">{{ comment.author.firstName }} {{ comment.author.lastName }}
-                                <small class="text-muted ml-2">
-                                    posté le {{ comment.createdAt|date('d m Y à H:i:s') }}
-                                </small>
-                            </p>
-                            <p>{{ comment.content }}</p>
-                        </div>
-                    {% endfor %}
+
+                    {% if comments %}
+                        {% for comment in comments %}
+                            <div class="comment my-4 background-gray">
+                                <p class="font-weight-bold">{{ comment.author.firstName }} {{ comment.author.lastName }}
+                                    <small class="text-muted ml-2">
+                                        posté le {{ comment.createdAt|date('d m Y à H:i:s') }}
+                                    </small>
+                                </p>
+                                <p>{{ comment.content }}</p>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Soyez le premier à laisser un commentaire !</p>
+                    {% endif %}
                 </div>
                 <hr>
                 <h2 class="my-5">Poster un commentaire </h2>
