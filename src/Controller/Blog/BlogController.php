@@ -88,7 +88,8 @@ class BlogController extends AbstractController
                     return $this->displayError(500);
                 }
 
-                $_SESSION['user'] = $insertedUser;
+                $session = new Session();
+                $session->setSession('user', $insertedUser);
     
                 header('Location: /blog');
             }
@@ -114,9 +115,8 @@ class BlogController extends AbstractController
             }
 
             if (empty($errors)) {
-                $_SESSION['user'] = $user;
-
                 $session = new Session();
+                $session->setSession('user', $user);
                 $user = $session->getCurrent('user');
 
                 if (!$user) {

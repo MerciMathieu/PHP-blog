@@ -44,7 +44,8 @@ class AdminController extends AbstractController
             }
             
             if (empty($errors)) {
-                $_SESSION['user'] = $user;
+                $session = new Session();
+                $session->setSession('user', $user);
                 header('Location: /admin/posts');
             }
         }
