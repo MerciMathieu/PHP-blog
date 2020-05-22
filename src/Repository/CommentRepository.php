@@ -18,7 +18,7 @@ class CommentRepository
         $this->postRepository = new PostRepository($pdo);
     }
 
-    public function findOneByID(int $id): Comment
+    public function findOneByID(int $commentId): Comment
     {
         $req = $this->pdo->prepare(
             "SELECT *
@@ -26,7 +26,7 @@ class CommentRepository
                                     WHERE  c.id = :id"
         );
 
-        $req->execute(['id' => $id]);
+        $req->execute(['id' => $commentId]);
 
         $commentFromDb = $req->fetch();
 

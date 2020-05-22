@@ -18,9 +18,9 @@ class BlogController extends AbstractController
         ]);
     }
 
-    public function showPost(int $id)
+    public function showPost(int $postId)
     {
-        $post = $this->postRepository->findOneById($id);
+        $post = $this->postRepository->findOneBypostId($postId);
         $comments = [];
 
         if ($post === null) {
@@ -45,14 +45,12 @@ class BlogController extends AbstractController
         $errors = [];
         
         if (isset($_POST['submit'])) {
-            if (isset($_POST)) {
-                $post = $_POST;
-            }
-            $firstName = htmlspecialchars($_POST['firstname']);
-            $lastName = htmlspecialchars($_POST['lastname']);
-            $email = htmlspecialchars($_POST['email']);
-            $password = htmlspecialchars($_POST['password']);
-            $confirmPassword = htmlspecialchars($_POST['confirm_password']);
+            $post = $_POST;
+            $firstName = htmlspecialchars($post['firstname']);
+            $lastName = htmlspecialchars($post['lastname']);
+            $email = htmlspecialchars($post['email']);
+            $password = htmlspecialchars($post['password']);
+            $confirmPassword = htmlspecialchars($post['confirm_password']);
 
             if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
@@ -104,13 +102,12 @@ class BlogController extends AbstractController
         $errors = [];
 
         if (isset($_POST['submit'])) {
-            if (isset($_POST)) {
-                $post = $_POST;
-            }
+            $post = $_POST;
             $email = $post['email'];
             $user = $this->userRepository->findOneByEmail($email);
+            $password = $post['password'];
 
-            if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
+            if ($user === null or !password_verify($password, $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
@@ -138,28 +135,24 @@ class BlogController extends AbstractController
         if (isset($_POST['submit'])) {
             $session = new Session();
             $user = $session->getCurrent('user');
-            if (isset($_POST)) {
-                $postVariables = $_POST;
-            }
-            if ($postVariables) {
-                $message = htmlspecialchars($postVariables['message']);
-    
-                if ($user) {
-                    $textComment = htmlspecialchars($message);
-                    $comment = new Comment(
-                        $textComment,
-                        $post,
-                        $user
-                    );
-    
-                    $insertedComment = $this->commentRepository->insert($comment);
-    
-                    if ($insertedComment === false) {
-                        return $this->displayError(500);
-                    }
-                    
-                    header('Location:/commentaire/confirmation');
+            $postVariables = $_POST;
+            $message = htmlspecialchars($postVariables['message']);
+
+            if ($user) {
+                $textComment = htmlspecialchars($message);
+                $comment = new Comment(
+                    $textComment,
+                    $post,
+                    $user
+                );
+
+                $insertedComment = $this->commentRepository->insert($comment);
+
+                if ($insertedComment === false) {
+                    return $this->displayError(500);
                 }
+                
+                header('Location:/commentaire/confirmation');
             }
         }
     }
