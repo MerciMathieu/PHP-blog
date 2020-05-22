@@ -30,7 +30,9 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $post = $_POST;
+            if (isset($_POST)) {
+                $post = $_POST;
+            }
             $email = htmlspecialchars($post['email']);
             $user = $this->userRepository->findOneByEmail($email);
             $password = htmlspecialchars($post['password']);
@@ -62,7 +64,9 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $postVariables = $_POST;
+            if (isset($_POST)) {
+                $postVariables = $_POST;
+            }
             $title = htmlspecialchars($postVariables['title']);
             $intro = htmlspecialchars($postVariables['intro']);
             $content = htmlspecialchars($postVariables['content']);
@@ -99,7 +103,9 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $postVariables = $_POST;
+            if (isset($_POST)) {
+                $postVariables = $_POST;
+            }
             $title = htmlspecialchars($postVariables['title']);
             $intro = htmlspecialchars($postVariables['intro']);
             $content = htmlspecialchars($postVariables['content']);

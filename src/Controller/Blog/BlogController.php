@@ -45,7 +45,9 @@ class BlogController extends AbstractController
         $errors = [];
         
         if (isset($_POST['submit'])) {
-            $post = $_POST;
+            if (isset($_POST)) {
+                $post = $_POST;
+            }
             $firstName = htmlspecialchars($_POST['firstname']);
             $lastName = htmlspecialchars($_POST['lastname']);
             $email = htmlspecialchars($_POST['email']);
@@ -102,7 +104,9 @@ class BlogController extends AbstractController
         $errors = [];
 
         if (isset($_POST['submit'])) {
-            $post = $_POST;
+            if (isset($_POST)) {
+                $post = $_POST;
+            }
             $email = $post['email'];
             $user = $this->userRepository->findOneByEmail($email);
 
@@ -134,7 +138,9 @@ class BlogController extends AbstractController
         if (isset($_POST['submit'])) {
             $session = new Session();
             $user = $session->getCurrent('user');
-            $postVariables = $_POST;
+            if (isset($_POST)) {
+                $postVariables = $_POST;
+            }
             $message = htmlspecialchars($postVariables['message']);
 
             if ($user) {
