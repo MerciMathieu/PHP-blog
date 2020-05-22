@@ -22,12 +22,13 @@ class BlogController extends AbstractController
     {
         $post = $this->postRepository->findOneById($postId);
         $comments = [];
+        $postVariables = $this->getPostVariables();
 
         if ($post === null) {
             return $this->displayError(404);
         }
 
-        if (isset($_POST['submit'])) {
+        if (isset($postVariables['submit'])) {
             $this->insertComment($post);
         }
         
@@ -41,16 +42,15 @@ class BlogController extends AbstractController
 
     public function register()
     {
-        $post = null;
         $errors = [];
+        $postVariables = $this->getPostVariables();
         
-        if (isset($_POST['submit'])) {
-            $post = $_POST;
-            $firstName = htmlspecialchars($post['firstname']);
-            $lastName = htmlspecialchars($post['lastname']);
-            $email = htmlspecialchars($post['email']);
-            $password = htmlspecialchars($post['password']);
-            $confirmPassword = htmlspecialchars($post['confirm_password']);
+        if (isset($postVariables['submit'])) {
+            $firstName = htmlspecialchars($postVariables['firstname']);
+            $lastName = htmlspecialchars($postVariables['lastname']);
+            $email = htmlspecialchars($postVariables['email']);
+            $password = htmlspecialchars($postVariables['password']);
+            $confirmPassword = htmlspecialchars($postVariables['confirm_password']);
 
             if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
@@ -89,7 +89,7 @@ class BlogController extends AbstractController
 
         return $this->twig->render('blog/register.html.twig', [
             'errors' => $errors,
-            'postvariables' => $post
+            'postvariables' => $postVariables
         ]);
     }
 
@@ -130,7 +130,6 @@ class BlogController extends AbstractController
         if (isset($postVariables['submit'])) {
             $session = new Session();
             $user = $session->getCurrent('user');
-            $postVariables = $_POST;
             $message = htmlspecialchars($postVariables['message']);
 
             if ($user) {
