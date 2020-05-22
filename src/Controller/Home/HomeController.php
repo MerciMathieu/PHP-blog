@@ -31,12 +31,10 @@ class HomeController extends AbstractController
                 $errors['message'] = "Le message doit contenir au moins 3 caractères";
             }
 
-            if (empty($errors)) {
-                $mail = $this->sendMail();
-                if ($mail === false) {
-                    $this->displayError(500);
-                }
-
+            $mail = $this->sendMail();
+            if ($mail === false) {
+                $this->displayError(500);
+            } else {
                 header("Location: /email/confirmation");
             }
         }

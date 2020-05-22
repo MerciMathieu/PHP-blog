@@ -20,7 +20,7 @@ class BlogController extends AbstractController
 
     public function showPost(int $postId)
     {
-        $post = $this->postRepository->findOneBypostId($postId);
+        $post = $this->postRepository->findOneById($postId);
         $comments = [];
 
         if ($post === null) {
@@ -68,24 +68,22 @@ class BlogController extends AbstractController
                 $errors['password'] = "Mot de passe différent";
             }
 
-            if (empty($errors)) {
-                $user = new User(
-                    $firstName,
-                    $lastName
-                );
-                $user->setEmail(strtolower($email));
-                $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
-                $user->setIsAdmin(0);
+            $user = new User(
+                $firstName,
+                $lastName
+            );
+            $user->setEmail(strtolower($email));
+            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            $user->setIsAdmin(0);
 
-                $this->userRepository->insert($user);
+            $this->userRepository->insert($user);
 
-                if ($user === null) {
-                    return $this->displayError(500);
-                }
-
+            if ($user === null) {
+                return $this->displayError(500);
+            } else {
                 $session = new Session();
                 $session->setSession('user', $user);
-    
+
                 header('Location: /blog');
             }
         }
@@ -111,15 +109,13 @@ class BlogController extends AbstractController
                 $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
-            if (empty($errors)) {
-                $session = new Session();
-                $session->setSession('user', $user);
-                $user = $session->getCurrent('user');
+            $session = new Session();
+            $session->setSession('user', $user);
+            $user = $session->getCurrent('user');
 
-                if (!$user) {
-                    return $this->displayError(500);
-                }
-                
+            if ($user === null) {
+                return $this->displayError(500);
+            } else {
                 header('Location: /blog');
             }
         }
@@ -150,9 +146,9 @@ class BlogController extends AbstractController
 
                 if ($insertedComment === false) {
                     return $this->displayError(500);
+                } else {
+                    header('Location:/commentaire/confirmation');
                 }
-                
-                header('Location:/commentaire/confirmation');
             }
         }
     }

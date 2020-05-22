@@ -42,9 +42,7 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
-if (isset($_SERVER['REQUEST_URI'])) {
-    $uri = $_SERVER['REQUEST_URI'];
-}
+$uri = filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
 
 if (isset($uri)) {
     if ($uri === '/') {
