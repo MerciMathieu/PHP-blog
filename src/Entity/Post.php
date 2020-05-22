@@ -117,13 +117,13 @@ class Post
         $this->id = $id;
     }
 
-    public function getHasUnvalidatedComments(): bool
+    public function getUnvalidComments(): bool
     {
-        return $this->hasUnvalidatedComments;
+        return $this->unvalidComments;
     }
 
-    public function setHasUnvalidatedComments(bool $hasUnvalidatedComments)
+    public function setUnvalidComments(bool $unvalidComments)
     {
-        $this->hasUnvalidatedComments = $hasUnvalidatedComments;
+        $this->unvalidComments = $unvalidComments;
     }
 }

@@ -33,7 +33,7 @@ class PostRepository
         $postsArrayFromDb = $req->fetchAll();
         $posts = [];
         foreach ($postsArrayFromDb as $postFromDb) {
-            $hasUnvalidatedComments = $postFromDb['unvalidated_comments_count'] > 0 ? true : false;
+            $hasUnvalidComments = $postFromDb['unvalidated_comments_count'] > 0 ? true : false;
 
             $author = new User(
                 $postFromDb['first_name'],
@@ -49,7 +49,7 @@ class PostRepository
             $post->setId($postFromDb['id']);
             $post->setCreatedAt(new \DateTime($postFromDb['created_at']));
             $post->setUpdatedAt($postFromDb['updated_at'] ? new \DateTime($postFromDb['updated_at']) : null);
-            $post->setHasUnvalidatedComments($hasUnvalidatedComments);
+            $post->setUnvalidComments($hasUnvalidComments);
             $posts[] = $post;
         }
         return $posts;
