@@ -6,7 +6,7 @@ use App\Entity\User;
 
 class Comment
 {
-    private int $id;
+    private int $identifier;
 
     private string $content;
 
@@ -68,12 +68,12 @@ class Comment
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(?int $id)
+    public function setId(?int $identifier)
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
  
     public function getPost(): Post

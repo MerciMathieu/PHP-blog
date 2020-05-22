@@ -58,12 +58,12 @@ class HomeController extends AbstractController
         $email = htmlspecialchars($post['email']);
         $message = htmlspecialchars($post['message']);
 
-        $to      = 'mathieu.delclos@gmail.com';
+        $receiver      = 'mathieu.delclos@gmail.com';
         $subject = $firstName . ' ' . $lastName . ' via formulaire de contact blog-php' ;
         $text = $message;
         $headers = 'From: '. $email . "\r\n" .
         'Reply-To: ' . $email . "\r\n" ;
 
-        mail($to, $subject, $text, $headers);
+        mail($receiver, $subject, $text, $headers);
     }
 }

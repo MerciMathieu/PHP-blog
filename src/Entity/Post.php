@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class Post
 {
-    private int $id;
+    private int $identifier;
     
     private string $title;
 
@@ -109,12 +109,12 @@ class Post
 
     public function getId(): int
     {
-        return $this->id;
+        return $this->identifier;
     }
 
-    public function setId(int $id)
+    public function setId(int $identifier)
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
     public function getUnvalidComments(): bool
