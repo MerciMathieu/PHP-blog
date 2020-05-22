@@ -80,16 +80,15 @@ class BlogController extends AbstractController
                 $user->setEmail(strtolower($email));
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
                 $user->setIsAdmin(0);
+
                 $this->userRepository->insert($user);
 
-                $insertedUser = $this->userRepository->insert($user);
-
-                if ($insertedUser === false) {
+                if ($user === null) {
                     return $this->displayError(500);
                 }
 
                 $session = new Session();
-                $session->setSession('user', $insertedUser);
+                $session->setSession('user', $user);
     
                 header('Location: /blog');
             }

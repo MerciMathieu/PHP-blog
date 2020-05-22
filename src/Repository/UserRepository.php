@@ -41,7 +41,7 @@ class UserRepository
 
     public function insert(User $user): void
     {
-        $req = $this->pdo->prepare("INSERT INTO user (first_name, last_name, email, password) VALUES         (:first_name, :last_name, :email, :password)");
+        $req = $this->pdo->prepare("INSERT INTO user (first_name, last_name, email, password) VALUES(:first_name, :last_name, :email, :password)");
 
         $req->execute([
             'first_name' => $user->getFirstName(),
