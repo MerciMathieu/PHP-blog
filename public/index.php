@@ -42,7 +42,9 @@ $blogController = new BlogController($twig, $postRepository, $commentRepository,
 $adminController = new AdminController($twig, $postRepository, $commentRepository, $userRepository);
 /**** /Controllers ****/
 
-$uri = $_SERVER['REQUEST_URI'];
+if (isset($_SERVER['REQUEST_URI'])) {
+    $uri = $_SERVER['REQUEST_URI'];
+}
 
 if (isset($uri)) {
     if ($uri === '/') {
@@ -55,29 +57,29 @@ if (isset($uri)) {
         echo $blogController->index();
     } elseif (preg_match('/^\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo $blogController->showPost(htmlspecialchars($postId));
+        echo htmlspecialchars($blogController->showPost($postId));
     } elseif ($uri === '/admin/posts') {
         echo $adminController->index();
     } elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->editPost(htmlspecialchars($postId));
+        echo htmlspecialchars($adminController->editPost($postId));
     } elseif ($uri === '/admin/post/add') {
         echo $adminController->addPost();
     } elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->deletePost(htmlspecialchars($postId));
+        echo htmlspecialchars($adminController->deletePost($postId));
     } elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo $adminController->showCommentsFromPost(htmlspecialchars($postId));
+        echo htmlspecialchars($adminController->showCommentsFromPost($postId));
     } elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->deleteComment(htmlspecialchars($commentId));
+        echo htmlspecialchars($adminController->deleteComment($commentId));
     } elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->approveComment(htmlspecialchars($commentId), true);
+        echo htmlspecialchars($adminController->approveComment($commentId, true));
     } elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo $adminController->approveComment(htmlspecialchars($commentId), false);
+        echo htmlspecialchars($adminController->approveComment($commentId, false));
     } elseif ($uri === '/login') {
         echo $blogController->login();
     } elseif ($uri === '/admin/login') {
