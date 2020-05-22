@@ -8,15 +8,14 @@ class HomeController extends AbstractController
 {
     public function index()
     {
-        $post = null;
         $errors = [];
+        $postVariables = $this->getPostVariables();
 
-        if (isset($_POST['submit'])) {
-            $post = $_POST;
-            $firstName = htmlspecialchars($post['firstname']);
-            $lastName = htmlspecialchars($post['lastname']);
-            $email = htmlspecialchars($post['email']);
-            $message = htmlspecialchars($post['message']);
+        if (isset($postVariables['submit'])) {
+            $firstName = htmlspecialchars($postVariables['firstname']);
+            $lastName = htmlspecialchars($postVariables['lastname']);
+            $email = htmlspecialchars($postVariables['email']);
+            $message = htmlspecialchars($postVariables['message']);
 
             if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
@@ -40,7 +39,7 @@ class HomeController extends AbstractController
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [
-            'postVariables' => $post,
+            'postVariables' => $postVariables,
             'errors' => $errors
         ]);
     }
@@ -52,11 +51,11 @@ class HomeController extends AbstractController
 
     private function sendMail(): void
     {
-        $post = $_POST;
-        $firstName = htmlspecialchars($post['firstname']);
-        $lastName = htmlspecialchars($post['lastname']);
-        $email = htmlspecialchars($post['email']);
-        $message = htmlspecialchars($post['message']);
+        $postVariables = $this->getPostVariables();
+        $firstName = htmlspecialchars($postVariables['firstname']);
+        $lastName = htmlspecialchars($postVariables['lastname']);
+        $email = htmlspecialchars($postVariables['email']);
+        $message = htmlspecialchars($postVariables['message']);
 
         $receiver      = 'mathieu.delclos@gmail.com';
         $subject = $firstName . ' ' . $lastName . ' via formulaire de contact blog-php' ;

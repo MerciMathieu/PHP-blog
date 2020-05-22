@@ -24,16 +24,16 @@ class AdminController extends AbstractController
     public function login()
     {
         $errors = [];
+        $postVariables = $this->getPostVariables();
 
         if ($this->isAdmin()) {
             header('Location: /admin/posts');
         }
 
-        if (isset($_POST['submit'])) {
-            $post = $_POST;
-            $email = htmlspecialchars($post['email']);
+        if (isset($postVariables['submit'])) {
+            $email = htmlspecialchars($postVariables['email']);
             $user = $this->userRepository->findOneByEmail($email);
-            $password = htmlspecialchars($post['password']);
+            $password = htmlspecialchars($postVariables['password']);
 
             if ($user === null or !password_verify($password, $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
@@ -56,12 +56,13 @@ class AdminController extends AbstractController
 
     public function addPost()
     {
+        $postVariables = $this->getPostVariables();
+
         if ($this->isAdmin() === false) {
             return $this->displayError(403);
         }
 
-        if (isset($_POST['submit'])) {
-            $postVariables = $_POST;
+        if (isset($postVariables['submit'])) {
             $title = htmlspecialchars($postVariables['title']);
             $intro = htmlspecialchars($postVariables['intro']);
             $content = htmlspecialchars($postVariables['content']);
@@ -91,14 +92,14 @@ class AdminController extends AbstractController
     public function editPost(int $postId)
     {
         $post = $this->postRepository->findOneById($postId);
+        $postVariables = $this->getPostVariables();
 
         if ($this->isAdmin() === false
         or $this->getCurrentUser()->getId() !== $post->getAuthor()->getId()) {
             return $this->displayError(403);
         }
 
-        if (isset($_POST['submit'])) {
-            $postVariables = $_POST;
+        if (isset($postVariables['submit'])) {
             $title = htmlspecialchars($postVariables['title']);
             $intro = htmlspecialchars($postVariables['intro']);
             $content = htmlspecialchars($postVariables['content']);
@@ -124,7 +125,9 @@ class AdminController extends AbstractController
 
     public function deletePost(int $postId)
     {
-        if (isset($_POST['delete'])) {
+        $postVariables = $this->getPostVariables();
+
+        if (isset($postVariables['delete'])) {
             $post = $this->postRepository->findOneById($postId);
 
             if ($this->isAdmin() === false
@@ -163,7 +166,9 @@ class AdminController extends AbstractController
 
     public function deleteComment(int $commentId)
     {
-        if (isset($_POST['delete'])) {
+        $postVariables = $this->getPostVariables();
+
+        if (isset($postVariables['delete'])) {
             $comment = $this->commentRepository->findOneById($commentId);
             $post = $comment->getPost();
             
@@ -184,7 +189,9 @@ class AdminController extends AbstractController
 
     public function approveComment(int $commentId, bool $validate)
     {
-        if (isset($_POST['unvalidate']) || isset($_POST['approve'])) {
+        $postVariables = $this->getPostVariables();
+
+        if (isset($postVariables['unvalidate']) || isset($postVariables['approve'])) {
             $comment = $this->commentRepository->findOneById($commentId);
             $post = $comment->getPost();
 

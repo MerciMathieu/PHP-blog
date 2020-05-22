@@ -65,4 +65,13 @@ abstract class AbstractController
             return $this->twig->render("error/error" . $errorCode . ".html.twig");
         }
     }
+
+    public function getPostVariables(): ?array
+    {
+        $post = null;
+        if ($_POST) {
+            $post = $_POST;
+        }
+        return $post;
+    }
 }

@@ -95,14 +95,12 @@ class BlogController extends AbstractController
 
     public function login()
     {
-        $post = null;
         $errors = [];
-
-        if (isset($_POST['submit'])) {
-            $post = $_POST;
-            $email = $post['email'];
+        $postVariables = $this->getPostVariables();
+        if (isset($postVariables['submit'])) {
+            $email = $postVariables['email'];
             $user = $this->userRepository->findOneByEmail($email);
-            $password = $post['password'];
+            $password = $postVariables['password'];
 
             if ($user === null or !password_verify($password, $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
@@ -121,13 +119,15 @@ class BlogController extends AbstractController
 
         return $this->twig->render('blog/login.html.twig', [
             'errors' => $errors,
-            'postvariables' => $post
+            'postvariables' => $postVariables
         ]);
     }
 
     private function insertComment(Post $post)
     {
-        if (isset($_POST['submit'])) {
+        $postVariables = $this->getPostVariables();
+
+        if (isset($postVariables['submit'])) {
             $session = new Session();
             $user = $session->getCurrent('user');
             $postVariables = $_POST;
