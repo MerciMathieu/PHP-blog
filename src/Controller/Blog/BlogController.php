@@ -46,7 +46,6 @@ class BlogController extends AbstractController
         
         if (isset($_POST['submit'])) {
             $post = $_POST;
-
             $firstName = htmlspecialchars($_POST['firstname']);
             $lastName = htmlspecialchars($_POST['lastname']);
             $email = htmlspecialchars($_POST['email']);
@@ -135,11 +134,13 @@ class BlogController extends AbstractController
         if (isset($_POST['submit'])) {
             $session = new Session();
             $user = $session->getCurrent('user');
+            $postVariables = $_POST;
+            $message = htmlspecialchars($postVariables['message']);
 
             if ($user) {
-                $message = htmlspecialchars($_POST['message']);
+                $textComment = htmlspecialchars($message);
                 $comment = new Comment(
-                    $message,
+                    $textComment,
                     $post,
                     $user
                 );

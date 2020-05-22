@@ -30,9 +30,10 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $email = htmlspecialchars($_POST['email']);
+            $post = $_POST;
+            $email = htmlspecialchars($post['email']);
             $user = $this->userRepository->findOneByEmail($email);
-            $password = htmlspecialchars($_POST['password']);
+            $password = htmlspecialchars($post['password']);
 
             if ($user === null or !password_verify($password, $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
@@ -61,10 +62,11 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $title = htmlspecialchars($_POST['title']);
-            $intro = htmlspecialchars($_POST['intro']);
-            $content = htmlspecialchars($_POST['content']);
-            $image = htmlspecialchars($_POST['image']);
+            $postVariables = $_POST;
+            $title = htmlspecialchars($postVariables['title']);
+            $intro = htmlspecialchars($postVariables['intro']);
+            $content = htmlspecialchars($postVariables['content']);
+            $image = htmlspecialchars($postVariables['image']);
 
             $session = new Session();
             $user = $session->getCurrent('user');
@@ -97,10 +99,11 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $title = htmlspecialchars($_POST['title']);
-            $intro = htmlspecialchars($_POST['intro']);
-            $content = htmlspecialchars($_POST['content']);
-            $image = htmlspecialchars($_POST['image']);
+            $postVariables = $_POST;
+            $title = htmlspecialchars($postVariables['title']);
+            $intro = htmlspecialchars($postVariables['intro']);
+            $content = htmlspecialchars($postVariables['content']);
+            $image = htmlspecialchars($postVariables['image']);
 
             $post->setTitle($title);
             $post->setIntro($intro);

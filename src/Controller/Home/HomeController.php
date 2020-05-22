@@ -13,17 +13,21 @@ class HomeController extends AbstractController
 
         if (isset($_POST['submit'])) {
             $post = $_POST;
+            $firstName = htmlspecialchars($post['firstname']);
+            $lastName = htmlspecialchars($post['lastname']);
+            $email = htmlspecialchars($post['email']);
+            $message = htmlspecialchars($post['message']);
 
-            if (!isset($_POST['firstname']) or empty($_POST['firstname']) or strlen($_POST['firstname']) < 3) {
+            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
             }
-            if (!isset($_POST['lastname']) or empty($_POST['lastname']) or strlen($_POST['lastname']) < 3) {
+            if (!isset($lastName) or empty($lastName) or strlen($lastName) < 3) {
                 $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
             }
-            if (!isset($_POST['email']) or empty($_POST['email']) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $_POST['email'])) {
+            if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
                 $errors['email'] = "L'email doit être valide";
             }
-            if (!isset($_POST['message']) or empty($_POST['message']) or strlen($_POST['message']) < 3) {
+            if (!isset($message) or empty($message) or strlen($message) < 3) {
                 $errors['message'] = "Le message doit contenir au moins 3 caractères";
             }
 
@@ -50,10 +54,11 @@ class HomeController extends AbstractController
 
     private function sendMail(): void
     {
-        $firstName = htmlspecialchars($_POST['firstname']);
-        $lastName = htmlspecialchars($_POST['lastname']);
-        $email = htmlspecialchars($_POST['email']);
-        $message = htmlspecialchars($_POST['message']);
+        $post = $_POST;
+        $firstName = htmlspecialchars($post['firstname']);
+        $lastName = htmlspecialchars($post['lastname']);
+        $email = htmlspecialchars($post['email']);
+        $message = htmlspecialchars($post['message']);
 
         $to      = 'mathieu.delclos@gmail.com';
         $subject = $firstName . ' ' . $lastName . ' via formulaire de contact blog-php' ;
