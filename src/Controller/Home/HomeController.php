@@ -34,9 +34,9 @@ class HomeController extends AbstractController
             $mail = $this->sendMail();
             if ($mail === false) {
                 $this->displayError(500);
-            } else {
-                header("Location: /email/confirmation");
             }
+
+            header("Location: /email/confirmation");
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [

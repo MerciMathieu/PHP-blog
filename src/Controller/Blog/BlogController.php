@@ -80,12 +80,11 @@ class BlogController extends AbstractController
 
             if ($user === null) {
                 return $this->displayError(500);
-            } else {
-                $session = new Session();
-                $session->setSession('user', $user);
-
-                header('Location: /blog');
             }
+            $session = new Session();
+            $session->setSession('user', $user);
+
+            header('Location: /blog');
         }
 
         return $this->twig->render('blog/register.html.twig', [
@@ -115,9 +114,9 @@ class BlogController extends AbstractController
 
             if ($user === null) {
                 return $this->displayError(500);
-            } else {
-                header('Location: /blog');
             }
+
+            header('Location: /blog');
         }
 
         return $this->twig->render('blog/login.html.twig', [
@@ -146,9 +145,9 @@ class BlogController extends AbstractController
 
                 if ($insertedComment === false) {
                     return $this->displayError(500);
-                } else {
-                    header('Location:/commentaire/confirmation');
                 }
+
+                header('Location:/commentaire/confirmation');
             }
         }
     }

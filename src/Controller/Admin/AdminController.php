@@ -42,12 +42,11 @@ class AdminController extends AbstractController
             if ($user and $user->getIsAdmin() === false) {
                 return $this->displayError(403);
             }
+
+            $session = new Session();
+            $session->setSession('user', $user);
             
-            if (empty($errors)) {
-                $session = new Session();
-                $session->setSession('user', $user);
-                header('Location: /admin/posts');
-            }
+            header('Location: /admin/posts');
         }
 
         return $this->twig->render('admin/login.html.twig', [
