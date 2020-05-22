@@ -33,22 +33,24 @@ class AdminController extends AbstractController
             if (isset($_POST)) {
                 $post = $_POST;
             }
-            $email = htmlspecialchars($post['email']);
-            $user = $this->userRepository->findOneByEmail($email);
-            $password = htmlspecialchars($post['password']);
+            if ($post) {
+                $email = htmlspecialchars($post['email']);
+                $user = $this->userRepository->findOneByEmail($email);
+                $password = htmlspecialchars($post['password']);
 
-            if ($user === null or !password_verify($password, $user->getPassword())) {
-                $errors['user'] = 'Le login/mot de passe est erroné';
-            }
+                if ($user === null or !password_verify($password, $user->getPassword())) {
+                    $errors['user'] = 'Le login/mot de passe est erroné';
+                }
 
-            if ($user and $user->getIsAdmin() === false) {
-                return $this->displayError(403);
-            }
-            
-            if (empty($errors)) {
-                $session = new Session();
-                $session->setSession('user', $user);
-                header('Location: /admin/posts');
+                if ($user and $user->getIsAdmin() === false) {
+                    return $this->displayError(403);
+                }
+                
+                if (empty($errors)) {
+                    $session = new Session();
+                    $session->setSession('user', $user);
+                    header('Location: /admin/posts');
+                }
             }
         }
 
@@ -67,28 +69,30 @@ class AdminController extends AbstractController
             if (isset($_POST)) {
                 $postVariables = $_POST;
             }
-            $title = htmlspecialchars($postVariables['title']);
-            $intro = htmlspecialchars($postVariables['intro']);
-            $content = htmlspecialchars($postVariables['content']);
-            $image = htmlspecialchars($postVariables['image']);
-
-            $session = new Session();
-            $user = $session->getCurrent('user');
-
-            $post = new Post(
-                $title,
-                $intro,
-                $content,
-                $image,
-                $user
-            );
-            $postId = $this->postRepository->insert($post);
-
-            if ($postId === null) {
-                return $this->displayError(500);
+            if ($postVariables) {
+                $title = htmlspecialchars($postVariables['title']);
+                $intro = htmlspecialchars($postVariables['intro']);
+                $content = htmlspecialchars($postVariables['content']);
+                $image = htmlspecialchars($postVariables['image']);
+    
+                $session = new Session();
+                $user = $session->getCurrent('user');
+    
+                $post = new Post(
+                    $title,
+                    $intro,
+                    $content,
+                    $image,
+                    $user
+                );
+                $postId = $this->postRepository->insert($post);
+    
+                if ($postId === null) {
+                    return $this->displayError(500);
+                }
+    
+                header("Location:/admin/edit/post/$postId");
             }
-
-            header("Location:/admin/edit/post/$postId");
         }
         return $this->twig->render('admin/add.html.twig');
     }
@@ -106,23 +110,25 @@ class AdminController extends AbstractController
             if (isset($_POST)) {
                 $postVariables = $_POST;
             }
-            $title = htmlspecialchars($postVariables['title']);
-            $intro = htmlspecialchars($postVariables['intro']);
-            $content = htmlspecialchars($postVariables['content']);
-            $image = htmlspecialchars($postVariables['image']);
-
-            $post->setTitle($title);
-            $post->setIntro($intro);
-            $post->setContent($content);
-            $post->setImageUrl($image);
-
-            $postEdited = $this->postRepository->edit($post);
-
-            if ($postEdited === false) {
-                return $this->displayError(500);
+            if ($postVariables) {
+                $title = htmlspecialchars($postVariables['title']);
+                $intro = htmlspecialchars($postVariables['intro']);
+                $content = htmlspecialchars($postVariables['content']);
+                $image = htmlspecialchars($postVariables['image']);
+    
+                $post->setTitle($title);
+                $post->setIntro($intro);
+                $post->setContent($content);
+                $post->setImageUrl($image);
+    
+                $postEdited = $this->postRepository->edit($post);
+    
+                if ($postEdited === false) {
+                    return $this->displayError(500);
+                }
+    
+                header('Location: /admin/posts');
             }
-
-            header('Location: /admin/posts');
         }
         return $this->twig->render('admin/edit.html.twig', [
             'post' => $post

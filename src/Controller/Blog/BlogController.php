@@ -141,23 +141,25 @@ class BlogController extends AbstractController
             if (isset($_POST)) {
                 $postVariables = $_POST;
             }
-            $message = htmlspecialchars($postVariables['message']);
-
-            if ($user) {
-                $textComment = htmlspecialchars($message);
-                $comment = new Comment(
-                    $textComment,
-                    $post,
-                    $user
-                );
-
-                $insertedComment = $this->commentRepository->insert($comment);
-
-                if ($insertedComment === false) {
-                    return $this->displayError(500);
+            if ($postVariables) {
+                $message = htmlspecialchars($postVariables['message']);
+    
+                if ($user) {
+                    $textComment = htmlspecialchars($message);
+                    $comment = new Comment(
+                        $textComment,
+                        $post,
+                        $user
+                    );
+    
+                    $insertedComment = $this->commentRepository->insert($comment);
+    
+                    if ($insertedComment === false) {
+                        return $this->displayError(500);
+                    }
+                    
+                    header('Location:/commentaire/confirmation');
                 }
-                
-                header('Location:/commentaire/confirmation');
             }
         }
     }
