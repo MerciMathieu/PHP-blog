@@ -57,29 +57,29 @@ if (isset($uri)) {
         echo $blogController->index();
     } elseif (preg_match('/^\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo htmlspecialchars($blogController->showPost($postId));
+        echo $blogController->showPost($postId);
     } elseif ($uri === '/admin/posts') {
         echo $adminController->index();
     } elseif (preg_match('/^\/admin\/edit\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo htmlspecialchars($adminController->editPost($postId));
+        echo $adminController->editPost($postId);
     } elseif ($uri === '/admin/post/add') {
         echo $adminController->addPost();
     } elseif (preg_match('/^\/admin\/delete\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo htmlspecialchars($adminController->deletePost($postId));
+        echo $adminController->deletePost($postId);
     } elseif (preg_match('/^\/admin\/moderate\/comments\/post\/(\d+)$/', $uri, $matches)) {
         $postId = (int)$matches[1];
-        echo htmlspecialchars($adminController->showCommentsFromPost($postId));
+        echo $adminController->showCommentsFromPost($postId);
     } elseif (preg_match('/^\/admin\/delete\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo htmlspecialchars($adminController->deleteComment($commentId));
+        echo $adminController->deleteComment($commentId);
     } elseif (preg_match('/^\/admin\/approve\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo htmlspecialchars($adminController->approveComment($commentId, true));
+        echo $adminController->approveComment($commentId, true);
     } elseif (preg_match('/^\/admin\/unvalidate\/comment\/(\d+)$/', $uri, $matches)) {
         $commentId = (int)$matches[1];
-        echo htmlspecialchars($adminController->approveComment($commentId, false));
+        echo $adminController->approveComment($commentId, false);
     } elseif ($uri === '/login') {
         echo $blogController->login();
     } elseif ($uri === '/admin/login') {

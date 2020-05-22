@@ -6,9 +6,6 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Comment;
 use App\Classes\Session;
-use App\Repository\PostRepository;
-use App\Repository\UserRepository;
-use App\Repository\CommentRepository;
 use App\Controller\AbstractController;
 
 class BlogController extends AbstractController
@@ -107,7 +104,8 @@ class BlogController extends AbstractController
 
         if (isset($_POST['submit'])) {
             $post = $_POST;
-            $user = $this->userRepository->findOneByEmail($_POST['email']);
+            $email = $post['email'];
+            $user = $this->userRepository->findOneByEmail($email);
 
             if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
@@ -139,8 +137,9 @@ class BlogController extends AbstractController
             $user = $session->getCurrent('user');
 
             if ($user) {
+                $message = htmlspecialchars($_POST['message']);
                 $comment = new Comment(
-                    htmlspecialchars($_POST['message']),
+                    $message,
                     $post,
                     $user
                 );

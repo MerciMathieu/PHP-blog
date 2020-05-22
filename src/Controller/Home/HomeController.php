@@ -28,12 +28,11 @@ class HomeController extends AbstractController
             }
 
             if (empty($errors)) {
-                $sendMail =  $this->sendMail();
-                
-                if ($sendMail === false) {
-                    return $this->displayError(500);
+                $mail = $this->sendMail();
+                if ($mail === false) {
+                    $this->displayError(500);
                 }
-              
+
                 header("Location: /email/confirmation");
             }
         }

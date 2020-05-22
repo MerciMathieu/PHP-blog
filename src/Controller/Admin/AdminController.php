@@ -3,10 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Post;
-use App\Entity\User;
 use App\Classes\Session;
-use App\Repository\PostRepository;
-use App\Repository\CommentRepository;
 use App\Controller\AbstractController;
 
 class AdminController extends AbstractController
@@ -33,9 +30,11 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $user = $this->userRepository->findOneByEmail($_POST['email']);
+            $email = htmlspecialchars($_POST['email']);
+            $user = $this->userRepository->findOneByEmail($email);
+            $password = htmlspecialchars($_POST['password']);
 
-            if ($user === null or !password_verify($_POST['password'], $user->getPassword())) {
+            if ($user === null or !password_verify($password, $user->getPassword())) {
                 $errors['user'] = 'Le login/mot de passe est erroné';
             }
 
@@ -62,10 +61,10 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $title = $_POST['title'];
-            $intro = $_POST['intro'];
-            $content = $_POST['content'];
-            $image = $_POST['image'];
+            $title = htmlspecialchars($_POST['title']);
+            $intro = htmlspecialchars($_POST['intro']);
+            $content = htmlspecialchars($_POST['content']);
+            $image = htmlspecialchars($_POST['image']);
 
             $session = new Session();
             $user = $session->getCurrent('user');
@@ -98,10 +97,10 @@ class AdminController extends AbstractController
         }
 
         if (isset($_POST['submit'])) {
-            $title = $_POST['title'];
-            $intro = $_POST['intro'];
-            $content = $_POST['content'];
-            $image = $_POST['image'];
+            $title = htmlspecialchars($_POST['title']);
+            $intro = htmlspecialchars($_POST['intro']);
+            $content = htmlspecialchars($_POST['content']);
+            $image = htmlspecialchars($_POST['image']);
 
             $post->setTitle($title);
             $post->setIntro($intro);

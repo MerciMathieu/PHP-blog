@@ -51,11 +51,10 @@
                     {% endif %}
                 </div>
                 <hr>
-                <h2 class="my-5">Poster un commentaire </h2>
-                <div class="bg-light my-5 text-center">
-                    <p>Les commentaires sont soumis pour validation avant publication</p>
-                </div>
                 {% if current_user %}
+                    <div class="bg-light my-5 text-center">
+                        <p>Les commentaires sont soumis pour validation avant publication</p>
+                    </div>
                     <form method="post" class="w-100 m-auto">
                         <div class="form-group">
                             <label for="message" hidden>Message:</label>
@@ -66,8 +65,8 @@
                         </div>
                     </form>
                 {% else %}
-                    <p>Vous devez être connecté pour pouvoir laisser un commentaire.</p>
-                    <small><a href="/login">Se connecter</a> ou <a href="/register">s'inscrire</a> si vous n'avez pas encore de compte.</small>
+                    <p class="mt-5">Vous devez être connecté pour pouvoir laisser un commentaire.</p>
+                    <small class="mb-5"><a href="/login">Se connecter</a> ou <a href="/register">s'inscrire</a> si vous n'avez pas encore de compte.</small>
                 {% endif %}
             </div>
         </div>
