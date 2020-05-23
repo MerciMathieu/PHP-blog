@@ -17,31 +17,54 @@ class HomeController extends AbstractController
             $email = htmlspecialchars($postVariables['email']);
             $message = htmlspecialchars($postVariables['message']);
 
-            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
-                $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
-            }
-            if (!isset($lastName) or empty($lastName) or strlen($lastName) < 3) {
-                $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
-            }
-            if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
-                $errors['email'] = "L'email doit être valide";
-            }
-            if (!isset($message) or empty($message) or strlen($message) < 3) {
-                $errors['message'] = "Le message doit contenir au moins 3 caractères";
-            }
+            $this->checkFirstName($firstName, $errors);
+            $this->checkLastName($lastName, $errors);
+            $this->checkEmail($email, $errors);
+            $this->checkMessage($message, $errors);
 
-            $mail = $this->sendMail();
-            if ($mail === false) {
-                $this->displayError(500);
-            }
+            if (empty($errors)) {
+                $mail = $this->sendMail();
 
-            header("Location: /email/confirmation");
+                if ($mail === false) {
+                    $this->displayError(500);
+                }
+                
+                header("Location: /email/confirmation");
+            }
         }
 
         return $this->twig->render('homepage/homepage.html.twig', [
             'postVariables' => $postVariables,
             'errors' => $errors
         ]);
+    }
+
+    private function checkFirstName(string $firstName, array &$errors)
+    {
+        if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
+            $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
+        }
+    }
+
+    private function checkLastName(string $lastName, array &$errors)
+    {
+        if (!isset($lastName) or empty($lastName) or strlen($lastName) < 3) {
+            $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
+        }
+    }
+
+    private function checkEmail(string $email, array &$errors)
+    {
+        if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
+            $errors['email'] = "L'email doit être valide";
+        }
+    }
+
+    private function checkMessage(string $message, array &$errors)
+    {
+        if (!isset($message) or empty($message) or strlen($message) < 3) {
+            $errors['message'] = "Le message doit contenir au moins 3 caractères";
+        }
     }
 
     public function displayConfirmationSendMail()
