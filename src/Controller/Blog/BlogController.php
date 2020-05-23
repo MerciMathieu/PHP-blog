@@ -52,9 +52,8 @@ class BlogController extends AbstractController
             $password = htmlspecialchars($postVariables['password']);
             $confirmPassword = htmlspecialchars($postVariables['confirm_password']);
 
-            if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
-                $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
-            }
+            $this->checkLastName($lastName, $errors);
+
             if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
                 $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
             }
@@ -148,6 +147,13 @@ class BlogController extends AbstractController
 
                 header('Location:/commentaire/confirmation');
             }
+        }
+    }
+
+    private function checkLastName(string $lastName, array &$errors)
+    {
+        if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
+            $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
         }
     }
 

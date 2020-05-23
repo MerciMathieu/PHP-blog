@@ -22,13 +22,13 @@ class HomeController extends AbstractController
             $this->checkEmail($email, $errors);
             $this->checkMessage($message, $errors);
 
-            if (empty($errors)) {
+            if (!$errors) {
                 $mail = $this->sendMail();
 
                 if ($mail === false) {
                     $this->displayError(500);
                 }
-                
+
                 header("Location: /email/confirmation");
             }
         }
