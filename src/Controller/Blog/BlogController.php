@@ -56,7 +56,10 @@ class BlogController extends AbstractController
             $this->checkFirstName($firstName, $errors);
             $this->checkEmail($email, $errors);
             $this->checkPassword($password, $errors);
-            $this->confirmPassword($password, $confirmPassword, $errors);
+            
+            if ($confirmPassword !== $password) {
+                $errors['password'] = "Mot de passe différent";
+            }
 
             if (!$errors) {
                 $user = new User(
@@ -96,7 +99,9 @@ class BlogController extends AbstractController
             $user = $this->userRepository->findOneByEmail($email);
             $password = $postVariables['password'];
 
-            $this->checkLogin($user, $password, $errors);
+            if ($user === null or !password_verify($password, $user->getPassword())) {
+                $errors['user'] = 'Le login/mot de passe est erroné';
+            }
 
             if (!$errors) {
                 $session = new Session();
@@ -138,20 +143,6 @@ class BlogController extends AbstractController
     {
         if (!isset($password) or empty($password) or strlen($password) < 4) {
             $errors['password'] = "Le mot de passe doit contenir au minimum 4 caractères";
-        }
-    }
-    
-    private function confirmPassword(string $password, string $confirmPassword, array &$errors)
-    {
-        if ($confirmPassword !== $password) {
-            $errors['password'] = "Mot de passe différent";
-        }
-    }
-
-    private function checkLogin(User &$user, string $password, array &$errors)
-    {
-        if ($user === null or !password_verify($password, $user->getPassword())) {
-            $errors['user'] = 'Le login/mot de passe est erroné';
         }
     }
 
