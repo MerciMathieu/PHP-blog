@@ -13,7 +13,7 @@ class BlogController extends AbstractController
     public function index()
     {
         $posts = $this->postRepository->findAll();
-        return $this->twig->render('blog/blog.html.twig', [
+        $this->render('blog/blog.html.twig', [
             'posts' => $posts
         ]);
     }
@@ -34,7 +34,7 @@ class BlogController extends AbstractController
         
         $comments = $this->commentRepository->findAllByPost($post, true);
         
-        return $this->twig->render('blog/showpost.html.twig', [
+        return $this->render('blog/showpost.html.twig', [
             'post' => $post,
             'comments' => $comments
         ]);
@@ -53,40 +53,34 @@ class BlogController extends AbstractController
             $confirmPassword = htmlspecialchars($postVariables['confirm_password']);
 
             $this->checkLastName($lastName, $errors);
+            $this->checkFirstName($firstName, $errors);
+            $this->checkEmail($email, $errors);
+            $this->checkPassword($password, $errors);
+            $this->confirmPassword($password, $confirmPassword, $errors);
 
-            if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
-                $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
+            if (!$errors) {
+                $user = new User(
+                    $firstName,
+                    $lastName
+                );
+                $user->setEmail(strtolower($email));
+                $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+                $user->setIsAdmin(0);
+    
+                $this->userRepository->insert($user);
+    
+                if ($user === null) {
+                    return $this->displayError(500);
+                }
+    
+                $session = new Session();
+                $session->setSession('user', $user);
+    
+                header('Location: /blog');
             }
-            if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
-                $errors['email'] = "L'email doit être valide";
-            }
-            if (!isset($password) or empty($password) or strlen($password) < 4) {
-                $errors['password'] = "Le mot de passe doit contenir au minimum 4 caractères";
-            }
-            if ($confirmPassword !== $password) {
-                $errors['password'] = "Mot de passe différent";
-            }
-
-            $user = new User(
-                $firstName,
-                $lastName
-            );
-            $user->setEmail(strtolower($email));
-            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
-            $user->setIsAdmin(0);
-
-            $this->userRepository->insert($user);
-
-            if ($user === null) {
-                return $this->displayError(500);
-            }
-            $session = new Session();
-            $session->setSession('user', $user);
-
-            header('Location: /blog');
         }
 
-        return $this->twig->render('blog/register.html.twig', [
+        return $this->render('blog/register.html.twig', [
             'errors' => $errors,
             'postvariables' => $postVariables
         ]);
@@ -96,30 +90,69 @@ class BlogController extends AbstractController
     {
         $errors = [];
         $postVariables = $this->getPostVariables();
+
         if (isset($postVariables['submit'])) {
             $email = $postVariables['email'];
             $user = $this->userRepository->findOneByEmail($email);
             $password = $postVariables['password'];
 
-            if ($user === null or !password_verify($password, $user->getPassword())) {
-                $errors['user'] = 'Le login/mot de passe est erroné';
+            $this->checkLogin($user, $password, $errors);
+
+            if (!$errors) {
+                $session = new Session();
+                $session->setSession('user', $user);
+                $user = $session->getCurrent('user');
+
+                header('Location: /blog');
             }
-
-            $session = new Session();
-            $session->setSession('user', $user);
-            $user = $session->getCurrent('user');
-
-            if ($user === null) {
-                return $this->displayError(500);
-            }
-
-            header('Location: /blog');
         }
 
-        return $this->twig->render('blog/login.html.twig', [
+        return $this->render('blog/login.html.twig', [
             'errors' => $errors,
             'postvariables' => $postVariables
         ]);
+    }
+
+    private function checkLastName(string $lastName, array &$errors)
+    {
+        if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
+            $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
+        }
+    }
+
+    private function checkFirstName(string $firstName, array &$errors)
+    {
+        if (!isset($firstName) or empty($firstName) or strlen($firstName) < 3) {
+            $errors['firstname'] = "Le prénom doit contenir au moins 3 caractères";
+        }
+    }
+
+    private function checkEmail(string $email, array &$errors)
+    {
+        if (!isset($email) or empty($email) or !preg_match(" /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/ ", $email)) {
+            $errors['email'] = "L'email doit être valide";
+        }
+    }
+
+    private function checkPassword(string $password, array &$errors)
+    {
+        if (!isset($password) or empty($password) or strlen($password) < 4) {
+            $errors['password'] = "Le mot de passe doit contenir au minimum 4 caractères";
+        }
+    }
+    
+    private function confirmPassword(string $password, string $confirmPassword, array &$errors)
+    {
+        if ($confirmPassword !== $password) {
+            $errors['password'] = "Mot de passe différent";
+        }
+    }
+
+    private function checkLogin(User &$user, string $password, array &$errors)
+    {
+        if ($user === null or !password_verify($password, $user->getPassword())) {
+            $errors['user'] = 'Le login/mot de passe est erroné';
+        }
     }
 
     private function insertComment(Post $post)
@@ -150,15 +183,8 @@ class BlogController extends AbstractController
         }
     }
 
-    private function checkLastName(string $lastName, array &$errors)
-    {
-        if (!isset($lastName) or empty($lastName) or strlen($lastName) <3) {
-            $errors['lastname'] = "Le nom doit contenir au moins 3 caractères";
-        }
-    }
-
     public function displayConfirmationSendComment()
     {
-        return  $this->twig->render('confirm/confirmComment.html.twig');
+        return  $this->render('confirm/confirmComment.html.twig');
     }
 }

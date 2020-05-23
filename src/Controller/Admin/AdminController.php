@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Classes\Session;
 use App\Controller\AbstractController;
 
@@ -16,7 +17,7 @@ class AdminController extends AbstractController
 
         $posts = $this->postRepository->findAll();
 
-        return $this->twig->render('admin/admin.html.twig', [
+        return $this->render('admin/admin.html.twig', [
             'posts' => $posts
         ]);
     }
@@ -35,21 +36,21 @@ class AdminController extends AbstractController
             $user = $this->userRepository->findOneByEmail($email);
             $password = htmlspecialchars($postVariables['password']);
 
-            if ($user === null or !password_verify($password, $user->getPassword())) {
-                $errors['user'] = 'Le login/mot de passe est erroné';
-            }
+            $this->checkLogin($user, $password, $errors);
 
             if ($user and $user->getIsAdmin() === false) {
                 return $this->displayError(403);
             }
 
-            $session = new Session();
-            $session->setSession('user', $user);
-            
-            header('Location: /admin/posts');
+            if (!$errors) {
+                $session = new Session();
+                $session->setSession('user', $user);
+                
+                header('Location: /admin/posts');
+            }
         }
 
-        return $this->twig->render('admin/login.html.twig', [
+        return $this->render('admin/login.html.twig', [
             'errors' => $errors
         ]);
     }
@@ -86,7 +87,7 @@ class AdminController extends AbstractController
 
             header("Location:/admin/edit/post/$postId");
         }
-        return $this->twig->render('admin/add.html.twig');
+        return $this->render('admin/add.html.twig');
     }
 
     public function editPost(int $postId)
@@ -118,7 +119,7 @@ class AdminController extends AbstractController
 
             header('Location: /admin/posts');
         }
-        return $this->twig->render('admin/edit.html.twig', [
+        return $this->render('admin/edit.html.twig', [
             'post' => $post
         ]);
     }
@@ -157,7 +158,7 @@ class AdminController extends AbstractController
         $approvedComments = $this->commentRepository->findAllByPost($post, true);
         $unvalidatedComments = $this->commentRepository->findAllByPost($post, false);
     
-        return $this->twig->render('admin/comments.html.twig', [
+        return $this->render('admin/comments.html.twig', [
             'post' => $post,
             'approvedComments' => $approvedComments,
             'unvalidatedComments' => $unvalidatedComments
@@ -209,6 +210,13 @@ class AdminController extends AbstractController
             }
 
             header('Location:/admin/moderate/comments/post/'.$comment->getPost()->getId());
+        }
+    }
+
+    private function checkLogin(User &$user, string $password, array &$errors)
+    {
+        if ($user === null or !password_verify($password, $user->getPassword())) {
+            $errors['user'] = 'Le login/mot de passe est erroné';
         }
     }
 }

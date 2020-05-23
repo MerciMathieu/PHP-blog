@@ -47,7 +47,7 @@ abstract class AbstractController
         header('Location:/');
     }
 
-    public function isAdmin(): bool
+    protected function isAdmin(): bool
     {
         $currentUser = $this->getCurrentUser();
 
@@ -62,11 +62,11 @@ abstract class AbstractController
         if (http_response_code()) {
             http_response_code($errorCode);
 
-            return $this->twig->render("error/error" . $errorCode . ".html.twig");
+            return $this->render("error/error" . $errorCode . ".html.twig");
         }
     }
 
-    public function getPostVariables(): ?array
+    protected function getPostVariables(): ?array
     {
         $post = null;
         if ($_POST) {
@@ -74,4 +74,10 @@ abstract class AbstractController
         }
         return $post;
     }
+
+    protected function render(string $template, array $params = []): void
+    {
+        echo $this->twig->render($template, $params);
+    }
+
 }

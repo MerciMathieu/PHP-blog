@@ -33,7 +33,7 @@ class HomeController extends AbstractController
             }
         }
 
-        return $this->twig->render('homepage/homepage.html.twig', [
+        $this->render('homepage/homepage.html.twig', [
             'postVariables' => $postVariables,
             'errors' => $errors
         ]);
@@ -67,11 +67,6 @@ class HomeController extends AbstractController
         }
     }
 
-    public function displayConfirmationSendMail()
-    {
-        return  $this->twig->render('confirm/confirmEmail.html.twig');
-    }
-
     private function sendMail(): void
     {
         $postVariables = $this->getPostVariables();
@@ -88,4 +83,10 @@ class HomeController extends AbstractController
 
         mail($receiver, $subject, $text, $headers);
     }
+
+    public function displayConfirmationSendMail()
+    {
+        return  $this->render('confirm/confirmEmail.html.twig');
+    }
+
 }

@@ -22,3 +22,7 @@
 .article-body h2 {
   font-size: 3rem;
 }
+
+section#last-articles {
+  height: initial;
+}
