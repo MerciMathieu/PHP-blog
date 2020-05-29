@@ -4,7 +4,7 @@
 * composer
 * php 7.4.*
 * apache 2.4.41
-* phpmyadmin (SGBD)
+* phpmyadmin(SGBD)
 
 ## Installation / Install
 
