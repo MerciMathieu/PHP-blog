@@ -58,7 +58,7 @@
                             </td>
                             <td class="text-center actions">
                                 <a class="btn btn-info" href="moderate/comments/post/{{ post.id }}" role="button">
-                                    Commentaires<i class="fas fa-comment ml-2 {% if post.hasUnvalidatedComments %}red{% endif %}"></i>
+                                    Commentaires<i class="fas fa-comment ml-2 {% if post.unvalidComments %}red{% endif %}"></i>
                                 </a>
                                 <a class="btn btn-primary" href="edit/post/{{ post.id }}" role="button">
                                     Modifier
