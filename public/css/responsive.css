@@ -1,0 +1,13 @@
+@media screen and (max-width: 1024px) {
+
+    .text-about {
+        padding: 0 !important;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+
+    .text-about p {
+        width: 100% !important;
+        margin-bottom: 50px;
+    }
+}
