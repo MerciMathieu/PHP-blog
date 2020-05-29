@@ -34,9 +34,7 @@ Dans le fichier  **HomeController.php**, trouvez cette ligne et entrez votre ema
 
 In  **HomeController.php** file, find this line and enter your email:
 
-```php
-   $receiver  = 'youremail@example.com';
-```
+    $receiver  = 'youremail@example.com';
 
 ## Administration
 
