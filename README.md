@@ -19,16 +19,14 @@
 ### Base de donnée / Database
 
 *   Importer dans phpmyadmin le fichier **main.sql** situé dans **/dump** pour créer la base de données ainsi que la structure des tables nécessaires au fonctionnement du blog. 
-
 *   Entrez les informations de connexion à votre base de données dans le fichier **/src/classes/ConnectDb.php**
 
 ---
 
 *   In phpmyadmin, import file **main.sql** which is in **/dump** folder to create database and tables needed to make the blog working fine. 
-
 *   Enter database informations in **/src/classes/ConnectDb.php** file. 
 
-### Formulaire de contact / Contact form ###
+### Formulaire de contact / Contact form
 
 Dans le fichier  **HomeController.php**, trouvez cette ligne et entrez votre email: 
 
@@ -36,10 +34,8 @@ Dans le fichier  **HomeController.php**, trouvez cette ligne et entrez votre ema
 
 In  **HomeController.php** file, find this line and enter your email:
 
-
 ```php
    $receiver  = 'youremail@example.com';
-
 ```
 
 ## Administration
