@@ -1,10 +1,10 @@
 # <p>Projet 5 OpenClassrooms - Créez votre premier blog en PHP</p> <p>Parcours Développeur d'application - PHP / Symfony</p>
 
 ## Prérequis / Requirements
-* composer
-* php 7.4.*
-* apache 2.4.41
-* phpmyadmin(SGBD)
+*   composer
+*   php 7.4.*
+*   apache 2.4.41
+*   phpmyadmin (SGBD)
 
 ## Installation / Install
 
@@ -18,15 +18,15 @@
 
 ### Base de donnée / Database
 
-* Importer dans phpmyadmin le fichier **main.sql** situé dans **/dump** pour créer la base de données ainsi que la structure des tables nécessaires au fonctionnement du blog. 
+*   Importer dans phpmyadmin le fichier **main.sql** situé dans **/dump** pour créer la base de données ainsi que la structure des tables nécessaires au fonctionnement du blog. 
 
-* Entrez les informations de connexion à votre base de données dans le fichier **/src/classes/ConnectDb.php**
+*   Entrez les informations de connexion à votre base de données dans le fichier **/src/classes/ConnectDb.php**
 
 ---
 
-* In phpmyadmin, import file **main.sql** which is in **/dump** folder to create database and tables needed to make the blog working fine. 
+*   In phpmyadmin, import file **main.sql** which is in **/dump** folder to create database and tables needed to make the blog working fine. 
 
-* Enter database informations in **/src/classes/ConnectDb.php** file. 
+*   Enter database informations in **/src/classes/ConnectDb.php** file. 
 
 ### Formulaire de contact / Contact form ###
 
@@ -47,16 +47,14 @@ In  **HomeController.php** file, find this line and enter your email:
 
 Il y'a un lien pour se connecter à l'administration dans le footer. 
 Pour entrer dans l'administration et créer des articles vous devez être administrateur:
-* vous devez d'abord vous enregistrer sur votre blog (mot de passe crypté)
-* dans la base données, changez la colonne 'is_admin' correspondant à vos identifiants de 0 à 1.
-* vous pouvez utiliser pleinement le blog !
-
+*   vous devez d'abord vous enregistrer sur votre blog (mot de passe crypté)
+*   dans la base données, changez la colonne 'is_admin' correspondant à vos identifiants de 0 à 1.
+*   vous pouvez utiliser pleinement le blog !
 
 ---
 
-
 There is a link to connect to administration in the footer.
 To enter in administration and create articles you have to be administrator. 
-* first, register on your blog (encrypted password)
-* in database, change column 'is_admin' corresponding to your username from 0 to 1.
-* you can fully use the blog !
+*   first, register on your blog (encrypted password)
+*   in database, change column 'is_admin' corresponding to your username from 0 to 1.
+*   you can fully use the blog !
