@@ -14,7 +14,7 @@
 
 ### Lancez composer / Run composer
 
-    	composer install
+    composer install
 
 ### Base de donnée / Database
 
@@ -29,7 +29,6 @@
 *   Enter database informations in **/src/classes/ConnectDb.php** file. 
 
 ### Formulaire de contact / Contact form ###
-
 
 Dans le fichier  **HomeController.php**, trouvez cette ligne et entrez votre email: 
 
