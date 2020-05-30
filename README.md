@@ -1,5 +1,7 @@
 # <p>Projet 5 OpenClassrooms - Créez votre premier blog en PHP</p> <p>Parcours Développeur d'application - PHP / Symfony</p>
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e35cb77262d74e9386743380006bd8d3)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MerciMathieu/PHP-blog&amp;utm_campaign=Badge_Grade)
+
 ## Prérequis / Requirements
 *   composer
 *   php 7.4.*
