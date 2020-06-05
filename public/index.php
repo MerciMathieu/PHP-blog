@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+$autoload = __DIR__ . '/../vendor/autoload.php';
+require_once $autoload;
 
 session_start();
 
