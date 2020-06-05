@@ -213,7 +213,7 @@ class AdminController extends AbstractController
         }
     }
 
-    private function checkLogin(User &$user, string $password, array &$errors)
+    private function checkLogin(User &$user = null, string $password, array &$errors)
     {
         if ($user === null or !password_verify($password, $user->getPassword())) {
             $errors['user'] = 'Le login/mot de passe est erroné';
