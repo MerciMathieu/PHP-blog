@@ -161,9 +161,9 @@ legend {
 }
 
 .dropdown-menu {
+  left: -11px;
   font-size: 1rem;
   color: #212529;
-  margin-left: 15px;
   background-color: rgb(52, 58, 64);
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
