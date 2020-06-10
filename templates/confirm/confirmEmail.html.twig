@@ -2,18 +2,12 @@
 
 {% block title %}Email envoyé - {{ parent() }}{% endblock %}
 
-{% block head %}
-    {{ parent() }}
-    <meta http-equiv="refresh" content="3; url=/">
-{% endblock %}
-
 {% block content %}
 
     <section class="bg-blue color-white">
         <div class="container">
             <div class="text-center">
                 <p>Votre email a bien été envoyé, vous recevrez une réponse dans un court délai.</p>
-                <small>Vous allez être redirigé dans 3 secondes</small>
                 <a href="/"><p><i class="fas fa-arrow-left mr-3"></i>Retour à l'accueil</p></a>
             </div>
         </div>

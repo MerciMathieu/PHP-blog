@@ -2,18 +2,12 @@
 
 {% block title %}Commentaire posté - {{ parent() }}{% endblock %}
 
-{% block head %}
-    {{ parent() }}
-    <meta http-equiv="refresh" content="3; url=/blog">
-{% endblock %}
-
 {% block content %}
 
     <section class="bg-blue color-white">
         <div class="container bg-blue">
             <div class="text-center">
                 <p class="mb-3">Votre commentaire a bien été soumis pour validation. <br />Il sera publié très prochainement.</p>
-                <small>Vous allez être redirigé dans 3 secondes</small>
                 <a href="/blog"><p><i class="fas fa-arrow-left mr-3"></i>Retour au blog</p></a>
             </div>
         </div>
