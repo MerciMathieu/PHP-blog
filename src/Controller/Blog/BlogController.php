@@ -70,7 +70,8 @@ class BlogController extends AbstractController
                 $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
                 $user->setIsAdmin(0);
     
-                $this->userRepository->insert($user);
+                $userId = $this->userRepository->insert($user);
+                $user->setId( $userId);
     
                 if ($user === null) {
                     return $this->displayError(500);

@@ -39,7 +39,7 @@ class UserRepository
         return $user;
     }
 
-    public function insert(User $user): void
+    public function insert(User $user): int
     {
         $req = $this->pdo->prepare("INSERT INTO user (first_name, last_name, email, password) VALUES(:first_name, :last_name, :email, :password)");
 
@@ -49,5 +49,7 @@ class UserRepository
             'email' => $user->getEmail(),
             'password' => $user->getPassword()
         ]);
+
+        return $this->pdo->lastInsertId();
     }
 }
